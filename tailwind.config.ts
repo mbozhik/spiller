@@ -8,13 +8,23 @@ const config: Config = {
     extend: {
       colors: {
         custom: {
-          violet: '#911BED',
+          grey: '#444444',
+          area: '#7D756F',
+          nav: '#DDDDDD',
+          blue: '#2F495A',
+          hytec: '#0B599E',
         },
+      },
+      boxShadow: {
+        nav: '0px 13px 32px -19px #000',
+        nav_mobile: '0px 3px 12px 2px #00000050;',
+        hytec: '0px -7px 32px -19px #000',
+        hytec_mobile: '0px -3px 12px 2px #00000050;',
       },
     },
     screens: {
       xl: {max: '1536px'},
-      lg: {max: '1024px'},
+      lg: {max: '1280px'},
       sm: {max: '768px'},
       xs: {max: '350px'},
     },
