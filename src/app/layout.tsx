@@ -4,6 +4,7 @@ import {Open_Sans} from 'next/font/google'
 import './globals.css'
 
 import Header from '@/components/Global/Header/Header'
+import Footer from '@/components/Global/Footer'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -57,10 +58,11 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full scroll-smooth">
       <body className={`h-full text-custom-grey ${openSans.className}`}>
-        <main className="flex flex-col min-h-full">
+        <section className="flex flex-col min-h-full">
           <Header />
-          {children}
-        </main>
+          <main className="flex-auto">{children}</main>
+          <Footer />
+        </section>
       </body>
     </html>
   )

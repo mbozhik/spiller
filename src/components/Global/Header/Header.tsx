@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import LogoImage from '../../../assets/images/logo.svg'
+export {LogoImage}
 
 import ContactsLine from './ContactsLine'
 import NavBar from './NavBar'
