@@ -60,7 +60,7 @@ export default function RootLayout({
       <body className={`h-full text-custom-grey ${openSans.className}`}>
         <section className="flex flex-col min-h-full">
           <Header />
-          <main className="flex-auto">{children}</main>
+          {children}
           <Footer />
         </section>
       </body>
