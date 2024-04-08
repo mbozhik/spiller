@@ -1,4 +1,7 @@
-import Image from 'next/image'
+import {Metadata} from 'next'
+export const metadata: Metadata = {
+  title: 'HYTEC',
+}
 
 import AboutHytecImage from '%/about/2.jpg'
 

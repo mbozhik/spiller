@@ -1,3 +1,8 @@
+import {Metadata} from 'next'
+export const metadata: Metadata = {
+  title: 'История бренда',
+}
+
 import Image from 'next/image'
 
 import AboutHistoryImage from '%/history/horst.jpg'

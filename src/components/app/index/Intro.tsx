@@ -1,6 +1,6 @@
-import Title from '../../UI/Title'
-import Button from '../../UI/Button'
-import Text from '../../UI/Text'
+import Title from '#/UI/Title'
+import Button from '#/UI/Button'
+import Text from '#/UI/Text'
 
 export default function Intro() {
   return (

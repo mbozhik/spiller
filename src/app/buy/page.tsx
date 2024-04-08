@@ -1,5 +1,10 @@
+import {Metadata} from 'next'
+export const metadata: Metadata = {
+  title: 'Где купить',
+}
+
 import Main from '#/UI/Container'
-import Grid from '@/components/app/buy/Grid'
+import Grid from '##/buy/Grid'
 import Contacts from '##/buy/Contacts'
 import Map from '##/buy/Map'
 

@@ -1,3 +1,8 @@
+import {Metadata} from 'next'
+export const metadata: Metadata = {
+  title: 'Награды',
+}
+
 import Main from '#/UI/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'

@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import LogoImage from '../../../assets/images/logo.svg'
+import LogoImage from '%/logo.svg'
 export {LogoImage}
 
-import ContactsLine from './ContactsLine'
-import NavBar from './NavBar'
+import ContactsLine from '#/Global/Header/ContactsLine'
+import NavBar from '#/Global/Header/NavBar'
 
 export default function Header() {
   return (

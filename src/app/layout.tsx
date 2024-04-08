@@ -13,7 +13,8 @@ const openSans = Open_Sans({
 })
 
 const website = {
-  title: 'Dr. Spiller',
+  siteName: 'Dr. Spiller',
+  title: 'Dr. Spiller — Казахстан и Кыргызстан',
   description: 'Сохранить здоровье и молодость - главная задача для Dr. Spiller! Профессиональная уходовая косметика премиального уровня из Германии, известная во всём мире. ТОО "WEC GROUP" является официальным дистрибьютором косметики Dr. Spiller в Казахстане и Кыргызстанe',
   keywords: 'dr spiller, доктор шпиллер, доктор шпиллер казахстан, косметика казахстан, косметика кыргыстан, немецкая косметика, профессиональная немецкая косметика, уходовая косметика, натуральная косметика, дерматологическая косметика, увлажняющий крем, антивозрастная косметика, органическая косметика, лечение акне, уход за кожей, косметика для лица',
 
@@ -24,7 +25,7 @@ const website = {
 export const metadata: Metadata = {
   title: {
     default: website.title,
-    template: `%s — ${website.title}`,
+    template: `%s — ${website.siteName}`,
   },
 
   description: website.description,

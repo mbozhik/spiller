@@ -1,5 +1,4 @@
 import GridImage1 from '%/buy/1.jpg'
-
 import GridCell, {GridDataProps} from '#/UI/GridCell'
 
 const gridData: {[key: number]: GridDataProps} = {

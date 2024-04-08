@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import {LogoImage} from './Header/Header'
+import {LogoImage} from '#/Global/Header/Header'
 
 const footerData = {
   clients: {
