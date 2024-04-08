@@ -1,6 +1,10 @@
-export default function Loader() {
+interface Props {
+  classes?: string
+}
+
+const Loader: React.FC<Props> = ({classes}) => {
   return (
-    <div id="LOADER" className="absolute grid bg-white s-full place-items-center">
+    <div id="LOADER" className={`absolute grid bg-white s-full place-items-center ${classes}`}>
       <div className="loader loader--style3" title="2">
         {/* @ts-ignore */}
         <svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" width="40" height="40" style={{enableBackground: 'new 0 0 50 50'}} viewBox="0 0 50 50">
@@ -12,3 +16,5 @@ export default function Loader() {
     </div>
   )
 }
+
+export default Loader
