@@ -16,7 +16,7 @@ export default function ProductsBody() {
     <section className="flex flex-col items-center mt-14 sm:mt-7 gap-7 sm:gap-10 sm:mb-[25vh]">
       <div className="flex gap-2 mx-auto sm:mx-3">
         <Button href="/files/products.pdf" blank={true} text="Открыть каталог в PDF формате" />
-        {/* <Button href="/form/" text="Оставить заявку" classes="bg-custom-blue text-white duration-200 hover:bg-transparent hover:border-custom-blue hover:!text-custom-blue" /> */}
+        <Button href="/form/" text="Оставить заявку" variant="secondary" />
       </div>
 
       <div id="SHEET" className="sm:hidden relative w-[70vw] mx-auto h-[70vh] duration-500 mb-[10vh] overflow-hidden">

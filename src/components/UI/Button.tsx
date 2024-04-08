@@ -4,13 +4,22 @@ interface Props {
   id?: string
   blank?: boolean
   text: string
-  classes?: string
+  variant?: 'primary' | 'secondary'
 }
 
-const Button: React.FC<Props> = ({href, download, id, blank, text, classes}) => (
-  <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={`inline-flex items-center justify-center gap-2 px-8 py-2 text-xl text-center uppercase duration-300 border sm:px-4 sm:text-sm border-custom-blue text-custom-blue w-fit group hover:bg-custom-blue hover:text-white ${classes}`}>
-    {text}
-  </a>
-)
+const buttonVariants = {
+  primary: 'text-custom-blue border-custom-blue hover:bg-custom-blue hover:text-white',
+  secondary: 'text-white border-custom-blue bg-custom-blue hover:opacity-85',
+}
+
+const Button: React.FC<Props> = ({href, download, id, blank, text, variant = 'primary'}) => {
+  const variantStyles = buttonVariants[variant] || buttonVariants['primary']
+
+  return (
+    <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={` w-fit px-8 sm:px-4 py-2 text-xl sm:text-sm uppercase border duration-300 ${variantStyles}`}>
+      {text}
+    </a>
+  )
+}
 
 export default Button
