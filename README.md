@@ -1,5 +1,5 @@
-# Dr. Spiller multi-page website [NEXT.js]
+# Dr. Spiller multi-page website
 
 ```bash
-git clone https://github.com/mbozhik/spiller2.git && cd spiller2 && pnpm i && code .
+git clone https://github.com/mbozhik/spiller.git && cd spiller && pnpm i && code .
 ```
