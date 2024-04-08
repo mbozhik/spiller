@@ -1,21 +1,9 @@
-import {StaticImageData} from 'next/image'
-
 import GridImage1 from '%/index/1.jpg'
 import GridImage2 from '%/index/2.jpg'
 
-import GridCell from '../../../components/UI/GridCell'
+import GridCell, {GridDataProps} from '#/UI/GridCell'
 
-interface GridData {
-  href: string
-  buttonText: string
-  isButton: boolean
-  flexDirection: string
-  titleText: string
-  text: string[]
-  image: string | StaticImageData
-}
-
-const gridData: {[key: number]: GridData} = {
+const gridData: {[key: number]: GridDataProps} = {
   1: {
     href: '/about/',
     buttonText: 'О БРЕНДЕ',
