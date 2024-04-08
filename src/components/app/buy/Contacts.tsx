@@ -44,7 +44,7 @@ export default function Contacts() {
         <Title text={contactsData.title} classes="mb-5" />
         <div className="flex flex-col gap-3">
           {Object.values(contactsData.buttons).map((button, index) => (
-            <Button key={index} text={button.text} blank={button.blank ? '_blank' : undefined} href={button.href} />
+            <Button key={index} text={button.text} blank={button.blank ?? undefined} href={button.href} />
           ))}
         </div>
       </div>
