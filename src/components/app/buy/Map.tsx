@@ -16,7 +16,7 @@ export default function Map() {
         </Link>
         <iframe className="s-full relative" src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=76.950442%2C43.231863&mode=whatshere&utm_source=share&whatshere%5Bpoint%5D=76.950442%2C43.231863&whatshere%5Bzoom%5D=17&z=17" width="560" height="400" frameBorder="1" allowFullScreen={true} name="map" title="map"></iframe>
       </div>
-      <Button text="ПЕРЕЙТИ НА КАРТЫ" blank="_blank" href="https://yandex.ru/maps/-/CDeKmOne" classes="w-full" />
+      <Button text="ПЕРЕЙТИ НА КАРТЫ" blank={true} href="https://yandex.ru/maps/-/CDeKmOne" classes="w-full" />
     </section>
   )
 }
