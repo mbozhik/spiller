@@ -1,18 +1,16 @@
 import Main from '#/UI/Container'
 import Grid from '@/components/app/buy/Grid'
 import Contacts from '##/buy/Contacts'
-// import Map from '##/buy/Map'
+import Map from '##/buy/Map'
 
-const YourComponentName: React.FC = () => {
+export default function Buy() {
   return (
     <Main>
       <div className="flex flex-col gap-16 mt-16 mb-44 sm:mb-24">
         <Grid />
         <Contacts />
-        {/* <Map /> */}
+        <Map />
       </div>
     </Main>
   )
 }
-
-export default YourComponentName

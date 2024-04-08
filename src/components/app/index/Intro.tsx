@@ -9,7 +9,7 @@ export default function Intro() {
       <Text text='ТОО "WEC GROUP" — официальный дистрибьютор профессиональной косметики Dr. Spiller (Германия) в Казахстане и Кыргызстане. Наша компания предлагает весь необходимый спектр услуг для обеспечения качественной работы специалистов индустрии красоты и их клиентов.' />
       <div className="flex gap-2 mx-auto sm:mx-0">
         <Button href="/products/" text="ПЕРЕЙТИ К ПРОДУКТАМ" />
-        <Button href="/form/" text="Оставить заявку" classes="bg-custom-blue !text-white duration-200 hover:bg-transparent hover:border-custom-blue hover:!text-custom-blue" />
+        {/* <Button href="/form/" text="Оставить заявку" classes="bg-custom-blue !text-white duration-200 hover:bg-transparent hover:border-custom-blue hover:!text-custom-blue" /> */}
       </div>
     </section>
   )
