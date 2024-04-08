@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+mark {
+  @apply px-2 py-0.5 bg-custom-blue/85 text-white block w-fit mb-1;
+}
+
+.swiper-pagination-bullet {
+  @apply !bg-white !opacity-80 !s-3 sm:!s-2;
+}
+
+.swiper-pagination-bullet-active {
+  @apply !bg-custom-grey !s-3 sm:!s-2;
+}

@@ -1,3 +1,18 @@
+import Main from '#/UI/Container'
+import Slider from '##/index/Slider'
+import Intro from '##/index/Intro'
+import Grid from '##/index/Grid'
+import Hytec from '#/UI/Hytec'
+
 export default function Home() {
-  return <h1>spiller</h1>
+  return (
+    <>
+      <Slider />
+      <Main>
+        <Intro />
+        <Grid />
+      </Main>
+      <Hytec />
+    </>
+  )
 }
