@@ -6,6 +6,7 @@ interface Props {
   text: string
   variant?: 'primary' | 'secondary'
   onClick?: () => void
+  classes?: string
 }
 
 export const buttonVariants = {
@@ -14,11 +15,11 @@ export const buttonVariants = {
   secondary: 'text-white border-custom-blue bg-custom-blue hover:opacity-85',
 }
 
-const Button: React.FC<Props> = ({href, download, id, blank, text, variant = 'primary', onClick}) => {
+const Button: React.FC<Props> = ({href, download, id, blank, text, variant = 'primary', onClick, classes}) => {
   const variantStyles = buttonVariants[variant] || buttonVariants['primary']
 
   return (
-    <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={`${buttonVariants.default} ${variantStyles}`} onClick={onClick}>
+    <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={`${buttonVariants.default} ${variantStyles} ${classes}`} onClick={onClick}>
       {text}
     </a>
   )
