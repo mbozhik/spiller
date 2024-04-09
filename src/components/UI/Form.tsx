@@ -51,7 +51,7 @@ const Form = ({onClose}) => {
 
   return (
     <section className="fixed inset-0 z-50 grid w-screen h-screen place-items-center bg-custom-blue/25">
-      <div id="FORM_WRAPPER" className="w-[25vw] p-5 bg-white shadow-nav">
+      <div id="FORM_WRAPPER" className="w-[25%] xl:w-[35%] sm:w-[95%] p-5 bg-white shadow-nav">
         {submitMessage ? (
           <Title text={submitMessage} classes="text-center" />
         ) : (
