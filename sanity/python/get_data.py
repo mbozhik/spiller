@@ -40,9 +40,9 @@ for obj in data["objectData"]:
 
 formatted_data = data["objectData"]
 
-output_json_file = "sanity/python/formatted_data.json"
-with open(output_json_file, "w", encoding="utf-8") as json_file:
-    json.dump(formatted_data, json_file, ensure_ascii=False, indent=4)
+# output_json_file = "sanity/python/formatted_data.json"
+# with open(output_json_file, "w", encoding="utf-8") as json_file:
+#     json.dump(formatted_data, json_file, ensure_ascii=False, indent=4)
 
 output_ndjson_file = "sanity/python/formatted_data.ndjson"
 with open(output_ndjson_file, "w", encoding="utf-8") as ndjson_file:
