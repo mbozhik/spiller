@@ -50,5 +50,5 @@ with open(output_ndjson_file, "w", encoding="utf-8") as ndjson_file:
         ndjson_file.write(json.dumps(item, ensure_ascii=False) + '\n')
 
 print("\033[31m" + "###")
-print("\033[35m" + f"Formatted data has been written to {output_json_file}")
+print("\033[35m" + f"Formatted data has been written to {output_ndjson_file}")
 print("\033[31m" + "###")

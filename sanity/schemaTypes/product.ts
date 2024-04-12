@@ -9,53 +9,36 @@ const product: SchemaTypeDefinition = {
       name: 'name',
       title: 'Product Name',
       type: 'string',
-      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'article',
       title: 'Product Article',
       type: 'number',
-      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'volume',
       title: 'Product Volume',
-      type: 'number',
-      validation: (rule: Rule) => rule.required(),
+      type: 'string',
     },
     {
       name: 'description',
       title: 'Product Description',
-      type: 'array',
-      of: [{type: 'block'}, {type: 'image', options: {hotspot: true}}],
+      type: 'text',
     },
     {
       name: 'usage',
       title: 'Product Usage',
-      type: 'array',
-      of: [{type: 'block'}, {type: 'image', options: {hotspot: true}}],
+      type: 'text',
     },
     {
       name: 'images',
       title: 'Product Images',
       type: 'array',
-      of: [{type: 'block'}, {type: 'image', options: {hotspot: true}}],
-      validation: (rule: Rule) => rule.required(),
-    },
-    {
-      name: 'categories',
-      title: 'Product Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
+      of: [{type: 'image', options: {hotspot: true}}],
     },
     {
       name: 'price',
       title: 'Product Price',
-      type: 'number',
-    },
-    {
-      name: 'stock',
-      title: 'Product Stock',
       type: 'number',
     },
 
@@ -82,14 +65,13 @@ const product: SchemaTypeDefinition = {
     {
       name: 'ampulsivity',
       title: 'Product Ampulsivity',
-      type: 'string',
+      type: 'boolean',
     },
   ],
   preview: {
     select: {
       title: 'name',
-      subtitle: 'category.name',
-      media: 'images.0.asset',
+      subtitle: 'article',
     },
   },
 }
