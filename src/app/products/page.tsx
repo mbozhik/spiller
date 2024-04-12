@@ -3,8 +3,8 @@ export const metadata: Metadata = {
   title: 'Продукты',
 }
 
-import ProductsBody from '##/products/Body'
+import Catalog from '##/products/Catalog'
 
 export default function Products() {
-  return <ProductsBody />
+  return <Catalog />
 }
