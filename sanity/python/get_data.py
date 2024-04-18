@@ -11,7 +11,7 @@ data = response.json()
 prev_name = None
 prev_description = None
 prev_usage = None
-prev_title = None
+prev_caption = None
 
 counter = 0 
 
@@ -26,14 +26,14 @@ for obj in data["objectData"]:
         text1 = obj["name"][:split_index].strip().replace("®", "")
         text2 = obj["name"][split_index:].strip().replace("®", "")
         obj["name"] = text1
-        obj["title"] = text2
+        obj["caption"] = text2
     else:
-        obj["title"] = (prev_title if prev_title else "").replace("®", "")
+        obj["caption"] = (prev_caption if prev_caption else "").replace("®", "")
 
     obj["name"] = prev_name if not obj["name"] else obj["name"]
     prev_name = obj["name"]
 
-    prev_title = obj["title"]
+    prev_caption = obj["caption"]
     
     obj["description"] = prev_description if not obj["description"] else obj["description"]
     prev_description = obj["description"]
