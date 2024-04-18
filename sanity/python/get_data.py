@@ -11,13 +11,30 @@ data = response.json()
 prev_name = None
 prev_description = None
 prev_usage = None
+prev_title = None
+
+counter = 0 
 
 for obj in data["objectData"]:
-    obj["name"] = ' '.join(obj["name"].split())
+    counter += 1
+
+    split_index = obj["name"].find("  ")
+    if split_index == -1:
+        split_index = obj["name"].find("\n")
+
+    if split_index != -1:
+        text1 = obj["name"][:split_index].strip().replace("®", "")
+        text2 = obj["name"][split_index:].strip().replace("®", "")
+        obj["name"] = text1
+        obj["title"] = text2
+    else:
+        obj["title"] = (prev_title if prev_title else "").replace("®", "")
 
     obj["name"] = prev_name if not obj["name"] else obj["name"]
     prev_name = obj["name"]
 
+    prev_title = obj["title"]
+    
     obj["description"] = prev_description if not obj["description"] else obj["description"]
     prev_description = obj["description"]
 
@@ -34,3 +51,4 @@ with open(output_ndjson_file, "w", encoding="utf-8") as ndjson_file:
         ndjson_file.write(json.dumps(item, ensure_ascii=False) + '\n')
 
 print("\033[35m" + f"Formatted data has been written to {output_ndjson_file}")
+print(f"Total objects processed: {counter}")
