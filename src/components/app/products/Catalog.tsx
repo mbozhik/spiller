@@ -1,5 +1,3 @@
-import {unstable_noStore as noStore} from 'next/cache'
-
 import Link from 'next/link'
 import Image from 'next/image'
 import {client, urlForImage} from '@/lib/sanity'
@@ -25,11 +23,9 @@ interface Product {
   [x: string]: any
 }
 
-const getData = async (): Promise<Product[]> => {
-  noStore()
-
-  const query = `
-    *[_type == 'product' && slug.current != null] {
+async function getData(): Promise<Product[]> {
+  const data = await client.fetch<Product>(
+    `*[_type == 'product' && slug.current != null] {
         name,
         caption,
         article,
@@ -45,10 +41,15 @@ const getData = async (): Promise<Product[]> => {
         problem_action,
         product_type,
         slug,
-    }`
-
-  const data: Product[] = await client.fetch(query)
-  return data
+    }`,
+    {},
+    {
+      next: {
+        revalidate: 30,
+      },
+    },
+  )
+  return Array.isArray(data) ? data : []
 }
 
 const Catalog = async () => {
