@@ -1,9 +1,9 @@
-export const compareCategory = (category: string, value: string, idx: number) => {
-  const title = categoryTitles[category][value]
+export const compareParams = (category: string, value: string, idx: number) => {
+  const title = productParams[category][value]
   return <mark key={idx}>{title}</mark>
 }
 
-export const categoryTitles = {
+export const productParams = {
   gender: {
     female: 'Женский',
     male: 'Мужской',
