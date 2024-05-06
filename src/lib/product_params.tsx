@@ -1,6 +1,6 @@
-export const compareParams = (category: string, value: string, idx: number) => {
-  const title = productParams[category][value]
-  return title && <mark key={idx}>{title}</mark>
+export const compareParams = (category: string, value: string | string[], idx: number) => {
+  const titles: string[] = Array.isArray(value) ? value.map((val) => productParams[category][val]) : [productParams[category][value]]
+  return titles.map((title, i) => title && <mark key={idx * 1000 + i}>{title}</mark>)
 }
 
 export const productParams = {

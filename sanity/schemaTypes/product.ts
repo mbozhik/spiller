@@ -138,7 +138,8 @@ const product: SchemaTypeDefinition = {
     defineField({
       name: 'by_intention',
       title: 'By Intention',
-      type: 'string',
+      type: 'array',
+      of: [{type: 'string'}],
       options: {
         list: [
           {title: 'Акне и воспаления', value: 'acne_inflammation'},

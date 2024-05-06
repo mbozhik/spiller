@@ -18,7 +18,7 @@ interface Product {
   for_face?: string
   for_body?: string
   product_type: string
-  by_intention: string
+  by_intention: string[]
   product_line: string
   [x: string]: any
 }
