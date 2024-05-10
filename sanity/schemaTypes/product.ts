@@ -114,10 +114,11 @@ const product: SchemaTypeDefinition = {
       options: {
         list: [
           {title: 'Бальзам', value: 'balm'},
-          {title: 'BB креп', value: 'bb_cream'},
+          {title: 'BB крем', value: 'bb_cream'},
           {title: 'Гель', value: 'gel'},
           {title: 'Дезодорант', value: 'deodorant'},
           {title: 'Крем', value: 'cream'},
+          {title: 'Концентрат', value: 'сoncentrate'},
           {title: 'Лосьон', value: 'lotion'},
           {title: 'Маски', value: 'masks'},
           {title: 'Масла', value: 'oils'},
@@ -130,6 +131,7 @@ const product: SchemaTypeDefinition = {
           {title: 'Сыворотка', value: 'serum'},
           {title: 'Тоник', value: 'toner'},
           {title: 'Туалетная вода', value: 'toilet_water'},
+          {title: 'Флюид', value: 'fluid'},
           {title: 'Шампунь', value: 'shampoo'},
           {title: 'Эмульсия', value: 'emulsion'},
         ],
@@ -144,6 +146,7 @@ const product: SchemaTypeDefinition = {
         list: [
           {title: 'Акне и воспаления', value: 'acne_inflammation'},
           {title: 'Возрастные изменения', value: 'age-changes'},
+          {title: 'Защита от пота и запаха', value: 'sweat_odour'},
           {title: 'Пигментация / постакне / рубцы', value: 'pigmentation'},
           {title: 'Сухость / шелушение', value: 'dryness'},
           {title: 'Купероз', value: 'couperosis'},
