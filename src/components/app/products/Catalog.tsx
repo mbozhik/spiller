@@ -1,5 +1,5 @@
 import {client, urlForImage} from '@/lib/sanity'
-import {compareParams, productParams} from '@/lib/product_params'
+import {compareParams, productParams} from '@/lib/categorize_products'
 import {revalidateOnTime} from '@/lib/utils'
 
 import Image from 'next/image'
