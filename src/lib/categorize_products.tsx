@@ -1,92 +1,15 @@
+import product from './categories_[product.ts]'
+
+const {main_filter, for_face, for_body, product_type, by_intention, product_line} = product.reduce((acc: any, field: any) => {
+  if (['main_filter', 'for_face', 'for_body', 'product_type', 'by_intention', 'product_line'].includes(field.name)) {
+    acc[field.name] = Array.isArray(field.options?.list) ? field.options.list.reduce((obj: any, item: any) => ({...obj, [item.value]: item.title}), {}) : field.options?.list?.title || ''
+  }
+  return acc
+}, {})
+
 export const compareParams = (category: string, value: string | string[], idx: number) => {
-  const titles: string[] = Array.isArray(value) ? value.map((val) => productParams[category][val]) : [productParams[category][value]]
-  return titles.map((title, i) => title && <mark key={idx * 1000 + i}>{title}</mark>)
+  const titles: string[] = Array.isArray(value) ? value.map((val: string) => productParams[category][val]) : [productParams[category][value]]
+  return titles.map((title: string, i: number) => title && <mark key={idx * 1000 + i}>{title}</mark>)
 }
 
-export const productParams = {
-  main_filter: {
-    face: 'Лицо',
-    eye_lip_skin: 'Кожа вокруг глаз и губ',
-    neck_decolletage: 'Шея и декольте',
-    body: 'Тело',
-    face_care: 'Мужской уход',
-    sets: 'Наборы',
-  },
-  for_face: {
-    skin_cleansing: 'Очищение кожи',
-    toning: 'Тонизирование',
-    moisturising_nourishing: 'Увлажнение и питание',
-    active_care: 'Активный уход',
-    sun_protection: 'Защита от солнца',
-    ampoule_concentrates: 'Ампульные концентраты',
-  },
-  for_body: {
-    cleansing: 'Очищение',
-    moisturising_nourishing: 'Увлажнение и питание',
-    for_hands: 'Для рук',
-    deodorants: 'Дезодоранты',
-    miscellaneous: 'Разное',
-  },
-  product_type: {
-    balm: 'Бальзам',
-    bb_cream: 'BB крем',
-    gel: 'Гель',
-    deodorant: 'Дезодорант',
-    cream: 'Крем',
-    lotion: 'Лосьон',
-    masks: 'Маски',
-    oils: 'Масла',
-    milky: 'Молочко',
-    soap: 'Мыло',
-    foam: 'Пенка',
-    lipstick: 'Помада',
-    scrubs_peels: 'Скрабы и пилинги',
-    spray: 'Спрей',
-    serum: 'Сыворотка',
-    toner: 'Тоник',
-    toilet_water: 'Туалетная вода',
-    shampoo: 'Шампунь',
-    emulsion: 'Эмульсия',
-  },
-  by_intention: {
-    acne_inflammation: 'Акне и воспаления',
-    'age-changes': 'Возрастные изменения',
-    pigmentation: 'Пигментация / постакне / рубцы',
-    dryness: 'Сухость / шелушение',
-    couperosis: 'Купероз',
-    skin_sensitivity: 'Чувствительность кожи',
-    black_spots: 'Черные точки / Расширенные поры',
-    oily_shine: 'Жирный блеск',
-    dark_circles: 'Тёмные круги / отёчность',
-    anti_cellulite: 'Антицеллюлитные средства',
-  },
-  product_line: {
-    dr_spiller: 'Dr. Spiller',
-    beauty_of_nature: 'Beauty of Nature',
-    herbal: 'Herbal',
-    anti_couperose: 'Anti-Couperose',
-    care_and_repair: 'Care & Repair',
-    carotene: 'Carotene',
-    sanvita: 'Sanvita',
-    alpine_aloe: 'Alpine-Aloe',
-    royal: 'Royal',
-    propolis: 'Propolis',
-    thymovit: 'Thymovit',
-    collagen: 'Collagen',
-    fresh_and_fruit: 'Fresh&Fruit',
-    azulen: 'Azulen',
-    celltresor: 'Celltresor',
-    cellular: 'Cellular',
-    hydro_marin: 'Hydro-Marin',
-    oxygen_vital: 'Oxygen Vital',
-    silk_protein: 'Silk Protein',
-    vitamin_a: 'Vitamin A',
-    vitamin_c_plus: 'Vitamin C Plus',
-    summer_glow: 'Summer Glow',
-    manage_your_skin: 'Manage Your Skin',
-    gaoxing: 'Gaoxing',
-    magico: 'Magico',
-    manaru: 'Manaru',
-    rahima: 'Rahima',
-  },
-}
+export const productParams = {main_filter, for_face, for_body, product_type, by_intention, product_line}
