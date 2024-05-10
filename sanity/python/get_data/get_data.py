@@ -45,7 +45,7 @@ for obj in data["objectData"]:
 
 formatted_data = data["objectData"]
 
-output_ndjson_file = "sanity/python/formatted_data.ndjson"
+output_ndjson_file = "sanity/python/get_data/formatted_data.ndjson"
 with open(output_ndjson_file, "w", encoding="utf-8") as ndjson_file:
     for item in formatted_data:
         ndjson_file.write(json.dumps(item, ensure_ascii=False) + '\n')
