@@ -1,4 +1,4 @@
-import Main from '#/UI/Container'
+import Container from '#/Global/Container'
 import Slider from '##/index/Slider'
 import Intro from '##/index/Intro'
 import Grid from '##/index/Grid'
@@ -8,10 +8,10 @@ export default function Home() {
   return (
     <>
       <Slider />
-      <Main>
+      <Container paddingTop={false}>
         <Intro />
         <Grid />
-      </Main>
+      </Container>
       <Hytec />
     </>
   )

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 import {client} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
-import Container from '#/UI/Container'
+import Container from '#/Global/Container'
 import Catalog from '##/products/Catalog'
 
 export interface Product {
@@ -65,7 +65,7 @@ const ProductsPage = async () => {
   }
 
   return (
-    <Container className="w-[80%]">
+    <Container className="w-[80%]" marginBottom={true}>
       <Catalog products={products} />
     </Container>
   )
