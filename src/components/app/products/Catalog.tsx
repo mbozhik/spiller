@@ -1,8 +1,8 @@
-import {client, urlForImage} from '@/lib/sanity'
+import {client} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
-import Image from 'next/image'
 import Container from '#/UI/Container'
+import CatalogCard from '##/products/CatalogCard'
 
 interface Product {
   name: string
@@ -75,27 +75,9 @@ const Catalog = async () => {
         </div>
 
         <div data-section="grid-products" className={`grid grid-cols-3 sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
-          {filteredProducts.map((item, idx) => {
-            if (!item.image) return null
-
-            return (
-              <div className="flex flex-col justify-between w-full h-full gap-5 p-5 border border-neutral-200 group " key={idx}>
-                <div className="h-[200px] w-full relative self-center">
-                  <Image src={urlForImage(item.image).url()} className="object-contain" fill={true} alt={`item ${idx}`} />
-                </div>
-                <div className="space-y-2">
-                  <div>
-                    <h1 className="text-2xl font-semibold">{item.name}</h1>
-                    <h1>{item.caption}</h1>
-                  </div>
-                  <div className="flex gap-2">
-                    <div className="border-2 px-1 border-neutral-200 w-fit">{item.article}</div>
-                    <div className="border-2 px-1 border-neutral-200 w-fit">{item.slug.current}</div>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+          {filteredProducts.map((item, idx) => (
+            <CatalogCard key={idx} item={item} idx={idx} />
+          ))}
         </div>
       </section>
     </Container>
