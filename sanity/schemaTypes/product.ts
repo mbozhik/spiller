@@ -198,14 +198,14 @@ const product: SchemaTypeDefinition = {
   preview: {
     select: {
       title: 'name',
-      product_line: 'product_line',
+      article: 'article',
       media: 'image',
     },
     prepare(selection) {
-      const {title, product_line, media} = selection
+      const {title, article, media} = selection
       return {
         title: title,
-        subtitle: product_line,
+        subtitle: article,
         media: media,
       }
     },
