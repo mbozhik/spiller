@@ -26,7 +26,7 @@ const gridData: {[key: number]: GridDataProps} = {
 
 export default function Grid() {
   return (
-    <section data-section="GRID" className="flex flex-col gap-16 mt-16 mb-44 sm:mb-24">
+    <section data-section="GRID" className="flex flex-col gap-16 sm:gap-10 mb-44 sm:mb-24">
       {Object.values(gridData).map(({href, buttonText, isButton, flexDirection, titleText, text, image}) => (
         <div key={href}>
           <GridCell href={href} buttonText={buttonText} isButton={isButton} flexDirection={flexDirection} titleText={titleText} textArray={text} image={image} />

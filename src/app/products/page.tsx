@@ -65,7 +65,7 @@ const ProductsPage = async () => {
   }
 
   return (
-    <Container className="w-[80%]" marginBottom={true}>
+    <Container className="w-[80%] xl:w-[90%]" marginBottom={true}>
       <Catalog products={products} />
     </Container>
   )

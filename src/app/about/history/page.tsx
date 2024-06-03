@@ -21,6 +21,7 @@ export default function AboutHistory() {
         <Title text="немецкая Компания Dr. Spiller основана в 1960 году доктором Хорстом Шпиллером" />
         <Image className="block object-contain" src={AboutHistoryImage} alt="" />
       </div>
+
       <div className="flex items-center justify-between sm:flex-col gap-14 sm:gap-5 sm:mt-10">
         <Image className="block object-contain w-[61%] xl:w-[56%] sm:w-full" src={AboutHistoryImage2} alt="" />
         <div className="flex flex-col gap-3">

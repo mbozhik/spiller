@@ -32,12 +32,12 @@ const awardsData = [
 
 export default function AboutAwards() {
   return (
-    <Container className="space-y-16 sm:space-y-10" marginBottom={true}>
+    <Container className="space-y-16 sm:space-y-7" marginBottom={true}>
       <div>
         <Title classes="w-[90%] sm:w-full sm:!text-xl" text="Лучшие оценки за выдающееся качество" />
         <Text classes="mt-5 w-[80%] sm:w-full sm:mt-2" text="Наш подход к качеству продукции не перестает радовать. Активные ингредиенты делают победителем не только кожу, но и бренд. Профессионалы в области красоты и потребители сходятся в своих оценках. Продукты и процедуры Dr. Spiller постоянно входят в число лучших по результатам премий и опросов:" />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 gap-y-8">
+      <div className="grid grid-cols-2 sm:grid-cols-1 gap-y-8 sm:gap-y-5">
         {awardsData.map((award, index) => (
           <article key={index}>
             <Title classes="mb-2" text={award.year} />

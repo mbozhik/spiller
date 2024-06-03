@@ -31,7 +31,7 @@ const divisionData: {[key: number]: {text: string; href: string; image: string |
 
 export default function About() {
   return (
-    <Container marginBottom={true} className="space-y-10">
+    <Container marginBottom={true} className="space-y-10 sm:space-y-5">
       <Title text="Разделы" classes="normal-case" />
 
       <section data-section="DIVISION" className="grid grid-cols-2 gap-3 sm:gap-5 sm:grid-cols-1">
