@@ -19,7 +19,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
   return (
     <article className="flex flex-col justify-between w-full h-full gap-5 p-5 border border-neutral-200 group" key={idx}>
       <div className="h-[250px] w-full relative self-center">
-        <Image src={urlForImage(item.image).url()} className="object-contain" fill={true} alt={`item ${idx}`} />
+        <Image src={urlForImage(item.image).url()} className="object-contain" sizes="40vw" fill={true} alt={`item ${idx}`} />
       </div>
 
       <div className="space-y-1">

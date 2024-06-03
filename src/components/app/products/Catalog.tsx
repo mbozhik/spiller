@@ -1,8 +1,11 @@
-import {shuffleArray} from '@/lib/utils'
+'use client'
+
+import {useState} from 'react'
+
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 
 import {Product} from '@/app/products/page' // interface (types)
-import CheckboxBlock from '#/UI/CheckboxBlock'
+import CheckboxBlock from '#/app/products/CheckboxBlock'
 import CatalogCard from '##/products/CatalogCard'
 
 interface CatalogProps {
@@ -16,8 +19,20 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
     grid: 'col-span-8 sm:col-span-10',
   }
 
-  const filteredProducts = products.filter((product) => !product.article.toString().startsWith('2'))
-  const shuffledProducts = shuffleArray(filteredProducts)
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
+
+  const handleFilterChange = (filterId: string, checked: boolean) => {
+    if (checked) {
+      setSelectedFilters([...selectedFilters, filterId])
+    } else {
+      setSelectedFilters(selectedFilters.filter((id) => id !== filterId))
+    }
+  }
+
+  const filteredProducts = products.filter((product) => {
+    if (selectedFilters.length === 0) return true
+    return selectedFilters.some((filterId) => product.article.toString().startsWith(filterId))
+  })
 
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
@@ -28,7 +43,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
 
             <div className="space-y-2">
               {filter.options.list.map((option) => (
-                <CheckboxBlock key={option.value} id={option.value} text={option.title} />
+                <CheckboxBlock key={option.value} id={option.value} text={option.title} checked={selectedFilters.includes(option.value)} onChange={(checked) => handleFilterChange(option.value, checked)} />
               ))}
             </div>
           </div>
@@ -36,7 +51,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
       </section>
 
       <section data-section="grid-catalog" className={`grid grid-cols-3 sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
-        {shuffledProducts.map((item, idx) => (
+        {filteredProducts.map((item, idx) => (
           <CatalogCard key={idx} item={item} idx={idx} />
         ))}
       </section>
