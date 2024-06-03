@@ -23,6 +23,7 @@ const config = {
       colors: {
         custom: {
           grey: '#444444',
+          grey2: '#666666',
           area: '#7D756F',
           nav: '#DDDDDD',
           blue: '#2F495A',
