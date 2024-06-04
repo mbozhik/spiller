@@ -1,3 +1,5 @@
+import {cn} from '@/lib/utils'
+
 interface Props {
   href?: string
   download?: string
@@ -19,7 +21,7 @@ const Button: React.FC<Props> = ({href, download, id, blank, text, variant = 'pr
   const variantStyles = buttonVariants[variant] || buttonVariants['primary']
 
   return (
-    <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={`${buttonVariants.default} ${variantStyles} ${classes}`} onClick={onClick}>
+    <a href={href} download={download} id={id} target={blank ? '_blank' : undefined} className={cn([buttonVariants.default, variantStyles], classes)} onClick={onClick}>
       {text}
     </a>
   )

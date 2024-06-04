@@ -1,3 +1,5 @@
+// import {compareParams, productParams} from '@/lib/categorize_products'
+
 import {urlForImage} from '@/lib/sanity'
 
 import Image from 'next/image'
@@ -28,9 +30,16 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
       </div>
 
       <div className="grid w-full grid-cols-2 gap-2">
-        <Button text="Подробнее" classes="!text-base w-full" href={`/products/${item.slug.current}`} />
-        <Button text="В корзину" classes="!text-base w-full" variant="secondary" />
+        <Button text="Подробнее" classes="text-base w-full" href={`/products/${item.slug.current}`} />
+        <Button text="В корзину" classes="text-base w-full" variant="secondary" />
       </div>
+
+      {/* <div className="flex flex-wrap gap-1">
+        {Object.keys(productParams).map((param, idx) =>
+          // utility function to compare params value with title
+          compareParams(param, item[param], idx),
+        )}
+      </div> */}
     </article>
   )
 }

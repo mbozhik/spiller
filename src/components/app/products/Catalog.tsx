@@ -12,26 +12,32 @@ interface CatalogProps {
   products: Product[]
 }
 
+interface Filter {
+  filterName: string
+  filterOption: string
+}
+
+const gridConfig = {
+  global: 'grid-cols-10',
+  filters: 'col-span-2',
+  grid: 'col-span-8 sm:col-span-10',
+}
+
 const Catalog: React.FC<CatalogProps> = ({products}) => {
-  const gridConfig = {
-    global: 'grid-cols-10',
-    filters: 'col-span-2',
-    grid: 'col-span-8 sm:col-span-10',
-  }
+  const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
+  // console.log('🚀 ~ selectedFilters:', selectedFilters)
 
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
-
-  const handleFilterChange = (filterId: string, checked: boolean) => {
+  const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
     if (checked) {
-      setSelectedFilters([...selectedFilters, filterId])
+      setSelectedFilters([...selectedFilters, {filterName, filterOption}])
     } else {
-      setSelectedFilters(selectedFilters.filter((id) => id !== filterId))
+      setSelectedFilters(selectedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption)))
     }
   }
 
   const filteredProducts = products.filter((product) => {
     if (selectedFilters.length === 0) return true
-    return selectedFilters.some((filterId) => product.article.toString().startsWith(filterId))
+    return selectedFilters.some((filter) => product[filter.filterName]?.includes(filter.filterOption))
   })
 
   return (
@@ -43,7 +49,13 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
 
             <div className="space-y-2">
               {filter.options.list.map((option) => (
-                <CheckboxBlock key={option.value} id={option.value} text={option.title} checked={selectedFilters.includes(option.value)} onChange={(checked) => handleFilterChange(option.value, checked)} />
+                <CheckboxBlock
+                  key={option.value}
+                  id={option.value}
+                  text={option.title}
+                  checked={selectedFilters.some((filter) => filter.filterOption === option.value)}
+                  onChange={(checked) => handleFilterChange(option.value, filter.name, checked)} // face, main_filter, (boolean) <- example
+                />
               ))}
             </div>
           </div>
