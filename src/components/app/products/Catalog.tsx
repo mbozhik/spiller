@@ -1,6 +1,7 @@
 'use client'
 
-import {useState} from 'react'
+import {useRouter, usePathname, useSearchParams} from 'next/navigation'
+import {useState, useCallback} from 'react'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 
@@ -27,12 +28,28 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
   // console.log('🚀 ~ selectedFilters:', selectedFilters)
 
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+
+      return params.toString()
+    },
+    [searchParams],
+  )
+
   const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
     if (checked) {
       setSelectedFilters([...selectedFilters, {filterName, filterOption}])
     } else {
       setSelectedFilters(selectedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption)))
     }
+
+    router.push(pathname + '?' + createQueryString(filterName, filterOption))
   }
 
   const filteredProducts = products.filter((product) => {
