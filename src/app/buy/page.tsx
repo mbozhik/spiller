@@ -10,7 +10,7 @@ import Map from '##/buy/Map'
 
 export default function Buy() {
   return (
-    <Container className="space-y-16 sm:space-y-10">
+    <Container className="space-y-16 sm:space-y-10" marginBottom={true}>
       <Grid />
       <Contacts />
       <Map />
