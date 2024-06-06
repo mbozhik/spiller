@@ -84,7 +84,7 @@ const product: SchemaTypeDefinition = {
         list: [
           {title: 'Очищение кожи', value: 'skin_cleansing'},
           {title: 'Тонизирование', value: 'toning'},
-          {title: 'Увлажнение и питание', value: 'moisturising_nourishing'},
+          {title: 'Увлажнение и питание', value: 'moisturising_nourishing_face'},
           {title: 'Активный уход', value: 'active_care'},
           {title: 'Защита от солнца', value: 'sun_protection'},
           {title: 'Ампульные концентраты', value: 'ampoule_concentrates'},
@@ -98,8 +98,8 @@ const product: SchemaTypeDefinition = {
       type: 'string',
       options: {
         list: [
-          {title: 'Очищение', value: 'cleansing'},
-          {title: 'Увлажнение и питание', value: 'moisturising_nourishing'},
+          {title: 'Очищение кожи', value: 'cleansing'},
+          {title: 'Увлажнение и питание', value: 'moisturising_nourishing_body'},
           {title: 'Для рук', value: 'for_hands'},
           {title: 'Дезодоранты', value: 'deodorants'},
           {title: 'Разное', value: 'miscellaneous'},
