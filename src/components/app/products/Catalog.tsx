@@ -4,6 +4,7 @@ import {useRouter, usePathname, useSearchParams} from 'next/navigation'
 import {useState, useCallback} from 'react'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
+import {filterTitles} from '@/lib/categorize_products'
 
 import {Product} from '@/app/products/page' // interface (types)
 import CheckboxBlock from '#/app/products/CheckboxBlock'
@@ -62,7 +63,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
       <section data-section="filters-catalog" className={`space-y-7 sm:hidden ${gridConfig.filters}`}>
         {productFilters.map((filter) => (
           <div className="space-y-3" key={filter.name}>
-            <p className="pl-2 text-lg font-bold bg-neutral-200">{filter.title}</p>
+            <p className="pl-2 text-lg font-bold bg-neutral-200">{filterTitles[filter.name] || ""}</p>
 
             <div className="space-y-2">
               {filter.options.list.map((option) => (

@@ -13,3 +13,12 @@ export const compareParams = (category: string, value: string | string[], idx: n
 }
 
 export const productParams = {main_filter, for_face, for_body, product_type, by_intention, product_line}
+
+export const filterTitles = {
+  main_filter: 'Основные фильтры',
+  for_face:  'Для лица',
+  for_body:  'Для тела',
+  product_type:  'Тип продукта',
+  by_intention:   'Состояние кожи',
+  product_line:  'Продуктовая линия',
+}
