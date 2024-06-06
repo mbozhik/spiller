@@ -82,7 +82,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
         })}
       </section>
 
-      <section data-section="grid-catalog" className={`grid relative grid-cols-3 sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
+      <section data-section="grid-catalog" className={`grid relative grid-cols-3 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
           <div className="w-full h-fit absolute inset-0 grid place-items-center">
             <mark className="h-fit">Ничего не найдено</mark>
