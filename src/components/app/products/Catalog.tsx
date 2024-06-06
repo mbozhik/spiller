@@ -1,7 +1,6 @@
 'use client'
 
-import {useRouter, usePathname, useSearchParams} from 'next/navigation'
-import {useState, useCallback} from 'react'
+import {useState} from 'react'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 import {filterTitles} from '@/lib/categorize_products'
@@ -29,28 +28,12 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
   // console.log('🚀 ~ selectedFilters:', selectedFilters)
 
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set(name, value)
-
-      return params.toString()
-    },
-    [searchParams],
-  )
-
   const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
     if (checked) {
       setSelectedFilters([...selectedFilters, {filterName, filterOption}])
     } else {
       setSelectedFilters(selectedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption)))
     }
-
-    router.push(pathname + '?' + createQueryString(filterName, filterOption))
   }
 
   const filteredProducts = products.filter((product) => {
@@ -63,7 +46,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
       <section data-section="filters-catalog" className={`space-y-7 sm:hidden ${gridConfig.filters}`}>
         {productFilters.map((filter) => (
           <div className="space-y-3" key={filter.name}>
-            <p className="pl-2 text-lg font-bold bg-neutral-200">{filterTitles[filter.name] || ""}</p>
+            <p className="pl-2 text-lg font-bold bg-neutral-200">{filterTitles[filter.name] || ''}</p>
 
             <div className="space-y-2">
               {filter.options.list.map((option) => (
