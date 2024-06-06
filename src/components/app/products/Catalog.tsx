@@ -42,9 +42,10 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
     let updatedFilters: Filter[] = [...selectedFilters]
 
     if (checked) {
-      // If the selected filter is a main_filter, remove any existing main_filter
-      if (filterName === 'main_filter') {
-        updatedFilters = updatedFilters.filter((filter) => filter.filterName !== 'main_filter')
+      // If the selected filter is a main_filter or a filter of type other than main_filter,
+      // remove any existing filter of the same type
+      if (filterName !== 'main_filter') {
+        updatedFilters = updatedFilters.filter((filter) => filter.filterName !== filterName)
       }
 
       // Add the new filter
