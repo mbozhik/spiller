@@ -26,47 +26,70 @@ const gridConfig = {
 
 const Catalog: React.FC<CatalogProps> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
-  // console.log('🚀 ~ selectedFilters:', selectedFilters)
-
-  const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
-    if (checked) {
-      setSelectedFilters([...selectedFilters, {filterName, filterOption}])
-    } else {
-      setSelectedFilters(selectedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption)))
-    }
-  }
+  console.log('🚀 ~ selectedFilters:', selectedFilters)
 
   const filteredProducts = products.filter((product) => {
     if (selectedFilters.length === 0) return true
-    return selectedFilters.some((filter) => product[filter.filterName]?.includes(filter.filterOption))
+
+    return selectedFilters.every((filter) => {
+      if (!product[filter.filterName]) return false
+
+      return product[filter.filterName]?.includes(filter.filterOption)
+    })
   })
+
+  const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
+    let updatedFilters: Filter[] = [...selectedFilters]
+
+    if (checked) {
+      // If the selected filter is a main_filter, remove any existing main_filter
+      if (filterName === 'main_filter') {
+        updatedFilters = updatedFilters.filter((filter) => filter.filterName !== 'main_filter')
+      }
+
+      // Add the new filter
+      updatedFilters.push({filterName, filterOption})
+    } else {
+      // Remove the deselected filter
+      updatedFilters = updatedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption))
+    }
+
+    setSelectedFilters(updatedFilters)
+  }
+
+  const mainFilterSelection = selectedFilters.find((filter) => filter.filterName === 'main_filter')
 
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
       <section data-section="filters-catalog" className={`space-y-7 sm:hidden ${gridConfig.filters}`}>
-        {productFilters.map((filter) => (
-          <div className="space-y-3" key={filter.name}>
-            <p className="pl-2 text-lg font-bold bg-neutral-200">{filterTitles[filter.name] || ''}</p>
+        {productFilters.map((filter) => {
+          const isForFace = filter.name === 'for_face'
+          const isForBody = filter.name === 'for_body'
+          const isMainFilterSelected = mainFilterSelection && mainFilterSelection.filterOption === (isForFace ? 'face' : isForBody ? 'body' : '')
 
-            <div className="space-y-2">
-              {filter.options.list.map((option) => (
-                <CheckboxBlock
-                  key={option.value}
-                  id={option.value}
-                  text={option.title}
-                  checked={selectedFilters.some((filter) => filter.filterOption === option.value)}
-                  onChange={(checked) => handleFilterChange(option.value, filter.name, checked)} // face, main_filter, (boolean) <- example
-                />
-              ))}
+          if ((isForFace || isForBody) && !isMainFilterSelected) return null // Skip rendering for_face and for_body if main filter is not selected
+
+          return (
+            <div className="space-y-3" key={filter.name}>
+              <p className="pl-2 text-lg font-bold bg-neutral-200">{filterTitles[filter.name] || ''}</p>
+              <div className="space-y-2">
+                {filter.options.list.map((option) => (
+                  <CheckboxBlock key={option.value} id={option.value} text={option.title} checked={selectedFilters.some((filter) => filter.filterOption === option.value)} onChange={(checked) => handleFilterChange(option.value, filter.name, checked)} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </section>
 
-      <section data-section="grid-catalog" className={`grid grid-cols-3 sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
-        {filteredProducts.map((item, idx) => (
-          <CatalogCard key={idx} item={item} idx={idx} />
-        ))}
+      <section data-section="grid-catalog" className={`grid relative grid-cols-3 sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
+        {filteredProducts.length === 0 ? (
+          <div className="w-full h-fit absolute inset-0 grid place-items-center">
+            <mark className="h-fit">Ничего не найдено</mark>
+          </div>
+        ) : (
+          filteredProducts.map((item, idx) => <CatalogCard key={idx} item={item} idx={idx} />)
+        )}
       </section>
     </div>
   )
