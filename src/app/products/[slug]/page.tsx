@@ -1,14 +1,13 @@
 import {client, urlForImage} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
-import {Product} from '@/app/products/page' // interface (types)
+import {Product} from '@/app/products/page' // types
 
 import Image from 'next/image'
 import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
-import Button from '#/UI/Button'
-import CartWidget from '##/products/[slug]/CartWidget'
+import CartButton from '@/components/app/products/[slug]/CartButton'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(
@@ -63,7 +62,7 @@ const ProductPage = async ({params}) => {
 
           <div className="flex flex-col gap-4 text-custom-blue">
             <h2 className="text-3xl font-medium">{product.price} тг</h2>
-            <Button text="В корзину" classes="text-base px-20" variant="secondary" />
+            <CartButton product={product} />
           </div>
 
           <div className="flex gap-3">
@@ -72,8 +71,6 @@ const ProductPage = async ({params}) => {
           </div>
         </div>
       </article>
-
-      <CartWidget number={1} />
     </Container>
   )
 }
