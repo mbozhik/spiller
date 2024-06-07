@@ -8,7 +8,7 @@ import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 import Button from '#/UI/Button'
-import {NumberInput} from '@/components/app/products/NumberInput'
+import {NumberInput} from '#/app/products/[slug]/NumberInput'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(
