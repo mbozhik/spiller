@@ -4,14 +4,11 @@ import {urlForImage} from '@/lib/sanity'
 
 import Image from 'next/image'
 import Button from '#/UI/Button'
+import CartButton from '##/products/[slug]/CartButton'
+import {Product} from '@/app/products/page'
 
 interface CatalogCardProps {
-  item: {
-    name: string
-    caption: string
-    slug: {current: string}
-    image?: Array<{asset: {url: string}}>
-  }
+  item: Product
   idx: number
 }
 
@@ -31,7 +28,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
 
       <div className="grid w-full grid-cols-2 gap-2">
         <Button text="Подробнее" classes="text-base w-full" href={`/products/${item.slug.current}`} />
-        <Button text="В корзину" classes="text-base w-full" variant="secondary" />
+        <CartButton product={item} className="text-base w-full block" />
       </div>
 
       {/* <div className="flex flex-wrap gap-1">

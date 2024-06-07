@@ -14,9 +14,10 @@ interface CartItem {
 
 interface CartButtonProps {
   product: Product
+  className?: string
 }
 
-export default function CartButton({product}: CartButtonProps) {
+export default function CartButton({product, className}: CartButtonProps) {
   const {count, addProduct} = useCartCounter((state) => state)
 
   const handleAddToCart = () => {
@@ -41,7 +42,7 @@ export default function CartButton({product}: CartButtonProps) {
 
   return (
     <div>
-      <Button text="В корзину" classes="text-base px-20" variant="secondary" onClick={handleAddToCart} />
+      <Button text="В корзину" classes={className} variant="secondary" onClick={handleAddToCart} />
     </div>
   )
 }

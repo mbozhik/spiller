@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
-import CartButton from '@/components/app/products/[slug]/CartButton'
+import CartButton from '##/products/[slug]/CartButton'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(
@@ -62,7 +62,7 @@ const ProductPage = async ({params}) => {
 
           <div className="flex flex-col gap-4 text-custom-blue">
             <h2 className="text-3xl font-medium">{product.price} тг</h2>
-            <CartButton product={product} />
+            <CartButton product={product} className="text-base px-20" />
           </div>
 
           <div className="flex gap-3">
