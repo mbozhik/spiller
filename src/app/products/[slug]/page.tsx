@@ -47,13 +47,13 @@ const ProductPage = async ({params}) => {
   }
 
   return (
-    <Container className="mt-5 w-[70%]" marginBottom={true}>
-      <article className={`flex items-center gap-10 sm:gap-5`}>
-        <div className={`relative h-full w-[50vw] aspect-[3/2]`}>
-          <Image quality={100} className="object-contain w-full h-full" src={urlForImage(product.image).url()} fill={true} sizes="40vw" alt={`${product.name}`} />
+    <Container className="w-[70%] xl:w-[80%] sm:w" marginBottom={true}>
+      <article className={`flex items-center sm:flex-col gap-10 sm:gap-5`}>
+        <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
+          <Image quality={100} className="object-contain" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
         </div>
 
-        <div className="w-[60%] space-y-5">
+        <div className="space-y-5 sm:space-y-2 w-[50%] xl:w-[55%] sm:w-full">
           <div className="space-y-2">
             <mark>Dr. Spiller</mark>
             <Title text={product.name} />
@@ -61,7 +61,7 @@ const ProductPage = async ({params}) => {
 
           <Text text={product.description} />
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4 text-custom-blue">
             {/* <NumberInput /> */}
             <h2 className="text-3xl font-medium">{product.price} тг</h2>
             <Button text="В корзину" classes="text-base px-20" variant="secondary" />
