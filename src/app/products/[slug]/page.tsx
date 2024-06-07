@@ -8,6 +8,7 @@ import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 import Button from '#/UI/Button'
+import {NumberInput} from '@/components/app/products/NumberInput'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(
@@ -60,11 +61,10 @@ const ProductPage = async ({params}) => {
 
           <Text text={product.description} />
 
-          <h2 className="text-3xl font-medium">{product.price} тг</h2>
-
-          <div className="flex gap-2">
-            <Button text="Подробнее" classes="text-base" href="" />
-            <Button text="В корзину" classes="text-base" variant="secondary" />
+          <div className="flex flex-col gap-2">
+            {/* <NumberInput /> */}
+            <h2 className="text-3xl font-medium">{product.price} тг</h2>
+            <Button text="В корзину" classes="text-base px-20" variant="secondary" />
           </div>
 
           <div className="flex gap-3">
