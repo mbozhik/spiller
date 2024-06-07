@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {isMobile} from '@bozzhik/is-mobile'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 import {filterTitles} from '@/lib/categorize_products'
@@ -28,7 +29,7 @@ const gridConfig = {
 
 const Catalog: React.FC<CatalogProps> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
-  const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => filter.name === 'main_filter')) // Initialize with true for main_filter and false for others
+  const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
 
   const filteredProducts = products.filter((product) => {
     if (selectedFilters.length === 0) return true
@@ -71,7 +72,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
           return (
             <div className="space-y-3" key={filter.name}>
               <p
-                className="px-3 py-1 flex justify-between items-center gap-1 text-lg font-semibold bg-neutral-200"
+                className="flex items-center justify-between gap-1 px-3 py-1 text-lg font-semibold sm:py-2 sm:text-base bg-neutral-200"
                 onClick={() => {
                   const newExpandedFilters = [...expandedFilters]
                   newExpandedFilters[index] = !newExpandedFilters[index]
@@ -83,7 +84,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
               </p>
 
               {expandedFilters[index] && (
-                <div className="space-y-2 pb-2">
+                <div className="space-y-2 sm:space-y-5 sm:pt-0.5 pb-2 sm:pb-2.5 sm:px-3">
                   {filter.options.list.map((option) => (
                     <CheckboxBlock key={option.value} id={option.value} text={option.title} checked={selectedFilters.some((filter) => filter.filterOption === option.value)} onChange={(checked) => handleFilterChange(option.value, filter.name, checked)} />
                   ))}
@@ -96,7 +97,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
-          <div className="w-full h-fit absolute inset-0 grid place-items-center">
+          <div className="absolute inset-0 grid w-full h-fit place-items-center">
             <mark className="h-fit">Ничего не найдено</mark>
           </div>
         ) : (

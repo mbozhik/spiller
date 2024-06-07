@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bozzhik/is-mobile": "^0.1.1",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@sanity/image-url": "^1.0.2",
     "class-variance-authority": "^0.7.0",

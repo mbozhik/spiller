@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@bozzhik/is-mobile':
+    specifier: ^0.1.1
+    version: 0.1.1
   '@radix-ui/react-checkbox':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.24)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
@@ -1422,6 +1425,10 @@ packages:
       diff-match-patch: 1.0.5
       hotscript: 1.0.13
       nanoid: 5.0.7
+    dev: false
+
+  /@bozzhik/is-mobile@0.1.1:
+    resolution: {integrity: sha512-b+BVf3EiYIiJFHD5ZBRBeGwBJ1Y0QZhyK0WpgNUofdzooBLZWAWuXaBr/OHyg7kxJOHhSu5sgRo07mudrJOMcQ==}
     dev: false
 
   /@dnd-kit/accessibility@3.1.0(react@18.2.0):
