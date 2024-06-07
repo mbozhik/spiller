@@ -1,5 +1,7 @@
 'use client'
 
+import {useCartCounter} from '@/store'
+
 import {Product} from '@/app/products/page'
 import Button from '#/UI/Button'
 
@@ -15,24 +17,26 @@ interface CartButtonProps {
 }
 
 export default function CartButton({product}: CartButtonProps) {
+  const {count, addProduct} = useCartCounter((state) => state)
+
   const handleAddToCart = () => {
-    const cartJSON = window.localStorage.getItem('cart')
-    const cart: CartItem[] = cartJSON ? JSON.parse(cartJSON) : []
+    const cart = JSON.parse(window.localStorage.getItem('cart') || '[]') as CartItem[]
 
     const existingProductIndex = cart.findIndex((item) => item.slug === product.slug.current)
     if (existingProductIndex === -1) {
-      const cartItem: CartItem = {
+      cart.push({
         name: product.name,
         price: product.price,
         quantity: 1,
         slug: product.slug.current,
-      }
-      cart.push(cartItem)
+      })
     } else {
       cart[existingProductIndex].quantity += 1
     }
 
     window.localStorage.setItem('cart', JSON.stringify(cart))
+
+    addProduct(count)
   }
 
   return (
