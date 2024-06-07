@@ -10,7 +10,7 @@ import {Product} from '@/app/products/page' // interface (types)
 import CheckboxBlock from '#/app/products/CheckboxBlock'
 import CatalogCard from '##/products/CatalogCard'
 
-import {ChevronUp, ChevronDown} from 'lucide-react'
+import {ChevronUp, ChevronDown, Search} from 'lucide-react'
 
 interface CatalogProps {
   products: Product[]
@@ -30,15 +30,28 @@ const gridConfig = {
 const Catalog: React.FC<CatalogProps> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
   const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
+  const [searchQuery, setSearchQuery] = useState('')
 
   const filteredProducts = products.filter((product) => {
-    if (selectedFilters.length === 0) return true
+    if (selectedFilters.length === 0 && !searchQuery) return true
 
-    return selectedFilters.every((filter) => {
-      if (!product[filter.filterName]) return false
+    let matchesFilters = true
+    if (selectedFilters.length > 0) {
+      matchesFilters = selectedFilters.every((filter) => {
+        if (!product[filter.filterName]) return false
 
-      return product[filter.filterName]?.includes(filter.filterOption)
-    })
+        return product[filter.filterName]?.includes(filter.filterOption)
+      })
+    }
+
+    let matchesSearchQuery = true
+    if (searchQuery) {
+      const productName = product.name.toLowerCase()
+      const productDescription = product.description.toLowerCase()
+      matchesSearchQuery = productName.includes(searchQuery.toLowerCase()) || productDescription.includes(searchQuery.toLowerCase())
+    }
+
+    return matchesFilters && matchesSearchQuery
   })
 
   const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
@@ -57,11 +70,26 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
     setSelectedFilters(updatedFilters)
   }
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value)
+  }
+
   const mainFilterSelection = selectedFilters.find((filter) => filter.filterName === 'main_filter')
 
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
       <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
+        <div className="px-3 flex items-center justify-between font-semibold text-lg INPUT ">
+          <input
+            className="w-full pr-3.5 sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
+            placeholder="Поиск"
+            type="text"
+            value={searchQuery}
+            onChange={handleSearch} // search functionality
+          />
+          <Search className="s-6 mt-0.5" />
+        </div>
+
         {productFilters.map((filter, index) => {
           const isForFace = filter.name === 'for_face'
           const isForBody = filter.name === 'for_body'
