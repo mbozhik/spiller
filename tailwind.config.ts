@@ -35,6 +35,7 @@ const config = {
         nav_mobile: '0px 3px 12px 2px #00000050;',
         hytec: '0px -7px 32px -19px #000',
         hytec_mobile: '0px -3px 12px 2px #00000050;',
+        cart: '0px 5px 15px -3px #00000040',
       },
       keyframes: {
         'accordion-down': {
