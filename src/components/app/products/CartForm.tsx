@@ -1,8 +1,11 @@
 import {useState, useEffect} from 'react'
 import {urlForImage} from '@/lib/sanity'
 
-import {buttonVariants} from '#/UI/Button'
+import {useCartCounter} from '@/store'
+
+import Button, {buttonVariants} from '#/UI/Button'
 import {CartItem} from '##/products/[slug]/CartButton' // types
+
 import Title from '#/UI/Title'
 import Image from 'next/image'
 
@@ -14,6 +17,8 @@ const Form = ({onClose}) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [message, setMessage] = useState('')
+
+  const {resetCart} = useCartCounter((state) => state)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -91,6 +96,16 @@ const Form = ({onClose}) => {
     sendData()
   }
 
+  const clearCart = () => {
+    window.localStorage.removeItem('cart')
+    setCart([])
+    resetCart()
+
+    setTimeout(() => {
+      onClose()
+    }, 500)
+  }
+
   const gridConfig = {
     global: 'grid-cols-12 sm:grid-col-span-1',
     info: 'col-span-10 sm:col-span-12',
@@ -99,7 +114,7 @@ const Form = ({onClose}) => {
 
   return (
     <section className="fixed inset-0 z-[99] grid w-screen h-screen place-items-center bg-custom-blue/25">
-      <div id="FORM_WRAPPER" className="overflow-x-hidden h-[90%] xl:h-[80%] sm:h-[95%] w-[35%] xl:w-[45%] sm:w-[92.5%] p-5 sm:p-3 bg-white shadow-nav">
+      <div id="FORM_WRAPPER" className="overflow-x-hidden max-h-[90%] xl:max-h-[80%] sm:max-h-[95%] w-[35%] xl:w-[45%] sm:w-[92.5%] p-5 sm:p-3 bg-white shadow-nav">
         {submitMessage ? (
           <Title text={submitMessage} classes="text-center" />
         ) : (
@@ -134,6 +149,10 @@ const Form = ({onClose}) => {
                   </div>
                 ))}
               </div>
+
+              <Button text="Очистить корзину" classes="text-base py-1 !w-full block" onClick={clearCart} />
+
+              <div className="w-full bg-custom-blue h-[1px]"></div>
 
               <div className="space-y-2.5">
                 <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
