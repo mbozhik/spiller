@@ -3,9 +3,10 @@ import {Open_Sans} from 'next/font/google'
 
 import './globals.css'
 
+import Analytics from '#/Analytics'
 import Header from '#/Global/Header/Header'
 import Footer from '#/Global/Footer'
-import Analytics from '#/Analytics'
+import CartWidget from '##/products/[slug]/CartWidget'
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -60,11 +61,13 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full scroll-smooth">
       <Analytics />
-      <body className={`h-full text-custom-grey ${openSans.className}`}>
+      <body className={`h-full text-custom-grey relative ${openSans.className}`}>
         <section className="flex flex-col min-h-full">
           <Header />
           {children}
           <Footer />
+
+          <CartWidget />
         </section>
       </body>
     </html>

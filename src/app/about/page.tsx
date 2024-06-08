@@ -8,7 +8,7 @@ import AboutImage from '%/about/1.jpg'
 import AboutImage2 from '%/about/2.jpg'
 import AboutImage3 from '%/about/3.jpg'
 
-import Main from '#/UI/Container'
+import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 
 const divisionData: {[key: number]: {text: string; href: string; image: string | StaticImageData}} = {
@@ -31,10 +31,10 @@ const divisionData: {[key: number]: {text: string; href: string; image: string |
 
 export default function About() {
   return (
-    <Main>
-      <Title text="Разделы" classes="mt-16 sm:mt-10 normal-case" />
+    <Container marginBottom={true} className="space-y-10 sm:space-y-5">
+      <Title text="Разделы" classes="normal-case" />
 
-      <section data-section="DIVISION" className="grid grid-cols-2 gap-3 mt-10 sm:gap-5 sm:mt-5 sm:grid-cols-1 mb-44 sm:mb-24">
+      <section data-section="DIVISION" className="grid grid-cols-2 gap-3 sm:gap-5 sm:grid-cols-1">
         {Object.values(divisionData).map(({text, href, image}) => (
           <a key={text} href={href} className="relative overflow-hidden group">
             <Image className="block object-cover duration-500 s-full group-hover:scale-105" src={image} alt="" />
@@ -44,6 +44,6 @@ export default function About() {
           </a>
         ))}
       </section>
-    </Main>
+    </Container>
   )
 }

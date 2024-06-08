@@ -3,7 +3,7 @@ export const metadata: Metadata = {
   title: 'Награды',
 }
 
-import Main from '#/UI/Container'
+import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 
@@ -32,23 +32,21 @@ const awardsData = [
 
 export default function AboutAwards() {
   return (
-    <Main>
-      <section className="flex flex-col gap-16 mt-16 sm:gap-10 sm:mt-10 mb-44 sm:mb-24">
-        <div>
-          <Title classes="w-[90%] sm:w-full sm:!text-xl" text="Лучшие оценки за выдающееся качество" />
-          <Text classes="mt-5 w-[80%] sm:w-full sm:mt-2" text="Наш подход к качеству продукции не перестает радовать. Активные ингредиенты делают победителем не только кожу, но и бренд. Профессионалы в области красоты и потребители сходятся в своих оценках. Продукты и процедуры Dr. Spiller постоянно входят в число лучших по результатам премий и опросов:" />
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-1 gap-y-8">
-          {awardsData.map((award, index) => (
-            <article key={index}>
-              <Title classes="mb-2" text={award.year} />
-              <Text classes="font-semibold" text={award.naming} />
-              <Text text={award.place} />
-              {award.product && <Text classes="italic" text={award.product} />}
-            </article>
-          ))}
-        </div>
-      </section>
-    </Main>
+    <Container className="space-y-16 sm:space-y-7" marginBottom={true}>
+      <div>
+        <Title classes="w-[90%] sm:w-full sm:!text-xl" text="Лучшие оценки за выдающееся качество" />
+        <Text classes="mt-5 w-[80%] sm:w-full sm:mt-2" text="Наш подход к качеству продукции не перестает радовать. Активные ингредиенты делают победителем не только кожу, но и бренд. Профессионалы в области красоты и потребители сходятся в своих оценках. Продукты и процедуры Dr. Spiller постоянно входят в число лучших по результатам премий и опросов:" />
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-1 gap-y-8 sm:gap-y-5">
+        {awardsData.map((award, index) => (
+          <article key={index}>
+            <Title classes="mb-2" text={award.year} />
+            <Text classes="font-semibold" text={award.naming} />
+            <Text text={award.place} />
+            {award.product && <Text classes="italic" text={award.product} />}
+          </article>
+        ))}
+      </div>
+    </Container>
   )
 }

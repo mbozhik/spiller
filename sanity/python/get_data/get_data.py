@@ -11,44 +11,44 @@ data = response.json()
 prev_name = None
 prev_description = None
 prev_usage = None
+prev_caption = None
 
-gender_values = ["мужской", "женский"]
-body_part_values = ["рука", "тело"]
-age_group_values = ["молодая", "зрелая", "возрастная"]
-compexity_values = ["базовые решения", "комплексные", "сложные препараты"]
+counter = 0 
 
 for obj in data["objectData"]:
-    obj["name"] = ' '.join(obj["name"].split())
+    counter += 1
+
+    split_index = obj["name"].find("  ")
+    if split_index == -1:
+        split_index = obj["name"].find("\n")
+
+    if split_index != -1:
+        text1 = obj["name"][:split_index].strip().replace("®", "")
+        text2 = obj["name"][split_index:].strip().replace("®", "")
+        obj["name"] = text1
+        obj["caption"] = text2
+    else:
+        obj["caption"] = (prev_caption if prev_caption else "").replace("®", "")
 
     obj["name"] = prev_name if not obj["name"] else obj["name"]
     prev_name = obj["name"]
 
+    prev_caption = obj["caption"]
+    
     obj["description"] = prev_description if not obj["description"] else obj["description"]
     prev_description = obj["description"]
 
     obj["usage"] = prev_usage if not obj["usage"] else obj["usage"]
     prev_usage = obj["usage"]
 
-    obj["gender"] = random.choice(gender_values)
-    obj["body_part"] = random.choice(body_part_values)
-    obj["age_group"] = random.choice(age_group_values)
-    obj["compexity"] = random.choice(compexity_values)
-    obj["ampulsivity"] = bool(random.getrandbits(1))
     obj["_type"] = "product"
-
-    obj["price"] = round(random.uniform(10000, 20000))
 
 formatted_data = data["objectData"]
 
-# output_json_file = "sanity/python/formatted_data.json"
-# with open(output_json_file, "w", encoding="utf-8") as json_file:
-#     json.dump(formatted_data, json_file, ensure_ascii=False, indent=4)
-
-output_ndjson_file = "sanity/python/formatted_data.ndjson"
+output_ndjson_file = "sanity/python/get_data/formatted_data.ndjson"
 with open(output_ndjson_file, "w", encoding="utf-8") as ndjson_file:
     for item in formatted_data:
         ndjson_file.write(json.dumps(item, ensure_ascii=False) + '\n')
 
-print("\033[31m" + "###")
 print("\033[35m" + f"Formatted data has been written to {output_ndjson_file}")
-print("\033[31m" + "###")
+print(f"Total objects processed: {counter}")

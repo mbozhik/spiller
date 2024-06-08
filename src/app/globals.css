@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 mark {
-  @apply px-2 py-0.5 bg-custom-blue/85 text-white block w-fit mb-1;
+  @apply px-2 py-0.5 bg-custom-blue/90 text-white block w-fit mb-1;
 }
 
 .swiper-pagination-bullet {
@@ -12,4 +12,8 @@ mark {
 
 .swiper-pagination-bullet-active {
   @apply !bg-custom-grey !s-3 sm:!s-2;
+}
+
+.INPUT {
+  @apply text-custom-blue border border-custom-blue w-full p-2 sm:p-3 placeholder:text-custom-blue focus:outline-custom-blue;
 }
