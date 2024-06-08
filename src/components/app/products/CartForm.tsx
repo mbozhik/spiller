@@ -101,9 +101,7 @@ const Form = ({onClose}) => {
     setCart([])
     resetCart()
 
-    setTimeout(() => {
-      onClose()
-    }, 500)
+    onClose()
   }
 
   const gridConfig = {
