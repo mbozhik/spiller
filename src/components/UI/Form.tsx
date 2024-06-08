@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 
-import {buttonVariants} from './Button'
+import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
 
 const Form = ({onClose}) => {
@@ -70,7 +70,7 @@ const Form = ({onClose}) => {
   }
 
   return (
-    <section className="fixed inset-0 z-50 grid w-screen h-screen place-items-center bg-custom-blue/25">
+    <section className="fixed inset-0 z-[99] grid w-screen h-screen place-items-center bg-custom-blue/25">
       <div id="FORM_WRAPPER" className="w-[25%] xl:w-[35%] sm:w-[95%] p-5 sm:p-3 bg-white shadow-nav">
         {submitMessage ? (
           <Title text={submitMessage} classes="text-center" />
@@ -84,11 +84,13 @@ const Form = ({onClose}) => {
             </div>
             <form className="mt-5 space-y-1 sm:space-y-3" onSubmit={submitForm}>
               <div className="space-y-4">
-                <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                <input className="INPUT" placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input className="INPUT" placeholder="Телефон" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <div className="space-y-2.5">
+                  <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                  <input className="INPUT" placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input className="INPUT" placeholder="Телефон" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                </div>
 
-                <label className="flex gap-3 sm:gap-4 select-none sm:text-sm">
+                <label className="flex gap-3 select-none sm:gap-4 sm:text-sm">
                   Являетесь ли вы косметологом?
                   <input className="w-4" type="checkbox" checked={cosmetologist} onChange={(e) => setCosmetologist(e.target.checked)} />
                 </label>

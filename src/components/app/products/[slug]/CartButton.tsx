@@ -2,14 +2,16 @@
 
 import {useCartCounter} from '@/store'
 
-import {Product} from '@/app/products/page'
+import {Product} from '@/app/products/page' // types
 import Button from '#/UI/Button'
 
-interface CartItem {
+export interface CartItem {
   name: string
+  article: number
   price: number
   quantity: number
   slug: string
+  image?: Array<{asset: {url: string}}>
 }
 
 interface CartButtonProps {
@@ -27,9 +29,11 @@ export default function CartButton({product, className}: CartButtonProps) {
     if (existingProductIndex === -1) {
       cart.push({
         name: product.name,
+        article: product.article,
         price: product.price,
         quantity: 1,
         slug: product.slug.current,
+        image: product.image,
       })
     } else {
       cart[existingProductIndex].quantity += 1
