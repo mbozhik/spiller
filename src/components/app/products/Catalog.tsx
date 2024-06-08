@@ -79,9 +79,9 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
       <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
-        <div className="px-3 flex items-center justify-between font-semibold text-lg INPUT ">
+        <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT ">
           <input
-            className="w-full pr-3.5 sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
+            className="w-full pr-3.5   sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
             placeholder="Поиск"
             type="text"
             value={searchQuery}
