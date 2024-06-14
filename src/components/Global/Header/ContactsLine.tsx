@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function ContactsLine() {
   return (
-    <div className="flex justify-center gap-16 py-2 text-base text-white xl:text-sm sm:text-xs bg-custom-grey">
+    <div className="flex justify-center gap-16 py-1.5 tracking-[0.015em] text-white text-sm sm:text-xs bg-custom-grey">
       <Link className="hover:underline" href="https://yandex.ru/maps/-/CDfxuF7R" target="_blank">
         Алматы, Самал-2, 69
       </Link>

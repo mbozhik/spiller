@@ -13,11 +13,11 @@ export default function NavBar() {
     buy: {href: '/buy', text: 'Где купить'},
   }
 
-  const linkStyle = 'py-3 duration-200 border-l-2 xl:py-2 px-11 xl:px-8 sm:px-0 hover:bg-custom-nav border-custom-nav w-fit sm:w-[25%]'
+  const linkStyle = 'py-2 duration-200 border-l-2 xl:py-2 px-8 sm:px-0 hover:bg-custom-nav border-custom-nav w-fit sm:w-[25%]'
   const activeStyle = 'bg-custom-nav'
 
   return (
-    <nav className="z-10 flex justify-center text-xl text-center bg-white sm:justify-between sm:text-xs xl:text-base text-custom-grey shadow-nav sm:shadow-nav_mobile">
+    <nav className="z-10 flex justify-center text-lg text-center bg-white sm:justify-between sm:text-xs xl:text-base text-custom-grey shadow-nav sm:shadow-nav_mobile">
       {Object.keys(navItems).map((id) => {
         const {href, text} = navItems[id]
         const isActive = currentRoute === href
