@@ -37,13 +37,6 @@ const product: SchemaTypeDefinition = {
       description: 'New Field!',
     },
     {
-      name: 'full_description',
-      title: '[New] Description',
-      type: 'array',
-      of: [{type: 'block'}],
-      description: 'New Field! (?)',
-    },
-    {
       name: 'utilization',
       title: '[New] Utilization (Usage)',
       type: 'array',
