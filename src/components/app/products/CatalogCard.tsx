@@ -2,8 +2,8 @@
 
 import {urlForImage} from '@/lib/sanity'
 
+import Link from 'next/link'
 import Image from 'next/image'
-import Button from '#/UI/Button'
 import CartButton from '##/products/[slug]/CartButton'
 import {Product} from '@/app/products/page'
 
@@ -13,22 +13,22 @@ interface CatalogCardProps {
 }
 
 const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
-  if (!item.image) return null
+  const cardHref = `/products/${item.slug.current}`
 
   return (
     <article className="flex flex-col justify-between w-full h-full gap-5 p-5 border border-neutral-200 group" key={idx}>
-      <div className="h-[250px] xl:h-[200px] w-full relative self-center">
+      <Link className="h-[250px] xl:h-[200px] w-full relative self-center" href={cardHref}>
         <Image src={urlForImage(item.image).url()} className="object-contain" sizes="40vw" fill={true} alt={`item ${idx}`} />
-      </div>
+      </Link>
 
-      <div className="space-y-1">
+      <Link className="space-y-1" href={cardHref}>
         <h1 className="text-2xl font-semibold">{item.name}</h1>
         <h1 className="text-custom-grey2">{item.caption}</h1>
-      </div>
+      </Link>
 
-      <div className="grid w-full grid-cols-2 gap-2">
-        <Button text="Подробнее" classes="text-base w-full" href={`/products/${item.slug.current}`} />
+      <div className="flex justify-between items-center">
         <CartButton product={item} className="text-base w-full block" />
+        <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
       </div>
 
       {/* <div className="flex flex-wrap gap-1">

@@ -30,7 +30,7 @@ export interface Product {
 
 async function getData(): Promise<Product[]> {
   const data = await client.fetch<Product>(
-    `*[_type == 'product' && slug.current != null] {
+    `*[_type == 'product' && slug.current != null && image != null] {
         name,
         caption,
         article,
