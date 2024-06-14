@@ -9,7 +9,7 @@ import Form from '##/partnership/Form'
 
 export default function About() {
   return (
-    <Container marginBottom={true} className="space-y-14 sm:space-y-5">
+    <Container marginBottom={true} className="space-y-14 sm:space-y-7">
       <Intro />
       <Form />
     </Container>

@@ -30,9 +30,9 @@ const getHtml = (text: string) => ({__html: text})
 export default function Intro() {
   return (
     <>
-      <Title classes="text-center" text="ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ" />
+      <Title classes="text-center sm:text-left" text="ПРИГЛАШАЕМ К СОТРУДНИЧЕСТВУ" />
 
-      <div className="flex justify-between gap-5 w-full">
+      <div className="flex justify-between gap-5 w-full sm:flex-col">
         {Object.values(partnershipData).map(({text, image}) => (
           <div key={text} className="flex gap-4 items-center">
             <Image className="s-12" src={image} alt="" />

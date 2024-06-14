@@ -60,7 +60,7 @@ const Form = () => {
   }
 
   return (
-    <div id="FORM_WRAPPER" className="px-[20%] py-10 border border-custom-blue w-full mx-auto">
+    <div id="FORM_WRAPPER" className="px-[20%] sm:p-5 py-10 border border-custom-blue w-full mx-auto">
       {submitMessage ? (
         <Title text={submitMessage} classes="text-center" />
       ) : (
@@ -75,8 +75,8 @@ const Form = () => {
               <div className="space-y-3">
                 <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
-                <div className="flex flex-col gap-1 select-none">
-                  <h3 className="font-semibold mb-0.5">Тип бизнеса:</h3>
+                <div className="flex flex-col gap-1 sm:gap-3 select-none">
+                  <h3 className="font-semibold mb-0.5 sm:mb-0">Тип бизнеса:</h3>
                   <label className="flex items-center gap-3">
                     <input className="w-4" type="radio" name="businessType" value="Дистрибьюторская компания" checked={businessType === 'Дистрибьюторская компания'} onChange={(e) => setBusinessType(e.target.value)} />
                     Дистрибьюторская компания
