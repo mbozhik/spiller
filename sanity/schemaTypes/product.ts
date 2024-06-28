@@ -37,6 +37,13 @@ const product: SchemaTypeDefinition = {
       description: 'New Field!',
     },
     {
+      name: 'full_description',
+      title: '[New] Full Description',
+      type: 'array',
+      of: [{type: 'block'}],
+      description: 'New Field!',
+    },
+    {
       name: 'utilization',
       title: '[New] Utilization (Usage)',
       type: 'array',
@@ -52,14 +59,16 @@ const product: SchemaTypeDefinition = {
     },
     {
       name: 'description',
-      title: 'Description',
+      title: '[Deleted] Description',
       type: 'text',
+      description: 'Deprecated! Will be deleted',
       validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'usage',
-      title: 'Usage',
+      title: '[Deleted] Usage',
       type: 'text',
+      description: 'Deprecated! Will be deleted',
     },
     {
       name: 'price',
