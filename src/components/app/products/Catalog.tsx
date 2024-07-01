@@ -9,6 +9,7 @@ import {filterTitles} from '@/lib/categorize_products'
 import {Product} from '@/app/products/page' // interface (types)
 import CheckboxBlock from '#/app/products/CheckboxBlock'
 import CatalogCard from '##/products/CatalogCard'
+import Button from '@/components/UI/Button'
 
 import {ChevronUp, ChevronDown, Search} from 'lucide-react'
 
@@ -81,7 +82,7 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
       <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
         <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT ">
           <input
-            className="w-full pr-3.5   sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
+            className="w-full pr-3.5 sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
             placeholder="Поиск"
             type="text"
             value={searchQuery}
@@ -121,6 +122,8 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
             </div>
           )
         })}
+
+        {selectedFilters.length > 0 && <Button text="Сбросить фильтры" classes="block w-full text-base !mt-4" onClick={() => setSelectedFilters([])}></Button>}
       </section>
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
