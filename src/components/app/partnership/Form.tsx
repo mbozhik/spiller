@@ -59,6 +59,8 @@ const Form = () => {
     sendData()
   }
 
+  const businessTypes = ['Дистрибьюторская компания', 'Клиника/косметология', 'Салон красоты', 'СПА-центр', 'Частный косметолог', 'Магазин косметики', 'Прочее']
+
   return (
     <div id="FORM_WRAPPER" className="px-[20%] sm:p-5 py-10 border border-custom-blue w-full mx-auto">
       {submitMessage ? (
@@ -77,26 +79,13 @@ const Form = () => {
 
                 <div className="flex flex-col gap-1 sm:gap-3 select-none">
                   <h3 className="font-semibold mb-0.5 sm:mb-0">Тип бизнеса:</h3>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Дистрибьюторская компания" checked={businessType === 'Дистрибьюторская компания'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Дистрибьюторская компания
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Клиника/косметология" checked={businessType === 'Клиника/косметология'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Клиника/косметология
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Салон красоты" checked={businessType === 'Салон красоты'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Салон красоты
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="СПА-центр" checked={businessType === 'СПА-центр'} onChange={(e) => setBusinessType(e.target.value)} />
-                    СПА-центр
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Частный косметолог" checked={businessType === 'Частный косметолог'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Частный косметолог
-                  </label>
+
+                  {businessTypes.map((value) => (
+                    <label className="flex items-center gap-3" key={value}>
+                      <input className="w-4" type="radio" name="businessType" value={value} checked={businessType === value} onChange={(e) => setBusinessType(e.target.value)} />
+                      {value}
+                    </label>
+                  ))}
                 </div>
               </div>
 
