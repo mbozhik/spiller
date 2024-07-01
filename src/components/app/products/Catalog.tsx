@@ -59,7 +59,11 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
     let updatedFilters: Filter[] = [...selectedFilters]
 
     if (checked) {
-      if (filterName !== 'main_filter') {
+      // If the filter being added is a main filter, remove any existing main filter first
+      if (filterName === 'main_filter') {
+        updatedFilters = updatedFilters.filter((filter) => filter.filterName !== 'main_filter')
+      } else {
+        // For non-main filters, remove any existing filter with the same name
         updatedFilters = updatedFilters.filter((filter) => filter.filterName !== filterName)
       }
 
