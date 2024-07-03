@@ -7,24 +7,43 @@ import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 
+type FormFields = {
+  name: string
+  naming: string
+  city: string
+  businessType: string
+  phone: string
+  email: string
+  message: string
+}
+
 const Form = () => {
   const [submitMessage, setSubmitMessage] = useState('')
-  const {register, handleSubmit, watch} = useForm()
+  const {register, handleSubmit, watch} = useForm<FormFields>()
   const businessType = watch('businessType')
 
   const businessTypes = ['Дистрибьюторская компания', 'Клиника/косметология', 'Салон красоты', 'СПА-центр', 'Частный косметолог', 'Магазин косметики', 'Прочее']
 
   const submitForm = async (data) => {
-    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbw3lv7VUUh9DeWk7iOFe0nsc4YbiMh7ZPYgZsfbG9RS9K_78S4hSeDO4aWQRm2TuuLv/exec'
-
     try {
-      const response = await fetch(GOOGLE_SHEET_URL, {
+      const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          subject: 'Партнерство',
+          email: data.email,
+          name: data.name,
+          naming: data.naming,
+          city: data.city,
+          phone: data.phone,
+          businessType: data.businessType,
+          message: data.message,
+        }),
       })
+
+      console.log(JSON.stringify(data))
 
       if (!response.ok) {
         throw new Error('Failed to send data')
@@ -34,9 +53,16 @@ const Form = () => {
       console.log('Response Data:', responseData)
 
       setSubmitMessage('Форма отправлена!')
+
+      setTimeout(() => {
+        setSubmitMessage(null)
+      }, 1500)
     } catch (error) {
       console.error('Error:', error)
       setSubmitMessage('Ошибка')
+      setTimeout(() => {
+        setSubmitMessage(null)
+      }, 1500)
     }
   }
 

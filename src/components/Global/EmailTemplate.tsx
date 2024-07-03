@@ -27,6 +27,37 @@ export const EmailTemplate = ({subject, email, name, naming, city, phone, busine
                   {subject}
                 </Heading>
 
+                {name && (
+                  <Text style={{...paragraph}}>
+                    <b style={b}>Имя:</b> {name}
+                  </Text>
+                )}
+                {naming && (
+                  <Text style={{...paragraph, marginTop: -5}}>
+                    <b style={b}>Компания:</b> {naming}
+                  </Text>
+                )}
+                {city && (
+                  <Text style={{...paragraph, marginTop: -5}}>
+                    <b style={b}>Город:</b> {city}
+                  </Text>
+                )}
+                {email && (
+                  <Text style={{...paragraph, marginTop: -5}}>
+                    <b style={b}>E-mail:</b> {email}
+                  </Text>
+                )}
+                {phone && (
+                  <Text style={{...paragraph, marginTop: -5}}>
+                    <b style={b}>Телефон:</b> {phone}
+                  </Text>
+                )}
+                {businessType && (
+                  <Text style={{...paragraph, marginTop: -5}}>
+                    <b style={b}>Тип бизнеса:</b> {businessType}
+                  </Text>
+                )}
+
                 <Text style={paragraph}>{message}</Text>
               </Column>
             </Row>
@@ -52,4 +83,8 @@ const content = {
   border: '1px solid rgb(0,0,0, 0.1)',
   borderRadius: '3px',
   overflow: 'hidden',
+}
+
+const b = {
+  fontWeight: 'medium',
 }

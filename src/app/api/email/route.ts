@@ -22,6 +22,12 @@ export async function POST(req: NextRequest) {
         subject: body.subject,
         email: body.email,
         message: body.message,
+
+        name: body.name,
+        naming: body.naming,
+        city: body.city,
+        phone: body.phone,
+        businessType: body.businessType,
       }),
     })
 
