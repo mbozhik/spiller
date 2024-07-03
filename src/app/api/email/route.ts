@@ -3,7 +3,10 @@ import {EmailTemplate} from '#/Global/EmailTemplate'
 import {Resend} from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const emailsList = ['notifications@dr-spiller.kz', 'mbozhik@edu.hse.ru']
+const emailsList = {
+  from: 'notifications@dr-spiller.kz',
+  to: 'sales@dr-spiller.kz',
+}
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
@@ -15,8 +18,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const {data, error} = await resend.emails.send({
-      from: `Dr. Spiller <${emailsList[0]}>`,
-      to: `${emailsList[1]}`,
+      from: `Dr. Spiller <${emailsList.from}>`,
+      to: `${emailsList.to}`,
       subject: `${body.subject} — Новое заполнение формы на сайте`,
       react: EmailTemplate({
         subject: body.subject,

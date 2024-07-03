@@ -4,16 +4,16 @@ import * as React from 'react'
 interface EmailTemplateProps {
   subject: string
   email: string
+  message?: string
 
   name?: string
   naming?: string
   city?: string
   phone?: string
   businessType?: string
-  message?: string
 
   cosmetologist?: boolean
-  items?: string
+  items?: any
 }
 
 export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items}: EmailTemplateProps) => {
@@ -32,50 +32,72 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
 
                 {items && (
                   <Text style={{...paragraph}}>
-                    <b style={b}>Корзина:</b> {items}
+                    <ol>
+                      {items.map((item, index) => (
+                        <li key={index}>
+                          <ul>
+                            <li>
+                              <b>Название:</b> {item.name}
+                            </li>
+                            <li>
+                              <b>Артикул:</b> {item.article}
+                            </li>
+                            <li>
+                              <b>Цена:</b> {item.price}
+                            </li>
+                            <li>
+                              <b>Количество:</b> {item.quantity}
+                            </li>
+                          </ul>
+                          <br />
+                        </li>
+                      ))}
+                    </ol>
                   </Text>
                 )}
 
                 {name && (
                   <Text style={{...paragraph}}>
-                    <b style={b}>Имя:</b> {name}
+                    <b>Имя:</b> {name}
                   </Text>
                 )}
                 {naming && (
                   <Text style={{...paragraph, marginTop: -5}}>
-                    <b style={b}>Компания:</b> {naming}
+                    <b>Компания:</b> {naming}
                   </Text>
                 )}
                 {city && (
                   <Text style={{...paragraph, marginTop: -5}}>
-                    <b style={b}>Город:</b> {city}
+                    <b>Город:</b> {city}
                   </Text>
                 )}
                 {email && (
                   <Text style={{...paragraph, marginTop: -5}}>
-                    <b style={b}>E-mail:</b> {email}
+                    <b>E-mail:</b> {email}
                   </Text>
                 )}
                 {phone && (
                   <Text style={{...paragraph, marginTop: -5}}>
-                    <b style={b}>Телефон:</b> {phone}
+                    <b>Телефон:</b> {phone}
                   </Text>
                 )}
                 {businessType && (
                   <Text style={{...paragraph, marginTop: -5}}>
-                    <b style={b}>Тип бизнеса:</b> {businessType}
+                    <b>Тип бизнеса:</b> {businessType}
                   </Text>
                 )}
 
                 {cosmetologist && (
                   <Text style={{...paragraph}}>
-                    <b style={b}>Косметолог:</b> {cosmetologist ? 'Да' : 'Нет'}
+                    <b>Косметолог:</b> {cosmetologist ? 'Да' : 'Нет'}
                   </Text>
                 )}
 
-                <Text style={paragraph}>
-                  <b style={b}>Комментарий:</b> {message}
-                </Text>
+                {message && (
+                  <Text style={paragraph}>
+                    <b>Комментарий:</b> {message}
+                  </Text>
+                )}
               </Column>
             </Row>
           </Section>
@@ -100,8 +122,4 @@ const content = {
   border: '1px solid rgb(0,0,0, 0.1)',
   borderRadius: '3px',
   overflow: 'hidden',
-}
-
-const b = {
-  fontWeight: 'medium',
 }

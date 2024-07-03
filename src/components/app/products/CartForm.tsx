@@ -9,26 +9,26 @@ import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
 import {CartItem} from '##/products/[slug]/CartButton' // types
 
+type FormFields = {
+  name: string
+  email: string
+  phone: string
+  message: string
+}
+
 const Form = ({onClose}) => {
   const [submitMessage, setSubmitMessage] = useState('')
   const [cart, setCart] = useState<CartItem[]>([])
 
   const {resetCart} = useCartCounter((state) => state)
 
-  const {register, handleSubmit} = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormFields>()
 
   const onSubmit = async (data) => {
-    const formatedCart = cart
-      .map((item) =>
-        JSON.stringify({
-          name: item.name,
-          article: item.article,
-          price: item.price,
-          quantity: item.quantity,
-        }),
-      )
-      .join(',')
-
     try {
       const response = await fetch('/api/email', {
         method: 'POST',
@@ -41,7 +41,7 @@ const Form = ({onClose}) => {
           message: data.message,
           name: data.name,
           phone: data.phone,
-          items: formatedCart,
+          items: cart,
         }),
       })
 
@@ -51,11 +51,10 @@ const Form = ({onClose}) => {
 
       setSubmitMessage('Форма отправлена!')
       setTimeout(() => {
-        onClose()
-      }, 2000)
+        clearCart()
+      }, 1500)
     } catch (error) {
       console.error('Error:', error)
-      setSubmitMessage('Ошибка')
     }
   }
 
@@ -135,10 +134,15 @@ const Form = ({onClose}) => {
               <div className="w-full bg-custom-blue h-[1px]"></div>
 
               <div className="space-y-2.5">
-                <input className="INPUT" placeholder="Имя" type="text" {...register('name', {required: true})} />
-                <input className="INPUT" placeholder="E-mail" type="email" {...register('email', {required: true})} />
-                <input className="INPUT" placeholder="Телефон" type="tel" {...register('phone', {required: true})} />
-                <textarea className="INPUT" placeholder="Комментарий" {...register('message')}></textarea>
+                <input className="INPUT" placeholder="Имя" type="text" {...register('name', {required: 'Заполните все поля'})} />
+                {errors.name && <span className="text-red-500">{errors.name.message}</span>}
+
+                <input className="INPUT" placeholder="E-mail" type="email" {...register('email', {required: 'Заполните все поля'})} />
+                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+                <input className="INPUT" placeholder="Телефон" type="tel" {...register('phone', {required: 'Заполните все поля'})} />
+                {errors.phone && <span className="text-red-500">{errors.phone.message}</span>}
+                <textarea className="INPUT" placeholder="Комментарий" {...register('message', {required: 'Заполните все поля'})}></textarea>
+                {errors.message && <span className="text-red-500">{errors.message.message}</span>}
               </div>
 
               <button className={`!w-full block text-center ${buttonVariants.default} ${buttonVariants.secondary} `} title="submit">
