@@ -15,17 +15,19 @@ const Form = ({onClose}) => {
   const {register, handleSubmit} = useForm<FormFields>()
 
   const onSubmit = async (data) => {
-    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyUeNos_7YubG8nvQolQQlNbOyuFtv1CoNZeSs-tY-ia5V4LTkUba_E-gDuuZVy_5aX/exec'
-
     try {
-      const response = await fetch(GOOGLE_SHEET_URL, {
+      const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...data,
-          cosmetologist: data.cosmetologist ? 'Да' : 'Нет',
+          subject: 'Главная страница',
+          email: data.email,
+          message: data.message,
+          name: data.name,
+          phone: data.phone,
+          cosmetologist: data.cosmetologist,
         }),
       })
 

@@ -34,23 +34,21 @@ const Form = () => {
         body: JSON.stringify({
           subject: 'Партнерство',
           email: data.email,
+          message: data.message,
           name: data.name,
           naming: data.naming,
           city: data.city,
           phone: data.phone,
           businessType: data.businessType,
-          message: data.message,
         }),
       })
-
-      console.log(JSON.stringify(data))
 
       if (!response.ok) {
         throw new Error('Failed to send data')
       }
 
-      const responseData = await response.json()
-      console.log('Response Data:', responseData)
+      // const responseData = await response.json()
+      // console.log('Response Data:', responseData)
 
       setSubmitMessage('Форма отправлена!')
 

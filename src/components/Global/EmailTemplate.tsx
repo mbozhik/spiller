@@ -5,6 +5,8 @@ interface EmailTemplateProps {
   subject: string
   email: string
 
+  cosmetologist?: boolean
+
   name?: string
   naming?: string
   city?: string
@@ -13,7 +15,7 @@ interface EmailTemplateProps {
   message?: string
 }
 
-export const EmailTemplate = ({subject, email, name, naming, city, phone, businessType, message}: EmailTemplateProps) => {
+export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist}: EmailTemplateProps) => {
   return (
     <Html>
       <Head />
@@ -55,6 +57,12 @@ export const EmailTemplate = ({subject, email, name, naming, city, phone, busine
                 {businessType && (
                   <Text style={{...paragraph, marginTop: -5}}>
                     <b style={b}>Тип бизнеса:</b> {businessType}
+                  </Text>
+                )}
+
+                {cosmetologist && (
+                  <Text style={{...paragraph}}>
+                    <b style={b}>Косметолог:</b> {cosmetologist ? 'Да' : 'Нет'}
                   </Text>
                 )}
 

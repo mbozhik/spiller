@@ -28,6 +28,8 @@ export async function POST(req: NextRequest) {
         city: body.city,
         phone: body.phone,
         businessType: body.businessType,
+
+        cosmetologist: body.cosmetologist,
       }),
     })
 
