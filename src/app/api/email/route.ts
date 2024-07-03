@@ -17,8 +17,9 @@ export async function POST(req: NextRequest) {
     const {data, error} = await resend.emails.send({
       from: `Dr. Spiller <${emailsList[0]}>`,
       to: `${emailsList[1]}`,
-      subject: 'Новое заполнение формы на сайте',
+      subject: `${body.subject} — Новое заполнение формы на сайте`,
       react: EmailTemplate({
+        subject: body.subject,
         email: body.email,
         message: body.message,
       }),
