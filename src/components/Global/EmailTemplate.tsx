@@ -5,17 +5,18 @@ interface EmailTemplateProps {
   subject: string
   email: string
 
-  cosmetologist?: boolean
-
   name?: string
   naming?: string
   city?: string
   phone?: string
   businessType?: string
   message?: string
+
+  cosmetologist?: boolean
+  items?: string
 }
 
-export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist}: EmailTemplateProps) => {
+export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items}: EmailTemplateProps) => {
   return (
     <Html>
       <Head />
@@ -28,6 +29,12 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                 <Heading as="h2" style={{fontSize: 26, fontWeight: 'bold', textAlign: 'center', color: '#7D756F'}}>
                   {subject}
                 </Heading>
+
+                {items && (
+                  <Text style={{...paragraph}}>
+                    <b style={b}>Корзина:</b> {items}
+                  </Text>
+                )}
 
                 {name && (
                   <Text style={{...paragraph}}>
@@ -66,7 +73,9 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                   </Text>
                 )}
 
-                <Text style={paragraph}>{message}</Text>
+                <Text style={paragraph}>
+                  <b style={b}>Комментарий:</b> {message}
+                </Text>
               </Column>
             </Row>
           </Section>

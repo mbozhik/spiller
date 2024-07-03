@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
         businessType: body.businessType,
 
         cosmetologist: body.cosmetologist,
+        items: body.items,
       }),
     })
 

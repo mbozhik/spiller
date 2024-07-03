@@ -1,5 +1,6 @@
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
+
 import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
 
@@ -81,7 +82,7 @@ const Form = ({onClose}) => {
                 <input className="w-4" type="checkbox" {...register('cosmetologist')} />
               </label>
 
-              <textarea className="INPUT" placeholder="Текст" {...register('message', {required: true})} rows={5}></textarea>
+              <textarea className="INPUT" placeholder="Текст" {...register('message')} rows={5}></textarea>
             </div>
 
             <button className={`!w-full block text-center ${buttonVariants.default} ${buttonVariants.secondary}`} title="submit">
