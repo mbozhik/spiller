@@ -1,62 +1,67 @@
 'use client'
 
 import {useState} from 'react'
+import {useForm} from 'react-hook-form'
 
 import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 
+type FormFields = {
+  name: string
+  naming: string
+  city: string
+  businessType: string
+  phone: string
+  email: string
+  message: string
+}
+
 const Form = () => {
   const [submitMessage, setSubmitMessage] = useState('')
+  const {register, handleSubmit, watch} = useForm<FormFields>()
+  const businessType = watch('businessType')
 
-  const [naming, setNaming] = useState('')
-  const [city, setCity] = useState('')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [businessType, setBusinessType] = useState('')
-  const [message, setMessage] = useState('')
+  const businessTypes = ['Дистрибьюторская компания', 'Клиника/косметология', 'Салон красоты', 'СПА-центр', 'Частный косметолог', 'Магазин косметики', 'Прочее']
 
-  function submitForm(e) {
-    e.preventDefault()
+  const submitForm = async (data) => {
+    try {
+      const response = await fetch('/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject: 'Партнерство',
+          email: data.email,
+          message: data.message,
+          name: data.name,
+          naming: data.naming,
+          city: data.city,
+          phone: data.phone,
+          businessType: data.businessType,
+        }),
+      })
 
-    const sendData = async () => {
-      const data = {
-        naming,
-        city,
-        name,
-        email,
-        phone,
-        businessType,
-        message,
+      if (!response.ok) {
+        throw new Error('Failed to send data')
       }
 
-      const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-G-IA4EP9scyC0RcEBnLoglylWbr05zJKDsrOHtFT4yW4OYpjgbC23xSrVQHDQO8D/exec'
+      // const responseData = await response.json()
+      // console.log('Response Data:', responseData)
 
-      try {
-        const response = await fetch(GOOGLE_SHEET_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
-          body: JSON.stringify(data),
-        })
+      setSubmitMessage('Форма отправлена!')
 
-        if (!response.ok) {
-          throw new Error('Failed to send data')
-        }
-
-        const responseData = await response.json()
-        console.log('Response Data:', responseData)
-
-        setSubmitMessage('Форма отправлена!')
-      } catch (error) {
-        console.error('Error:', error)
-        setSubmitMessage('Ошибка')
-      }
+      setTimeout(() => {
+        setSubmitMessage(null)
+      }, 1500)
+    } catch (error) {
+      console.error('Error:', error)
+      setSubmitMessage('Ошибка')
+      setTimeout(() => {
+        setSubmitMessage(null)
+      }, 1500)
     }
-
-    sendData()
   }
 
   return (
@@ -70,42 +75,29 @@ const Form = () => {
             <Text text="Мы рассмотрим заявку в ближайшее время и свяжемся с вами" />
           </div>
 
-          <form className="mt-5 space-y-1 sm:space-y-3" onSubmit={submitForm}>
+          <form className="mt-5 space-y-1 sm:space-y-3" onSubmit={handleSubmit(submitForm)}>
             <div className="space-y-5">
               <div className="space-y-3">
-                <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                <input className="INPUT" placeholder="Имя" {...register('name')} type="text" />
 
                 <div className="flex flex-col gap-1 sm:gap-3 select-none">
                   <h3 className="font-semibold mb-0.5 sm:mb-0">Тип бизнеса:</h3>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Дистрибьюторская компания" checked={businessType === 'Дистрибьюторская компания'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Дистрибьюторская компания
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Клиника/косметология" checked={businessType === 'Клиника/косметология'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Клиника/косметология
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Салон красоты" checked={businessType === 'Салон красоты'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Салон красоты
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="СПА-центр" checked={businessType === 'СПА-центр'} onChange={(e) => setBusinessType(e.target.value)} />
-                    СПА-центр
-                  </label>
-                  <label className="flex items-center gap-3">
-                    <input className="w-4" type="radio" name="businessType" value="Частный косметолог" checked={businessType === 'Частный косметолог'} onChange={(e) => setBusinessType(e.target.value)} />
-                    Частный косметолог
-                  </label>
+
+                  {businessTypes.map((value) => (
+                    <label className="flex items-center gap-3" key={value}>
+                      <input className="w-4" type="radio" {...register('businessType')} value={value} checked={businessType === value} />
+                      {value}
+                    </label>
+                  ))}
                 </div>
               </div>
 
               <div className="space-y-3">
-                <input className="INPUT" placeholder="Название компании (если есть)" type="text" value={naming} onChange={(e) => setNaming(e.target.value)} />
-                <input className="INPUT" placeholder="Ваш город" type="text" value={city} onChange={(e) => setCity(e.target.value)} />
-                <input className="INPUT" placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input className="INPUT" placeholder="Телефон" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                <textarea className="INPUT" placeholder="Комментарий (необязательно)" value={message} onChange={(e) => setMessage(e.target.value)} rows={5}></textarea>
+                <input {...register('naming')} placeholder="Название компании" type="text" className="INPUT" />
+                <input {...register('city')} placeholder="Ваш город" type="text" className="INPUT" />
+                <input {...register('email')} placeholder="E-mail" type="email" className="INPUT" />
+                <input {...register('phone')} placeholder="Телефон" type="tel" className="INPUT" />
+                <textarea {...register('message')} placeholder="Комментарий (необязательно)" className="INPUT" rows={5}></textarea>
               </div>
             </div>
 

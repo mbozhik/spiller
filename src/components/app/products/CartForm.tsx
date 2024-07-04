@@ -1,24 +1,62 @@
-import {useState, useEffect} from 'react'
-import {urlForImage} from '@/lib/sanity'
+import {useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
 
+import {urlForImage} from '@/lib/sanity'
 import {useCartCounter} from '@/store'
 
+import Image from 'next/image'
+import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
 import {CartItem} from '##/products/[slug]/CartButton' // types
 
-import Title from '#/UI/Title'
-import Image from 'next/image'
+type FormFields = {
+  name: string
+  email: string
+  phone: string
+  message: string
+}
 
 const Form = ({onClose}) => {
   const [submitMessage, setSubmitMessage] = useState('')
-
   const [cart, setCart] = useState<CartItem[]>([])
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [message, setMessage] = useState('')
 
   const {resetCart} = useCartCounter((state) => state)
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<FormFields>()
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('/api/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject: 'КОРЗИНА',
+          email: data.email,
+          message: data.message,
+          name: data.name,
+          phone: data.phone,
+          items: cart,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send data')
+      }
+
+      setSubmitMessage('Форма отправлена!')
+      setTimeout(() => {
+        clearCart()
+      }, 1500)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,63 +76,6 @@ const Form = ({onClose}) => {
     const cartData: CartItem[] = JSON.parse(window.localStorage.getItem('cart') || '[]')
     setCart(cartData)
   }, [])
-
-  function submitForm(e) {
-    e.preventDefault()
-
-    const sendData = async () => {
-      // Convert cart array to string with commas between products
-      const cartString = cart
-        .map((item) =>
-          JSON.stringify({
-            name: item.name,
-            article: item.article,
-            price: item.price,
-            quantity: item.quantity,
-          }),
-        )
-        .join(',')
-
-      const data = {
-        cart: cartString,
-        name,
-        email,
-        phone,
-        message,
-      }
-
-      const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbyq3hIKQ3NEcQscqMqPE1CylgJXcgm-yb6xuvI4UivoiPPLgo-S2kVh7_opPFxlBI0/exec'
-
-      try {
-        const response = await fetch(GOOGLE_SHEET_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
-          body: JSON.stringify(data),
-        })
-
-        if (!response.ok) {
-          throw new Error('Failed to send data')
-        }
-
-        const responseData = await response.json()
-        console.log(data)
-
-        console.log('Response Data:', responseData)
-
-        setSubmitMessage('Форма отправлена!')
-        setTimeout(() => {
-          onClose()
-        }, 2000)
-      } catch (error) {
-        console.error('Error:', error)
-        setSubmitMessage('Ошибка')
-      }
-    }
-
-    sendData()
-  }
 
   const clearCart = () => {
     window.localStorage.removeItem('cart')
@@ -123,7 +104,7 @@ const Form = ({onClose}) => {
                 &times;
               </span>
             </div>
-            <form className="mt-3 space-y-5 sm:space-y-3" onSubmit={submitForm}>
+            <form className="mt-3 space-y-5 sm:space-y-3" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 {cart.map((item, idx) => (
                   <div className={`grid ${gridConfig.global} items-center justify-between`} key={idx}>
@@ -153,10 +134,15 @@ const Form = ({onClose}) => {
               <div className="w-full bg-custom-blue h-[1px]"></div>
 
               <div className="space-y-2.5">
-                <input className="INPUT" placeholder="Имя" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                <input className="INPUT" placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input className="INPUT" placeholder="Телефон" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                <textarea className="INPUT" placeholder="Комментарий" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+                <input className="INPUT" placeholder="Имя" type="text" {...register('name', {required: 'Заполните все поля'})} />
+                {errors.name && <span className="text-red-500">{errors.name.message}</span>}
+
+                <input className="INPUT" placeholder="E-mail" type="email" {...register('email', {required: 'Заполните все поля'})} />
+                {errors.email && <span className="text-red-500">{errors.email.message}</span>}
+                <input className="INPUT" placeholder="Телефон" type="tel" {...register('phone', {required: 'Заполните все поля'})} />
+                {errors.phone && <span className="text-red-500">{errors.phone.message}</span>}
+                <textarea className="INPUT" placeholder="Комментарий" {...register('message', {required: 'Заполните все поля'})}></textarea>
+                {errors.message && <span className="text-red-500">{errors.message.message}</span>}
               </div>
 
               <button className={`!w-full block text-center ${buttonVariants.default} ${buttonVariants.secondary} `} title="submit">
