@@ -7,9 +7,10 @@ import {product as productFilters} from '@/lib/categories_[product.ts]'
 import {filterTitles} from '@/lib/categorize_products'
 
 import {Product} from '@/app/products/page' // interface (types)
-import CheckboxBlock from '#/app/products/CheckboxBlock'
+import CheckboxBlock from '##/products/CheckboxBlock'
 import CatalogCard from '##/products/CatalogCard'
-import Button from '@/components/UI/Button'
+import Button from '#/UI/Button'
+import Title from '#/UI/Title'
 
 import {ChevronUp, ChevronDown, Search} from 'lucide-react'
 
@@ -136,7 +137,8 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
           <div className="absolute inset-0 grid w-full h-fit place-items-center">
-            <mark className="h-fit">Ничего не найдено</mark>
+            <Title text="Ничего не найдено" />
+            <Button text="Сбросить фильтры" classes="block w-[50%] text-base !mt-3" variant="secondary" onClick={() => setSelectedFilters([])}></Button>
           </div>
         ) : (
           filteredProducts.map((item, idx) => <CatalogCard key={idx} item={item} idx={idx} />)
