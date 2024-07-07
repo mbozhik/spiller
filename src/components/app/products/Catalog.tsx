@@ -47,9 +47,12 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
 
     let matchesSearchQuery = true
     if (searchQuery) {
-      const productName = product.name.toLowerCase()
-      const productDescription = product.description.toLowerCase()
-      matchesSearchQuery = productName.includes(searchQuery.toLowerCase()) || productDescription.includes(searchQuery.toLowerCase())
+      const productName = product.name.replace(/ ?- ?/g, ' ').replace(/\s+/g, '').toLowerCase()
+      const productDescription = product.description.replace(/\s+/g, '').toLowerCase()
+      const productArticle = product.article.toString().replace(/\s+/g, '').toLowerCase()
+      const lowerCaseSearchQuery = searchQuery.replace(/ ?- ?/g, ' ').replace(/\s+/g, '').toLowerCase()
+
+      matchesSearchQuery = productName.includes(lowerCaseSearchQuery) || productDescription.includes(lowerCaseSearchQuery) || productArticle.includes(lowerCaseSearchQuery)
     }
 
     return matchesFilters && matchesSearchQuery
