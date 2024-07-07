@@ -6,6 +6,8 @@ export const metadata: Metadata = {
 import {client} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
+import {shuffleArray} from '@/lib/utils'
+
 import Container from '#/Global/Container'
 import Catalog from '##/products/Catalog'
 
@@ -66,7 +68,7 @@ const ProductsPage = async () => {
 
   return (
     <Container className="w-[80%] xl:w-[90%]" marginBottom={true}>
-      <Catalog products={products} />
+      <Catalog products={shuffleArray(products)} />
     </Container>
   )
 }
