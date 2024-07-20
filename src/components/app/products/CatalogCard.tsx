@@ -4,7 +4,7 @@ import {urlForImage} from '@/lib/sanity'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import CartButton from '##/products/[slug]/CartButton'
+import CartButton from '##/products/Cart/CartButton'
 import {Product} from '@/app/products/page'
 
 interface CatalogCardProps {

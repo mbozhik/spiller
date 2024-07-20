@@ -8,7 +8,7 @@ import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 import PortableText from '#/UI/PortableText'
-import CartButton from '##/products/[slug]/CartButton'
+import CartButton from '##/products/Cart/CartButton'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(

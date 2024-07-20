@@ -7,7 +7,7 @@ import {useCartCounter} from '@/store'
 import Image from 'next/image'
 import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
-import {CartItem} from '##/products/[slug]/CartButton' // types
+import {CartItem} from '##/products/Cart/CartButton' // types
 
 type FormFields = {
   name: string
