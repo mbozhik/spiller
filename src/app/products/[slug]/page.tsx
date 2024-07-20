@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
+import PortableText from '#/UI/PortableText'
 import CartButton from '##/products/[slug]/CartButton'
 
 async function getData(slug): Promise<Product | null> {
@@ -16,7 +17,12 @@ async function getData(slug): Promise<Product | null> {
         caption,
         article,
         volume,
-        description,
+
+        short_description,
+        full_description,
+        utilization,
+        composition,
+
         usage,
         price,
         slug,
@@ -58,7 +64,7 @@ const ProductPage = async ({params}) => {
             <Title text={product.name} />
           </div>
 
-          <Text text={product.description} />
+          <PortableText value={product.short_description} />
 
           <div className="flex flex-col gap-4 text-custom-blue">
             <h2 className="text-3xl font-medium">{product.price} тг</h2>

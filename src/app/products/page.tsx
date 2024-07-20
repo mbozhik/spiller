@@ -16,8 +16,12 @@ export interface Product {
   caption: string
   article: number
   volume: string
-  description: string
-  usage: string
+
+  short_description: any
+  full_description: any
+  utilization: any
+  composition: any
+
   price: number
   slug: {current: string}
   image?: Array<{asset: {url: string}}>
