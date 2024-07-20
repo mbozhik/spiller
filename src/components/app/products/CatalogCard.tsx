@@ -26,8 +26,9 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
         <h1 className="text-custom-grey2">{item.caption}</h1>
       </Link>
 
-      <div className="flex justify-between items-center">
-        <CartButton product={item} className="text-base w-full block" />
+      <div className="flex items-center justify-between">
+        <CartButton product={item} className="text-base" />
+
         <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
       </div>
 
