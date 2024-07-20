@@ -7,7 +7,9 @@ import Image from 'next/image'
 import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
-import CartButton from '##/products/[slug]/CartButton'
+import PortableText from '#/UI/PortableText'
+import ProductInfo from '##/products/ProductInfo'
+import CartButton from '##/products/Cart/CartButton'
 
 async function getData(slug): Promise<Product | null> {
   const data = await client.fetch<Product>(
@@ -16,7 +18,12 @@ async function getData(slug): Promise<Product | null> {
         caption,
         article,
         volume,
-        description,
+
+        short_description,
+        full_description,
+        utilization,
+        composition,
+
         usage,
         price,
         slug,
@@ -46,31 +53,33 @@ const ProductPage = async ({params}) => {
   }
 
   return (
-    <Container className="w-[70%] xl:w-[80%] sm:w" marginBottom={true}>
-      <article className={`flex items-center sm:flex-col gap-10 sm:gap-5`}>
+    <Container className="w-[70%] xl:w-[80%]" marginBottom={true}>
+      <article className={`flex items-center sm:flex-col gap-10 sm:gap-5 mb-[10vh] sm:mb-[7vh]`}>
         <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
-          <Image quality={100} className="object-contain" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+          <Image quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
         </div>
 
-        <div className="space-y-5 sm:space-y-2 w-[50%] xl:w-[55%] sm:w-full">
+        <div className="space-y-5 sm:space-y-3 w-[50%] xl:w-[55%] sm:w-full">
           <div className="space-y-2">
             <mark>Dr. Spiller</mark>
             <Title text={product.name} />
-          </div>
 
-          <Text text={product.description} />
+            <PortableText value={product.short_description} />
+          </div>
 
           <div className="flex flex-col gap-4 text-custom-blue">
             <h2 className="text-3xl font-medium">{product.price} тг</h2>
-            <CartButton product={product} className="text-base px-20" />
+            <CartButton product={product} className="px-20 text-base sm:!w-full" />
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 sm:!mt-3">
             <Text text={`Артикул: <b>${product.article}</b>`} />
             <Text text={`Объем: <b>${product.volume}</b>`} />
           </div>
         </div>
       </article>
+
+      <ProductInfo product={product} />
     </Container>
   )
 }

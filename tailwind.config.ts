@@ -58,6 +58,7 @@ const config = {
       api.matchUtilities({s: (value: string) => ({width: value, height: value})}, {values: api.theme('width')})
     }),
     require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
   ],
 } satisfies Config
 

@@ -45,9 +45,5 @@ export default function CartButton({product, variant, className}: CartButtonProp
     addProduct(count)
   }
 
-  return (
-    <div>
-      <Button text="В корзину" classes={className} variant={variant} onClick={handleAddToCart} />
-    </div>
-  )
+  return <Button text="В корзину" classes={className} variant={variant} onClick={handleAddToCart} />
 }

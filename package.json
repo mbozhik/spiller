@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@bozzhik/is-mobile": "^0.1.1",
+    "@portabletext/react": "^3.1.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@react-email/components": "^0.0.21",
     "@sanity/image-url": "^1.0.2",
+    "@tailwindcss/typography": "^0.5.13",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.383.0",

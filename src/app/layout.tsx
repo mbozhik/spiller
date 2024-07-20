@@ -6,7 +6,7 @@ import './globals.css'
 import Analytics from '#/Analytics'
 import Header from '#/Global/Header/Header'
 import Footer from '#/Global/Footer'
-import CartWidget from '##/products/[slug]/CartWidget'
+import CartWidget from '##/products/Cart/CartWidget'
 
 const openSans = Open_Sans({
   subsets: ['latin'],

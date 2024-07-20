@@ -7,7 +7,7 @@ import {useCartCounter} from '@/store'
 import Image from 'next/image'
 import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
-import {CartItem} from '##/products/[slug]/CartButton' // types
+import {CartItem} from '##/products/Cart/CartButton' // types
 
 type FormFields = {
   name: string
@@ -85,6 +85,10 @@ const Form = ({onClose}) => {
     onClose()
   }
 
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0)
+  }
+
   const gridConfig = {
     global: 'grid-cols-12 sm:grid-col-span-1',
     info: 'col-span-10 sm:col-span-12',
@@ -116,17 +120,24 @@ const Form = ({onClose}) => {
                         <span className="text-sm">{item.article}</span>
                         <div className="hidden sm:gap-5 sm:items-center sm:flex">
                           <span className="text-sm">{item.quantity} шт.</span>
-                          <span className="font-bold">{item.price} тг.</span>
+                          <span className="font-bold">{item.price} тг</span>
                         </div>
                       </div>
                     </div>
 
                     <div className={`flex flex-col justify-self-end w-full text-left sm:hidden ${gridConfig.price}`}>
-                      <span className="font-bold">{item.price} тг.</span>
+                      <span className="font-bold">{item.price} тг</span>
                       <span className="text-sm">{item.quantity} шт.</span>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="flex flex-col gap-1 items-end text-lg font-semibold">
+                <div className="w-full bg-custom-blue h-[1px]"></div>
+                <span>
+                  Всего: <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
+                </span>
               </div>
 
               <Button text="Очистить корзину" classes="text-base py-1 !w-full block" onClick={clearCart} />

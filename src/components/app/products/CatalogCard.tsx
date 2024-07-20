@@ -4,7 +4,7 @@ import {urlForImage} from '@/lib/sanity'
 
 import Link from 'next/link'
 import Image from 'next/image'
-import CartButton from '##/products/[slug]/CartButton'
+import CartButton from '##/products/Cart/CartButton'
 import {Product} from '@/app/products/page'
 
 interface CatalogCardProps {
@@ -26,8 +26,9 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
         <h1 className="text-custom-grey2">{item.caption}</h1>
       </Link>
 
-      <div className="flex justify-between items-center">
-        <CartButton product={item} className="text-base w-full block" />
+      <div className="flex items-center justify-between">
+        <CartButton product={item} className="text-base" />
+
         <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
       </div>
 
