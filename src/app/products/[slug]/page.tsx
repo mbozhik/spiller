@@ -8,6 +8,7 @@ import Container from '#/Global/Container'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 import PortableText from '#/UI/PortableText'
+import ProductInfo from '##/products/ProductInfo'
 import CartButton from '##/products/Cart/CartButton'
 
 async function getData(slug): Promise<Product | null> {
@@ -52,10 +53,10 @@ const ProductPage = async ({params}) => {
   }
 
   return (
-    <Container className="w-[70%] xl:w-[80%] sm:w" marginBottom={true}>
-      <article className={`flex items-center sm:flex-col gap-10 sm:gap-5`}>
+    <Container className="w-[70%] xl:w-[80%]" marginBottom={true}>
+      <article className={`flex items-center sm:flex-col gap-10 sm:gap-5 mb-[10vh]`}>
         <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
-          <Image quality={100} className="object-contain" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+          <Image quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
         </div>
 
         <div className="space-y-5 sm:space-y-2 w-[50%] xl:w-[55%] sm:w-full">
@@ -68,7 +69,7 @@ const ProductPage = async ({params}) => {
 
           <div className="flex flex-col gap-4 text-custom-blue">
             <h2 className="text-3xl font-medium">{product.price} тг</h2>
-            <CartButton product={product} className="text-base px-20" />
+            <CartButton product={product} className="px-20 text-base" />
           </div>
 
           <div className="flex gap-3">
@@ -77,6 +78,8 @@ const ProductPage = async ({params}) => {
           </div>
         </div>
       </article>
+
+      <ProductInfo product={product} />
     </Container>
   )
 }
