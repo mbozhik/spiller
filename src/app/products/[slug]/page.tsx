@@ -9,6 +9,7 @@ import Title from '#/UI/Title'
 import Text from '#/UI/Text'
 import PortableText from '#/UI/PortableText'
 import ProductInfo from '##/products/ProductInfo'
+import ProductBack from '##/products/ProductBack'
 import CartButton from '##/products/Cart/CartButton'
 
 async function getData(slug): Promise<Product | null> {
@@ -54,6 +55,8 @@ const ProductPage = async ({params}) => {
 
   return (
     <Container className="w-[70%] xl:w-[80%]" marginBottom={true}>
+      <ProductBack />
+
       <article className={`flex items-center sm:flex-col gap-10 sm:gap-5 mb-[10vh] sm:mb-[7vh]`}>
         <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
           <Image quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
