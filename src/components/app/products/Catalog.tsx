@@ -14,10 +14,6 @@ import Title from '#/UI/Title'
 
 import {ChevronUp, ChevronDown, Search} from 'lucide-react'
 
-interface CatalogProps {
-  products: Product[]
-}
-
 interface Filter {
   filterName: string
   filterOption: string
@@ -29,7 +25,7 @@ const gridConfig = {
   grid: 'col-span-8 sm:col-span-10',
 }
 
-const Catalog: React.FC<CatalogProps> = ({products}) => {
+const Catalog: React.FC<{products: Product[]}> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
   const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
   const [searchQuery, setSearchQuery] = useState('')
@@ -49,11 +45,11 @@ const Catalog: React.FC<CatalogProps> = ({products}) => {
     let matchesSearchQuery = true
     if (searchQuery) {
       const productName = product.name.replace(/ ?- ?/g, ' ').replace(/\s+/g, '').toLowerCase()
-      const productDescription = product.description.replace(/\s+/g, '').toLowerCase()
+      const productCaption = product.caption.replace(/\s+/g, '').toLowerCase()
       const productArticle = product.article.toString().replace(/\s+/g, '').toLowerCase()
       const lowerCaseSearchQuery = searchQuery.replace(/ ?- ?/g, ' ').replace(/\s+/g, '').toLowerCase()
 
-      matchesSearchQuery = productName.includes(lowerCaseSearchQuery) || productDescription.includes(lowerCaseSearchQuery) || productArticle.includes(lowerCaseSearchQuery)
+      matchesSearchQuery = productName.includes(lowerCaseSearchQuery) || productCaption.includes(lowerCaseSearchQuery) || productArticle.includes(lowerCaseSearchQuery)
     }
 
     return matchesFilters && matchesSearchQuery
