@@ -170,7 +170,7 @@ const Form = ({onClose}) => {
                         <span className="text-sm">{item.quantity} шт.</span>
                       </div>
 
-                      <button className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={() => removeItem(idx)}>
+                      <button type="button" className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={() => removeItem(idx)}>
                         <SquareX strokeWidth={1.7} />
                       </button>
                     </div>
@@ -194,7 +194,7 @@ const Form = ({onClose}) => {
                       Всего: <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
                     </span>
 
-                    <button className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={clearCart}>
+                    <button type="button" className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={clearCart}>
                       <SquareX strokeWidth={1.7} />
                     </button>
                   </div>

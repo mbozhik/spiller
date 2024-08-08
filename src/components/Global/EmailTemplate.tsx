@@ -14,9 +14,10 @@ interface EmailTemplateProps {
 
   cosmetologist?: boolean
   items?: any
+  promoDetails?: string
 }
 
-export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items}: EmailTemplateProps) => {
+export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items, promoDetails}: EmailTemplateProps) => {
   return (
     <Html>
       <Head />
@@ -53,6 +54,12 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                         </li>
                       ))}
                     </ol>
+                  </Text>
+                )}
+
+                {promoDetails && (
+                  <Text style={{...paragraph, color: '#7D756F'}}>
+                    <b>{promoDetails}</b>
                   </Text>
                 )}
 
