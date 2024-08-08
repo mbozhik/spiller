@@ -1,10 +1,12 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {isMobile} from '@bozzhik/is-mobile'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 import {filterTitles} from '@/lib/categorize_products'
+
+import {useFilterStore} from '@/state/filters'
 
 import {Product} from '@/app/products/page' // interface (types)
 import CheckboxBlock from '##/products/CheckboxBlock'
@@ -26,9 +28,15 @@ const gridConfig = {
 }
 
 const Catalog: React.FC<{products: Product[]}> = ({products}) => {
-  const [selectedFilters, setSelectedFilters] = useState<Filter[]>([])
+  const {filters, addFilter, removeFilter, resetFilters} = useFilterStore()
+
+  const [selectedFilters, setSelectedFilters] = useState<Filter[]>(filters)
   const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
   const [searchQuery, setSearchQuery] = useState('')
+
+  useEffect(() => {
+    setSelectedFilters(filters)
+  }, [filters])
 
   const filteredProducts = products.filter((product) => {
     if (selectedFilters.length === 0 && !searchQuery) return true
@@ -37,7 +45,6 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
     if (selectedFilters.length > 0) {
       matchesFilters = selectedFilters.every((filter) => {
         if (!product[filter.filterName]) return false
-
         return product[filter.filterName]?.includes(filter.filterOption)
       })
     }
@@ -59,17 +66,18 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
     let updatedFilters: Filter[] = [...selectedFilters]
 
     if (checked) {
-      // If the filter being added is a main filter, remove any existing main filter first
       if (filterName === 'main_filter') {
         updatedFilters = updatedFilters.filter((filter) => filter.filterName !== 'main_filter')
       } else {
-        // For non-main filters, remove any existing filter with the same name
-        updatedFilters = updatedFilters.filter((filter) => filter.filterName !== filterName)
+        updatedFilters = updatedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption))
       }
 
-      updatedFilters.push({filterName, filterOption})
+      const newFilter = {filterName, filterOption}
+      updatedFilters.push(newFilter)
+      addFilter(newFilter)
     } else {
       updatedFilters = updatedFilters.filter((filter) => !(filter.filterName === filterName && filter.filterOption === filterOption))
+      removeFilter(filterName, filterOption)
     }
 
     setSelectedFilters(updatedFilters)
@@ -127,14 +135,31 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
           )
         })}
 
-        {selectedFilters.length > 0 && <Button text="Сбросить фильтры" classes="block w-full text-base !mt-4" onClick={() => setSelectedFilters([])}></Button>}
+        {selectedFilters.length > 0 && (
+          <Button
+            text="Сбросить фильтры"
+            classes="block w-full text-base !mt-4"
+            onClick={() => {
+              setSelectedFilters([])
+              resetFilters()
+            }}
+          ></Button>
+        )}
       </section>
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
           <div className="absolute inset-0 grid w-full h-fit place-items-center">
             <Title text="Ничего не найдено" />
-            <Button text="Сбросить фильтры" classes="block w-[50%] text-base !mt-3" variant="secondary" onClick={() => setSelectedFilters([])}></Button>
+            <Button
+              text="Сбросить фильтры"
+              classes="block w-[50%] text-base !mt-3"
+              variant="secondary"
+              onClick={() => {
+                setSelectedFilters([])
+                resetFilters()
+              }}
+            ></Button>
           </div>
         ) : (
           filteredProducts.map((item, idx) => <CatalogCard key={idx} item={item} idx={idx} />)
