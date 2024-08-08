@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 import {urlForImage} from '@/lib/sanity'
-import {useCartCounter} from '@/store'
+import {useCartCounter} from '@/state/cart'
 
 import Image from 'next/image'
 import Title from '#/UI/Title'

@@ -1,6 +1,6 @@
 'use client'
 
-import {useCartCounter} from '@/store'
+import {useCartCounter} from '@/state/cart'
 
 import {Product} from '@/app/products/page' // types
 import Button from '#/UI/Button'
