@@ -5,6 +5,8 @@ import {urlForImage} from '@/lib/sanity'
 import {useCartCounter} from '@/state/cart'
 
 import Image from 'next/image'
+import {SquareX} from 'lucide-react'
+
 import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
 import {CartItem} from '##/products/Cart/CartButton' // types
@@ -20,7 +22,7 @@ const Form = ({onClose}) => {
   const [submitMessage, setSubmitMessage] = useState('')
   const [cart, setCart] = useState<CartItem[]>([])
 
-  const {resetCart} = useCartCounter((state) => state)
+  const {removeProduct, resetCart} = useCartCounter((state) => state)
 
   const {
     register,
@@ -85,13 +87,27 @@ const Form = ({onClose}) => {
     onClose()
   }
 
+  const removeItem = (index: number) => {
+    const productToRemove = cart[index]
+    const newCart = cart.filter((_, idx) => idx !== index)
+
+    setCart(newCart)
+    window.localStorage.setItem('cart', JSON.stringify(newCart))
+
+    if (newCart.length === 0) {
+      onClose()
+    }
+
+    removeProduct(productToRemove.quantity)
+  }
+
   const calculateTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0)
   }
 
   const gridConfig = {
-    global: 'grid-cols-12 sm:grid-col-span-1',
-    info: 'col-span-10 sm:col-span-12',
+    global: 'grid-cols-10 sm:grid-col-span-1',
+    info: 'col-span-8 sm:col-span-12',
     price: 'col-span-2 sm:col-span-12',
   }
 
@@ -125,9 +141,15 @@ const Form = ({onClose}) => {
                       </div>
                     </div>
 
-                    <div className={`flex flex-col justify-self-end w-full text-left sm:hidden ${gridConfig.price}`}>
-                      <span className="font-bold">{item.price} тг</span>
-                      <span className="text-sm">{item.quantity} шт.</span>
+                    <div className={`flex justify-end gap-5 ${gridConfig.price}`}>
+                      <div className={`flex flex-col justify-self-end w-fit text-left sm:hidden`}>
+                        <span className="font-bold">{item.price} тг</span>
+                        <span className="text-sm">{item.quantity} шт.</span>
+                      </div>
+
+                      <button className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={() => removeItem(idx)}>
+                        <SquareX />
+                      </button>
                     </div>
                   </div>
                 ))}
