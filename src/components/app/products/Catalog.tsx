@@ -36,6 +36,12 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
 
   useEffect(() => {
     setSelectedFilters(filters)
+
+    if (!isMobile) {
+      // Expand all groups that have selected filters and always expand main_filter
+      const newExpandedFilters = productFilters.map((filter) => filter.name === 'main_filter' || filters.some((selectedFilter) => selectedFilter.filterName === filter.name))
+      setExpandedFilters(newExpandedFilters)
+    }
   }, [filters])
 
   const filteredProducts = products.filter((product) => {
@@ -142,6 +148,8 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
             onClick={() => {
               setSelectedFilters([])
               resetFilters()
+              // Ensure main_filter is always expanded
+              setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
             }}
           ></Button>
         )}
@@ -158,6 +166,8 @@ const Catalog: React.FC<{products: Product[]}> = ({products}) => {
               onClick={() => {
                 setSelectedFilters([])
                 resetFilters()
+                // Ensure main_filter is always expanded
+                setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
               }}
             ></Button>
           </div>
