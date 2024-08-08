@@ -31,7 +31,6 @@ export interface Product {
   product_type: string
   by_intention: string[]
   product_line: string
-  [x: string]: any
 }
 
 async function getData(): Promise<Product[]> {

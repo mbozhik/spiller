@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react'
-import {useCartCounter} from '@/store'
+import {useCartCounter} from '@/state/cart'
 
 import {ShoppingBag} from 'lucide-react'
 import CartForm from '##/products/CartForm'

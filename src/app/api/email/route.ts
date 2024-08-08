@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
 
         cosmetologist: body.cosmetologist,
         items: body.items,
+        promoDetails: body.promoDetails,
       }),
     })
 
