@@ -18,9 +18,19 @@ type FormFields = {
   message: string
 }
 
+const promocodes = {
+  1: {
+    code: 'SPILLER',
+    discount: 10,
+  },
+}
+
 const Form = ({onClose}) => {
   const [submitMessage, setSubmitMessage] = useState('')
   const [cart, setCart] = useState<CartItem[]>([])
+  const [promoCode, setPromoCode] = useState('')
+  const [discount, setDiscount] = useState(0)
+  const [promoApplied, setPromoApplied] = useState(false)
 
   const {removeProduct, resetCart} = useCartCounter((state) => state)
 
@@ -44,6 +54,7 @@ const Form = ({onClose}) => {
           name: data.name,
           phone: data.phone,
           items: cart,
+          promoDetails: promoApplied ? `Промокод: ${promoCode} — ${discount}%` : 'Промокод не применен',
         }),
       })
 
@@ -102,7 +113,19 @@ const Form = ({onClose}) => {
   }
 
   const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    const total = cart.reduce((total, item) => total + item.price * item.quantity, 0)
+    return total - (total * discount) / 100
+  }
+
+  const applyPromoCode = () => {
+    const promo = Object.values(promocodes).find((p) => p.code === promoCode.toUpperCase())
+    if (promo) {
+      setDiscount(promo.discount)
+      setPromoApplied(true)
+    } else {
+      setDiscount(0)
+      setPromoApplied(false)
+    }
   }
 
   const gridConfig = {
@@ -148,21 +171,35 @@ const Form = ({onClose}) => {
                       </div>
 
                       <button className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={() => removeItem(idx)}>
-                        <SquareX />
+                        <SquareX strokeWidth={1.7} />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-col gap-1 items-end text-lg font-semibold">
-                <div className="w-full bg-custom-blue h-[1px]"></div>
-                <span>
-                  Всего: <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
-                </span>
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <input className="INPUT !px-3" placeholder="Промокод" type="text" value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
+                  <Button text="Применить" classes="text-base !w-full block" onClick={applyPromoCode} />
+                </div>
               </div>
 
-              <Button text="Очистить корзину" classes="text-base py-1 !w-full block" onClick={clearCart} />
+              <div className="">
+                <div className="flex items-center justify-between text-lg">
+                  {promoApplied ? <div className="text-custom-blue text-center">Промокод применен! Скидка: {discount}%</div> : <div></div>}
+
+                  <div className="flex items-center gap-4 font-semibold">
+                    <span>
+                      Всего: <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
+                    </span>
+
+                    <button className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={clearCart}>
+                      <SquareX strokeWidth={1.7} />
+                    </button>
+                  </div>
+                </div>
+              </div>
 
               <div className="w-full bg-custom-blue h-[1px]"></div>
 
