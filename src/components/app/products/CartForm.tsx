@@ -148,18 +148,18 @@ const Form = ({onClose}) => {
               </span>
             </div>
             <form className="mt-3 space-y-5 sm:space-y-3" onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className="sm:space-y-2.5">
                 {cart.map((item, idx) => (
-                  <div className={`grid ${gridConfig.global} items-center justify-between`} key={idx}>
-                    <div className={`flex items-center gap-2 sm:gap-0 ${gridConfig.info}`}>
-                      <Image src={urlForImage(item.image).url()} className="object-contain w-20 aspect-square" width={50} height={50} alt={`item ${idx}`} />
+                  <div className={`grid ${gridConfig.global} sm:flex items-center justify-between`} key={idx}>
+                    <div className={`flex items-center gap-2 sm:gap-2.5 ${gridConfig.info}`}>
+                      <Image src={urlForImage(item.image).url()} className="object-contain w-20 sm:w-14 aspect-square" width={50} height={50} alt={`item ${idx}`} />
 
                       <div className="flex flex-col">
-                        <span className="font-bold max-w-[30ch]">{item.name}</span>
+                        <span className="font-bold sm:text-sm max-w-[30ch]">{item.name}</span>
                         <span className="text-sm">{item.article}</span>
-                        <div className="hidden sm:gap-5 sm:items-center sm:flex">
+                        <div className="items-center hidden gap-3 sm:flex">
                           <span className="text-sm">{item.quantity} шт.</span>
-                          <span className="font-bold">{item.price} тг</span>
+                          <span className="font-bold sm:text-sm">{item.price} тг</span>
                         </div>
                       </div>
                     </div>
@@ -170,7 +170,7 @@ const Form = ({onClose}) => {
                         <span className="text-sm">{item.quantity} шт.</span>
                       </div>
 
-                      <button type="button" className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={() => removeItem(idx)}>
+                      <button type="button" className="text-right duration-200 w-fit justify-self-end text-custom-grey hover:text-custom-hytec" onClick={() => removeItem(idx)}>
                         <SquareX strokeWidth={1.7} />
                       </button>
                     </div>
@@ -181,23 +181,28 @@ const Form = ({onClose}) => {
               <div className="space-y-2">
                 <div className="flex gap-2">
                   <input className="INPUT !px-3" placeholder="Промокод" type="text" value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
-                  <Button text="Применить" classes="text-base !w-full block" onClick={applyPromoCode} />
+                  <Button text="Применить" classes="text-base !w-full block grid place-items-center" onClick={applyPromoCode} />
                 </div>
               </div>
 
-              <div className="">
-                <div className="flex items-center justify-between text-lg">
-                  {promoApplied ? <div className="text-custom-blue text-center">Промокод применен! Скидка: {discount}%</div> : <div></div>}
+              <div className="flex items-center justify-between text-lg font-semibold sm:text-base">
+                {promoApplied ? <div className="text-center text-custom-blue">Скидка: {discount}%</div> : <div></div>}
 
-                  <div className="flex items-center gap-4 font-semibold">
-                    <span>
-                      Всего: <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
-                    </span>
+                <div className="flex items-center gap-4">
+                  <span className="font-semibold">
+                    {promoApplied ? (
+                      <span className="flex items-center gap-2">
+                        <span className="line-through text-custom-blue opacity-70">{cart.reduce((total, item) => total + item.price * item.quantity, 0)} тг</span>
+                        <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
+                      </span>
+                    ) : (
+                      <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
+                    )}
+                  </span>
 
-                    <button type="button" className="text-right w-fit justify-self-end text-custom-grey hover:text-custom-hytec duration-200" onClick={clearCart}>
-                      <SquareX strokeWidth={1.7} />
-                    </button>
-                  </div>
+                  <button type="button" className="text-right duration-200 w-fit justify-self-end text-custom-grey hover:text-custom-hytec" onClick={clearCart}>
+                    <SquareX strokeWidth={1.7} />
+                  </button>
                 </div>
               </div>
 
