@@ -60,6 +60,11 @@ const product: SchemaTypeDefinition = {
       validation: (rule: Rule) => rule.required(),
     },
     {
+      name: 'discount_price',
+      title: 'Discount Price',
+      type: 'number',
+    },
+    {
       name: 'slug',
       title: 'Link',
       type: 'slug',
