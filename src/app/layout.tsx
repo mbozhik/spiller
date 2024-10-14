@@ -1,9 +1,10 @@
 import type {Metadata} from 'next'
 import {Open_Sans} from 'next/font/google'
-
 import './globals.css'
 
-import Analytics from '#/Analytics'
+import Analytics from '#/Global/Analytics'
+import MetaPixel from '#/Global/MetaPixel'
+
 import Header from '#/Global/Header/Header'
 import Footer from '#/Global/Footer'
 import CartWidget from '##/products/Cart/CartWidget'
@@ -61,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className="h-full scroll-smooth">
       <Analytics />
+      <MetaPixel />
       <body className={`h-full text-custom-grey relative ${openSans.className}`}>
         <section className="flex flex-col min-h-full">
           <Header />
