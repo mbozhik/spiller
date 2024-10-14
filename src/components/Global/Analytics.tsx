@@ -5,15 +5,19 @@ export default function Analytics() {
     <>
       {process.env.NODE_ENV === 'production' && (
         <>
-          <NextScript src="https://www.googletagmanager.com/gtag/js?id=G-ABCDEFGHIJK" strategy="afterInteractive" />
-          <NextScript id="google-analytics" strategy="afterInteractive">
+          <NextScript id="gtm-script" strategy="afterInteractive">
             {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){window.dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-ABCDEFGHIJK');
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-PSNNWQC7');
             `}
           </NextScript>
+
+          <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSNNWQC7" height="0" width="0" style={{display: 'none', visibility: 'hidden'}}></iframe>
+          </noscript>
 
           <NextScript
             id="yandex_metrika"
