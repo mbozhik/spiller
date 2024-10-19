@@ -1,6 +1,9 @@
 'use client'
+import {isMobile} from '@bozzhik/is-mobile'
 
 import Image from 'next/image'
+import SliderDiscount from '%/slider/discount.jpg'
+import SliderDiscountMobile from '%/slider/discount-mobile.jpg'
 import SliderImage1 from '%/slider/1.jpg'
 import SliderImage2 from '%/slider/2.jpg'
 import SliderImage3 from '%/slider/3.jpg'
@@ -16,7 +19,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 
 export default function Slider() {
-  const sliderImages = [SliderImage1, SliderImage2, SliderImage3, SliderImage4, SliderImage5, SliderImage6]
+  const sliderImages = [isMobile ? SliderDiscountMobile : SliderDiscount, SliderImage1, SliderImage2, SliderImage3, SliderImage4, SliderImage5, SliderImage6]
 
   return (
     <Swiper modules={[Pagination, Autoplay, EffectFade]} pagination={{clickable: true}} autoplay={{delay: 3500}} effect={'fade'} grabCursor={true} loop={true} className="mySwiper w-full h-[60vh] xl:h-[65vh] sm:h-[45vh]">
