@@ -23,6 +23,7 @@ export interface Product {
   composition: any
 
   price: number
+  discount_price?: number
   slug: {current: string}
   image?: Array<{asset: {url: string}}>
   main_filter: string
@@ -43,6 +44,7 @@ async function getData(): Promise<Product[]> {
         description,
         usage,
         price,
+        discount_price,
         slug,
         image,
         main_filter,

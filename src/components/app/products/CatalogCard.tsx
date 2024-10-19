@@ -29,7 +29,14 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
       <div className="flex items-center justify-between">
         <CartButton product={item} className="text-base" />
 
-        <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
+        {item.discount_price ? (
+          <div className="flex items-end gap-1.5">
+            <h1 className="text-lg font-medium line-through text-custom-blue/50">{item.price}</h1>
+            <h1 className="text-2xl font-medium text-custom-blue">{item.discount_price} тг</h1>
+          </div>
+        ) : (
+          <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
+        )}
       </div>
 
       {/* <div className="flex flex-wrap gap-1">

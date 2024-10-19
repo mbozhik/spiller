@@ -27,6 +27,7 @@ async function getData(slug): Promise<Product | null> {
 
         usage,
         price,
+        discount_price,
         slug,
         image,
         main_filter,
@@ -71,7 +72,14 @@ const ProductPage = async ({params}) => {
           </div>
 
           <div className="flex flex-col gap-4 text-custom-blue">
-            <h2 className="text-3xl font-medium">{product.price} тг</h2>
+            {product.discount_price ? (
+              <div className="flex items-end gap-1.5">
+                <h2 className="text-lg font-medium line-through text-custom-blue/50">{product.price}</h2>
+                <h2 className="text-3xl font-medium">{product.discount_price} тг</h2>
+              </div>
+            ) : (
+              <h2 className="text-3xl font-medium">{product.price} тг</h2>
+            )}
             <CartButton product={product} className="px-20 text-base sm:!w-full" />
           </div>
 
