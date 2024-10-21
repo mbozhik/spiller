@@ -25,7 +25,7 @@ export default function Slider() {
     <Swiper modules={[Pagination, Autoplay, EffectFade]} pagination={{clickable: true}} autoplay={{delay: 3500}} effect={'fade'} grabCursor={true} loop={true} className="mySwiper w-full h-[60vh] xl:h-[65vh] sm:h-[45vh]">
       {sliderImages.map((image, index) => (
         <SwiperSlide className="relative grid place-items-center" key={index}>
-          <Image className="absolute inset-0 block object-cover s-full" src={image} alt={`slide-${index + 1}`} />
+          <Image quality={100} priority={true} className="absolute inset-0 block object-cover s-full" src={image} alt={`slide-${index + 1}`} />
         </SwiperSlide>
       ))}
     </Swiper>
