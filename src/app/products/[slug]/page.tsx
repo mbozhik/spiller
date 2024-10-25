@@ -1,7 +1,7 @@
 import {client, urlForImage} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
-import {Product} from '@/app/products/page' // types
+import {TProduct} from '@/lib/get_products'
 
 import Image from 'next/image'
 import Container from '#/Global/Container'
@@ -12,8 +12,8 @@ import ProductInfo from '##/products/ProductInfo'
 import ProductBack from '##/products/ProductBack'
 import CartButton from '##/products/Cart/CartButton'
 
-async function getData(slug): Promise<Product | null> {
-  const data = await client.fetch<Product>(
+async function getData(slug): Promise<TProduct | null> {
+  const data = await client.fetch<TProduct>(
     `*[_type == 'product' && slug.current == '${slug}'][0] {
         name,
         caption,
@@ -48,7 +48,7 @@ async function getData(slug): Promise<Product | null> {
 }
 
 const ProductPage = async ({params}) => {
-  const product: Product = await getData(params.slug)
+  const product: TProduct = await getData(params.slug)
 
   if (!product) {
     return <mark>ошибка</mark>

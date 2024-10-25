@@ -8,7 +8,7 @@ import {filterTitles} from '@/lib/categorize_products'
 
 import {useFilterStore} from '@/state/filters'
 
-import {Product} from '@/app/products/page' // interface (types)
+import {TProduct} from '@/lib/get_products'
 import CheckboxBlock from '##/products/CheckboxBlock'
 import CatalogCard from '##/products/CatalogCard'
 import Button from '#/UI/Button'
@@ -27,7 +27,7 @@ const gridConfig = {
   grid: 'col-span-8 sm:col-span-10',
 }
 
-const Catalog: React.FC<{products: Product[]}> = ({products}) => {
+const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   const {filters, addFilter, removeFilter, resetFilters} = useFilterStore()
 
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>(filters)

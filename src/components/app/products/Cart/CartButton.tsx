@@ -2,7 +2,7 @@
 
 import {useCartCounter} from '@/state/cart'
 
-import {Product} from '@/app/products/page' // types
+import {TProduct} from '@/lib/get_products'
 import Button from '#/UI/Button'
 
 export interface CartItem {
@@ -15,7 +15,7 @@ export interface CartItem {
 }
 
 interface CartButtonProps {
-  product: Product
+  product: TProduct
   variant?: 'primary' | 'secondary'
   className?: string
 }

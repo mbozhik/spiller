@@ -1,14 +1,14 @@
 // import {compareParams, productParams} from '@/lib/categorize_products'
 
 import {urlForImage} from '@/lib/sanity'
+import {TProduct} from '@/lib/get_products'
 
 import Link from 'next/link'
 import Image from 'next/image'
 import CartButton from '##/products/Cart/CartButton'
-import {Product} from '@/app/products/page'
 
 interface CatalogCardProps {
-  item: Product
+  item: TProduct
   idx: number
 }
 
