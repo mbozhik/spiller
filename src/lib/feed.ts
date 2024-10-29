@@ -9,25 +9,30 @@ function escapeXML(value: string) {
 export function generateXML(products: TProduct[]) {
   const mainFilters = productFilters.find((filter: any) => filter.name === 'main_filter')?.options?.list || []
 
+  const getCategoryId = (filterValue: string) => {
+    const filterIndex = mainFilters.findIndex((filter: {value: string}) => filter.value === filterValue)
+    return filterIndex !== -1 ? `${filterIndex + 1}` : ''
+  }
+
   const categories = `
-    <categories>
-      ${mainFilters
-        .map(
-          (filter: {title: string; value: string}, index: number) => `
-        <category id="${filter.value}">${escapeXML(filter.title)}</category>`,
-        )
-        .join('')}
-    </categories>`
+  <categories>
+    ${mainFilters
+      .map(
+        (filter: {title: string; value: string}, index: number) => `
+      <category id="${index + 1}">${escapeXML(filter.title)}</category>`,
+      )
+      .join('')}
+  </categories>`
 
   const offers = products
     .map(
       (product) => `
-      <offer id="${product.slug.current}" available="true">
+      <offer id="${product.article}" available="true">
         <url>https://dr-spiller.kz/products/${product.slug.current}</url>
         <price>${product.discount_price || product.price}</price>
         <oldprice>${product.price}</oldprice>
         <currencyId>KZT</currencyId>
-        <categoryId>${product.main_filter}</categoryId>
+        <categoryId>${getCategoryId(product.main_filter)}</categoryId>
         <picture>${urlForImage(product.image).url()}</picture>
         <name>${escapeXML(product.name)}</name>
         <description>${escapeXML(product.full_description || '')}</description>
