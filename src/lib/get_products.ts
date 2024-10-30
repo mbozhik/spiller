@@ -14,8 +14,10 @@ type TProduct = {
 
   price: number
   discount_price?: number
+
   slug: {current: string}
   image?: Array<{asset: {url: string}}>
+
   main_filter: string
   for_face?: string
   for_body?: string
@@ -31,12 +33,18 @@ async function getProducts(): Promise<TProduct[]> {
         caption,
         article,
         volume,
-        description,
-        usage,
+
+        short_description,
+        full_description,
+        utilization,
+        composition,
+
         price,
         discount_price,
+
         slug,
         image,
+
         main_filter,
         for_face,
         for_body,

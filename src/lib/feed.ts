@@ -14,6 +14,10 @@ export function generateXML(products: TProduct[]) {
     return filterIndex !== -1 ? `${filterIndex + 1}` : ''
   }
 
+  const extractTextFromDescription = (description: any[]): string => {
+    return description.map((block) => block.children.map((child) => child.text).join('')).join(' ')
+  }
+
   const categories = `
   <categories>
     ${mainFilters
@@ -25,8 +29,10 @@ export function generateXML(products: TProduct[]) {
   </categories>`
 
   const offers = products
-    .map(
-      (product) => `
+    .map((product) => {
+      const shortDescription = Array.isArray(product.short_description) ? extractTextFromDescription(product.short_description) : product.short_description || ' '
+
+      return `
       <offer id="${product.article}" available="true">
         <url>https://dr-spiller.kz/products/${product.slug.current}</url>
         <price>${product.discount_price || product.price}</price>
@@ -35,11 +41,10 @@ export function generateXML(products: TProduct[]) {
         <categoryId>${getCategoryId(product.main_filter)}</categoryId>
         <picture>${urlForImage(product.image).url()}</picture>
         <name>${escapeXML(product.name)}</name>
-        <description>${escapeXML(product.full_description || '')}</description>
+        <description>${escapeXML(shortDescription)}</description>
         <sales_notes>Скидки до 50%. Бесплатная доставка в день заказа!</sales_notes>
-        <country_of_origin>Германия</country_of_origin>
-      </offer>`,
-    )
+      </offer>`
+    })
     .join('')
 
   return `<shop>
