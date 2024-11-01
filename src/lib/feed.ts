@@ -29,11 +29,11 @@ export function generateXML(products: TProduct[]) {
   </categories>`
 
   const offers = products
-    .map((product) => {
+    .map((product, index) => {
       const shortDescription = Array.isArray(product.short_description) ? extractTextFromDescription(product.short_description) : product.short_description || ' '
 
       return `
-      <offer id="${product.article}" available="true">
+      <offer id="${index + 1}" available="true">
         <url>https://dr-spiller.kz/products/${product.slug.current}</url>
         <price>${product.discount_price || product.price}</price>
         <oldprice>${product.price}</oldprice>
@@ -47,7 +47,11 @@ export function generateXML(products: TProduct[]) {
     })
     .join('')
 
-  return `<shop>
+  const currentDate = new Date().toISOString().replace(/\.\d{3}Z$/, '+03:00')
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="${currentDate}">
+  <shop>
     <name>Официальный дистрибьютор Dr. Spiller в Казахстане и Кыргызстане</name>
     <company>WEC Group</company>
     <url>https://dr-spiller.kz/</url>
@@ -58,5 +62,6 @@ export function generateXML(products: TProduct[]) {
     <offers>
       ${offers}
     </offers>
-  </shop>`
+  </shop>
+</yml_catalog>`
 }
