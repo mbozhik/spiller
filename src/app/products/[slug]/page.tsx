@@ -64,9 +64,12 @@ const ProductPage = async ({params}) => {
         </div>
 
         <div className="space-y-5 sm:space-y-3 w-[50%] xl:w-[55%] sm:w-full">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <mark>Dr. Spiller</mark>
-            <Title text={product.name} />
+            <div className="space-y-0">
+              <Title text={product.name} />
+              <span className="block text-lg border-b-[1px] border-custom-blue w-fit font-medium text-custom-blue">{product.caption}</span>
+            </div>
 
             <PortableText value={product.short_description} />
           </div>
