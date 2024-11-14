@@ -78,6 +78,12 @@ const product: SchemaTypeDefinition = {
       title: 'Image',
       type: 'image',
     },
+    {
+      name: 'more_images',
+      title: 'More images',
+      type: 'array',
+      of: [{type: 'image'}],
+    },
 
     defineField({
       name: 'main_filter',
