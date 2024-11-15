@@ -9,6 +9,7 @@ export default function NavBar() {
   const navItems = {
     index: {href: '/', text: 'Главная'},
     products: {href: 'products', text: 'Продукты'},
+    cosmetology: {href: 'cosmetology', text: 'Косметология'},
     about: {href: 'about', text: 'О бренде'},
     buy: {href: 'buy', text: 'Где купить'},
     partnership: {href: 'partnership', text: 'Партнёрам'},
