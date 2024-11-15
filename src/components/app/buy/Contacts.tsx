@@ -17,7 +17,7 @@ interface ContactsData {
   image: string | StaticImageData
 }
 
-const contactsData: ContactsData = {
+export const contactsData: ContactsData = {
   title: 'КОНТАКТЫ:',
   buttons: {
     1: {

@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const buttonVariants = {
-  default: 'w-fit px-8 sm:px-4 py-2 text-xl sm:text-sm uppercase border duration-300 cursor-pointer text-center',
+  default: 'w-fit px-8 sm:px-2 py-2 text-xl sm:text-sm uppercase border duration-300 cursor-pointer text-center',
   primary: 'text-custom-blue border-custom-blue hover:bg-custom-blue hover:text-white',
   secondary: 'text-white border-custom-blue bg-custom-blue hover:opacity-85',
 }
