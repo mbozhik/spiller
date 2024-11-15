@@ -12,9 +12,13 @@ export default function Intro() {
         <Text text="Dr. Spiller сочетает немецкое качество и инновационный подход для ухода за вашей кожей. Современные технологии и натуральные ингредиенты обеспечивают долгосрочный результат, сохраняя молодость, сияние и здоровье кожи." />
       </div>
 
-      <div className="flex gap-2 mx-auto sm:mx-0">
-        <Button blank={true} href="https://zapis.kz/salon/dr-spiller-10532?redirect=true" text="Онлайн-запись" />
-        <Button href={contactsData.buttons[1].href} variant="secondary" text="Запись по телефону" />
+      <div className="mx-auto space-y-1.5">
+        <div className="flex gap-2 mx-auto sm:mx-0">
+          <Button blank={true} href="https://zapis.kz/salon/dr-spiller-10532?redirect=true" text="Онлайн-запись" />
+          <Button href={contactsData.buttons[1].href} variant="secondary" text="Запись по телефону" />
+        </div>
+
+        <span className="block text-xs text-center sm:text-start text-custom-blue">запишитесь на первую процедуру и получите приятный бонус</span>
       </div>
     </section>
   )
