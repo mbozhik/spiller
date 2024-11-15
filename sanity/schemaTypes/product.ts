@@ -1,7 +1,7 @@
 import {defineField} from 'sanity'
 import {Rule, SchemaTypeDefinition} from 'sanity'
 
-const product: SchemaTypeDefinition = {
+export const product: SchemaTypeDefinition = {
   name: 'product',
   title: 'Products',
   type: 'document',
@@ -235,5 +235,3 @@ const product: SchemaTypeDefinition = {
     },
   },
 }
-
-export default product

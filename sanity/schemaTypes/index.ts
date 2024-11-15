@@ -1,3 +1,4 @@
-import product from './product'
+import {product} from './product'
+import {procedures} from './procedure'
 
-export const schemaTypes = [product]
+export const schemaTypes = [product, procedures]
