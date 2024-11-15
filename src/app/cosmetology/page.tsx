@@ -10,6 +10,7 @@ import Container from '#/Global/Container'
 import Intro from '##/cosmetology/Intro'
 import Details from '##/cosmetology/Details'
 import Procedures from '##/cosmetology/Procedures'
+import Specialist from '##/cosmetology/Specialist'
 
 export default function Cosmetology() {
   return (
@@ -24,6 +25,8 @@ export default function Cosmetology() {
           <Details />
           <Procedures />
         </div>
+
+        <Specialist />
       </Container>
     </div>
   )
