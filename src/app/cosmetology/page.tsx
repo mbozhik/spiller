@@ -8,6 +8,7 @@ import CosmetologyImage from '%/slider/3.jpg'
 
 import Container from '#/Global/Container'
 import Intro from '##/cosmetology/Intro'
+import Details from '##/cosmetology/Details'
 
 export default function Cosmetology() {
   return (
@@ -15,8 +16,9 @@ export default function Cosmetology() {
       <section className="relative w-full h-[40vh] sm:h-[30vh]">
         <Image quality={100} priority={true} className="s-full object-top object-cover" src={CosmetologyImage} alt="" />
       </section>
-      <Container marginBottom={true} className="space-y-14 sm:space-y-7">
+      <Container marginBottom={true} className="space-y-20 sm:space-y-10">
         <Intro />
+        <Details />
       </Container>
     </div>
   )

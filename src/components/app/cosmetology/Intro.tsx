@@ -13,7 +13,7 @@ export default function Intro() {
       </div>
 
       <div className="flex gap-2 mx-auto sm:mx-0">
-        <Button href="https://zapis.kz/salon/dr-spiller-10532?redirect=true" text="Онлайн-запись" />
+        <Button blank={true} href="https://zapis.kz/salon/dr-spiller-10532?redirect=true" text="Онлайн-запись" />
         <Button href={contactsData.buttons[1].href} variant="secondary" text="Запись по телефону" />
       </div>
     </section>
