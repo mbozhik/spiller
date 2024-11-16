@@ -98,15 +98,30 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
       <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
-        <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT ">
-          <input
-            className="w-full pr-3.5 sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
-            placeholder="Поиск"
-            type="text"
-            value={searchQuery}
-            onChange={handleSearch} // search functionality
-          />
-          <Search className="s-6 mt-0.5" />
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT">
+            <input
+              className="w-full pr-3.5 sm:pr-5 border-none outline-none text-custom-blue placeholder:text-custom-blue"
+              placeholder="Поиск"
+              type="text"
+              value={searchQuery}
+              onChange={handleSearch} // search functionality
+            />
+            <Search className="s-6 mt-0.5" />
+          </div>
+
+          {selectedFilters.length > 0 && (
+            <Button
+              text="Сбросить фильтры"
+              classes="block w-full text-base"
+              onClick={() => {
+                setSelectedFilters([])
+                resetFilters()
+                // Ensure main_filter is always expanded
+                setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
+              }}
+            ></Button>
+          )}
         </div>
 
         {productFilters.map((filter, index) => {
@@ -140,19 +155,6 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
             </div>
           )
         })}
-
-        {selectedFilters.length > 0 && (
-          <Button
-            text="Сбросить фильтры"
-            classes="block w-full text-base !mt-4"
-            onClick={() => {
-              setSelectedFilters([])
-              resetFilters()
-              // Ensure main_filter is always expanded
-              setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
-            }}
-          ></Button>
-        )}
       </section>
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>

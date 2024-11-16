@@ -10,9 +10,9 @@ const emailsList = {
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const {email, message} = body
+  const {email} = body
 
-  if (!message || !email) {
+  if (!email) {
     return NextResponse.json({error: 'Missing required fields'}, {status: 400})
   }
 
