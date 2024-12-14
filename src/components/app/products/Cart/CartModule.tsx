@@ -51,7 +51,7 @@ export default function CartModule() {
   useEffect(() => {
     const cartData: CartItem[] = JSON.parse(window.localStorage.getItem('cart') || '[]')
     if (cartData.length === 0) {
-      router.push('/products')
+      setSubmitMessage('Корзина пуста')
     } else {
       setCart(cartData)
     }
@@ -136,12 +136,16 @@ export default function CartModule() {
   return (
     <div id="FORM_WRAPPER" className="w-[80%] sm:w-full mx-auto mb-[15vh]">
       {submitMessage ? (
-        <Title text={submitMessage} classes="text-center" />
+        <>
+          <Title text={submitMessage} classes="text-center" />
+          {submitMessage === 'Корзина пуста' && <Button text="Вернуться к продуктам" classes="mt-4 text-base !w-full block grid place-items-center" onClick={() => router.push('/products')} />}
+        </>
       ) : (
         <div className="flex flex-col gap-2 sm:gap-0">
           <div className="flex justify-between">
             <Title text="Ваш заказ:" />
           </div>
+
           <form className="mt-3 space-y-7 sm:space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div className="sm:space-y-3">
               {cart.map((item, idx) => (
@@ -233,6 +237,7 @@ export default function CartModule() {
               </li>
               <li>Отправка товара производится после оплаты. Доставка осуществляется по территории Казахстана с помощью сервиса СДЭК.</li>
               <li>Отправляя форму заказа, вы соглашаетесь на обработку ваших персональных данных.</li>
+              <li>Возврат товара надлежащего качества не производится, если коробка и продукт повреждены, вскрыты или использовались. Стоимость возврата товара надлежащего качества лежит на Покупателе.</li>
             </ol>
           </form>
         </div>
