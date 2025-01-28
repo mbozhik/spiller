@@ -1,5 +1,8 @@
 'use client'
 
+import type {CartItem} from '##/products/Cart/CartButton'
+import type {TPromocode} from '@/lib/get_promocodes'
+
 import {useRouter} from 'next/navigation'
 import {useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
@@ -13,7 +16,6 @@ import {SquareX} from 'lucide-react'
 
 import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
-import {CartItem} from '##/products/Cart/CartButton' // types
 
 type FormFields = {
   name: string
@@ -22,14 +24,7 @@ type FormFields = {
   message: string
 }
 
-const promocodes = {
-  1: {
-    code: 'SPILLER',
-    discount: 10,
-  },
-}
-
-export default function CartModule() {
+export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
   const router = useRouter()
   const [cart, setCart] = useState<CartItem[]>([])
 
@@ -117,7 +112,7 @@ export default function CartModule() {
   }
 
   const applyPromoCode = () => {
-    const promo = Object.values(promocodes).find((p) => p.code === promoCode.toUpperCase())
+    const promo = promocodes.find((p) => p.code === promoCode.toLowerCase())
     if (promo) {
       setDiscount(promo.discount)
       setPromoApplied(true)
