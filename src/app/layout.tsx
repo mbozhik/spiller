@@ -9,6 +9,9 @@ import Header from '#/Global/Header/Header'
 import Footer from '#/Global/Footer'
 import CartWidget from '##/products/Cart/CartWidget'
 
+export const dynamic = 'force-dynamic'
+export const revalidate = 86400
+
 const openSans = Open_Sans({
   subsets: ['latin'],
   display: 'swap',
