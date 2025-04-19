@@ -18,7 +18,7 @@ const ProductsPage = async () => {
 
   return (
     <Container className="w-[80%] xl:w-[90%]" marginBottom={true}>
-      <Catalog products={shuffleArray(products)} />
+      <Catalog view="products" products={shuffleArray(products)} />
     </Container>
   )
 }

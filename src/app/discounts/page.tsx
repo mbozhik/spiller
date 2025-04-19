@@ -5,9 +5,11 @@ export const metadata: Metadata = {
 
 import {TProduct, getProducts} from '@/lib/get_products'
 import {shuffleArray} from '@/lib/utils'
+import {redirect} from 'next/navigation'
 
 import Container from '#/Global/Container'
 import Catalog from '##/products/Catalog'
+import Title from '#/UI/Title'
 
 const DiscountsPage = async () => {
   const products: TProduct[] = await getProducts()
@@ -17,11 +19,19 @@ const DiscountsPage = async () => {
   }
 
   const discountedProducts = products.filter((product) => product.discount_price !== null)
-  // console.log(`products ${products.length} discounts ${discountedProducts.length}`)
+
+  if (discountedProducts.length === 0) {
+    return (
+      <Container className="w-[80%] xl:w-[90%]" marginBottom={true}>
+        <Title text="Нет продуктов на скидке" classes="text-center mb-5" />
+        {redirect('/products')}
+      </Container>
+    )
+  }
 
   return (
     <Container className="w-[80%] xl:w-[90%]" marginBottom={true}>
-      <Catalog products={shuffleArray(discountedProducts)} />
+      <Catalog view="discounts" products={shuffleArray(discountedProducts)} />
     </Container>
   )
 }

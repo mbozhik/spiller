@@ -27,7 +27,7 @@ const gridConfig = {
   grid: 'col-span-8 sm:col-span-10',
 }
 
-const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
+const Catalog: React.FC<{view: 'products' | 'discounts'; products: TProduct[]}> = ({products, view}) => {
   const {filters, addFilter, removeFilter, resetFilters} = useFilterStore()
 
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>(filters)
@@ -96,8 +96,8 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   const mainFilterSelection = selectedFilters.find((filter) => filter.filterName === 'main_filter')
 
   return (
-    <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
-      <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
+    <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global} ${view === 'discounts' && '!flex !flex-col'}`}>
+      <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters} ${view === 'discounts' && 'hidden'}`}>
         <div className="space-y-2.5">
           <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT">
             <input
@@ -157,7 +157,9 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
         })}
       </section>
 
-      <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
+      {view === 'discounts' && <Title text="Продукты на скидке" classes="text-center" />}
+
+      <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid} ${view === 'discounts' && 'mx-32 xl:mx-20'}`}>
         {filteredProducts.length === 0 ? (
           <div className="col-span-3 xl:col-span-2 sm:col-span-1 space-y-24 sm:space-y-10">
             <div className="grid w-full pt-10 sm:pt-6 place-items-center">
