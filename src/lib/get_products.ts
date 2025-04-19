@@ -7,6 +7,8 @@ type TProduct = {
   article: number
   volume: string
 
+  // is_hidden: boolean | null
+
   short_description: any
   full_description: any
   utilization: any
@@ -28,7 +30,7 @@ type TProduct = {
 
 async function getProducts(): Promise<TProduct[]> {
   const data = await client.fetch<TProduct>(
-    `*[_type == 'product' && slug.current != null && image != null] {
+    `*[_type == 'product' && slug.current != null && image != null && (is_hidden != true || !defined(is_hidden))] {
         name,
         caption,
         article,
