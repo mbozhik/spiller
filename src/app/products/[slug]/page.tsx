@@ -1,3 +1,19 @@
+import {Metadata} from 'next'
+
+type Props = {
+  params: Promise<{slug: string}>
+}
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {slug} = await params
+  const product: TProduct = await getData(slug).catch(() => null)
+
+  return {
+    title: `${product.name}`,
+    description: `${product.name} — ${product.short_description}`,
+  }
+}
+
 import {client, urlForImage} from '@/lib/sanity'
 import {revalidateOnTime} from '@/lib/utils'
 
