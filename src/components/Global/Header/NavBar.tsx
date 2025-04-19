@@ -11,6 +11,7 @@ export default function NavBar() {
 
   const navItems = [
     {href: '/', label: 'Главная'},
+    {href: '/discounts', label: 'Скидки'},
     {href: '/products', label: 'Продукты'},
     {href: '/cosmetology', label: 'Косметология'},
     {href: '/about', label: 'О бренде'},
@@ -27,7 +28,16 @@ export default function NavBar() {
         if (isMobile && ['/about', '/'].includes(href)) return null
 
         return (
-          <Link href={href} key={href} className={cn('py-2 duration-200 border-l-2 xl:py-2 px-8 sm:px-1.5 hover:bg-custom-nav border-custom-nav w-fit sm:w-full', isActive && 'bg-custom-nav', isLast && 'border-r-2')}>
+          <Link
+            href={href}
+            key={href}
+            className={cn(
+              'py-2 duration-200 border-l-2 xl:py-2 px-8 sm:px-1.5 hover:bg-custom-nav border-custom-nav w-fit sm:w-full',
+              isActive && 'bg-custom-nav', // active
+              isLast && 'border-r-2', // last
+              label === 'Скидки' && 'text-white bg-red-400 hover:text-custom-grey',
+            )}
+          >
             {label}
           </Link>
         )
