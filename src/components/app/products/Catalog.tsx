@@ -159,19 +159,33 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
-          <div className="absolute inset-0 grid w-full h-fit place-items-center">
-            <Title text="Ничего не найдено" />
-            <Button
-              text="Сбросить фильтры"
-              classes="block w-[50%] text-base !mt-3"
-              variant="secondary"
-              onClick={() => {
-                setSelectedFilters([])
-                resetFilters()
-                // Ensure main_filter is always expanded
-                setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
-              }}
-            ></Button>
+          <div className="col-span-3 xl:col-span-2 sm:col-span-1 space-y-24 sm:space-y-10">
+            <div className="grid w-full pt-10 sm:pt-6 place-items-center">
+              <Title text="Ничего не найдено" />
+
+              <Button
+                text="Сбросить фильтры"
+                classes="block w-[60%] sm:w-full text-base !mt-3"
+                variant="secondary"
+                onClick={() => {
+                  setSelectedFilters([])
+                  resetFilters()
+                  setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Title text="Возможно, вас заинтересует:" classes="text-center" />
+
+              <div className="grid grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-3">
+                {products
+                  .slice(0, 9) // Show first 6 products
+                  .map((item, idx) => (
+                    <CatalogCard key={idx} item={item} idx={idx} />
+                  ))}
+              </div>
+            </div>
           </div>
         ) : (
           filteredProducts.map((item, idx) => <CatalogCard key={idx} item={item} idx={idx} />)
