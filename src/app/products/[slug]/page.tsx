@@ -98,9 +98,14 @@ const ProductPage = async ({params}) => {
           {!noProduct ? (
             <div className="flex flex-col gap-4 text-custom-blue">
               {product.discount_price ? (
-                <div className="flex items-end gap-1.5">
-                  <h2 className="text-lg font-medium line-through text-custom-blue/50">{product.price}</h2>
-                  <h2 className="text-3xl font-medium">{product.discount_price} тг</h2>
+                <div className="flex flex-col gap-0.5 sm:gap-1.5 items-start">
+                  <div className="flex gap-2 justify-end items-end">
+                    <span className="text-base leading-none text-right line-through font-medium text-custom-blue/50">{product.price}</span>
+
+                    <span className="text-xl leading-none font-medium text-custom-blue/50">-{Math.round(((product.price - product.discount_price) / product.price) * 100)}%</span>
+                  </div>
+
+                  <h1 className="text-3xl text-right font-medium text-custom-blue">{product.discount_price} тг</h1>
                 </div>
               ) : (
                 <h2 className="text-3xl font-medium">{product.price} тг</h2>

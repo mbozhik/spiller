@@ -31,7 +31,7 @@ export default function CartButton({product, variant, className}: CartButtonProp
       cart.push({
         name: product.name,
         article: product.article,
-        price: product.price,
+        price: product.discount_price || product.price, // Используем скидочную цену если она есть
         quantity: 1,
         slug: product.slug.current,
         image: product.image,
