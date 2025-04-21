@@ -15,6 +15,7 @@ import Button from '#/UI/Button'
 import Title from '#/UI/Title'
 
 import {ChevronUp, ChevronDown, Search} from 'lucide-react'
+import {cn} from '@/lib/utils'
 
 interface Filter {
   filterName: string
@@ -33,6 +34,7 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>(filters)
   const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
   const [searchQuery, setSearchQuery] = useState('')
+  const [showDiscounted, setShowDiscounted] = useState(false) // Добавляем новое состояние
 
   useEffect(() => {
     setSelectedFilters(filters)
@@ -45,6 +47,11 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   }, [filters])
 
   const filteredProducts = products.filter((product) => {
+    // Сначала проверяем флаг showDiscounted
+    if (showDiscounted) {
+      return Boolean(product.discount_price) && (product.unavailable === false || product.unavailable === null)
+    }
+
     if (selectedFilters.length === 0 && !searchQuery) return true
 
     let matchesFilters = true
@@ -69,6 +76,7 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   })
 
   const handleFilterChange = (filterOption: string, filterName: string, checked: boolean) => {
+    setShowDiscounted(false) // Сбрасываем флаг при изменении фильтров
     let updatedFilters: Filter[] = [...selectedFilters]
 
     if (checked) {
@@ -90,14 +98,44 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setShowDiscounted(false) // Сбрасываем флаг при поиске
     setSearchQuery(event.target.value)
   }
 
   const mainFilterSelection = selectedFilters.find((filter) => filter.filterName === 'main_filter')
 
+  const handleDiscountedProducts = () => {
+    if (showDiscounted) {
+      // Если уже показываем скидочные товары - отключаем режим
+      setShowDiscounted(false)
+    } else {
+      // Проверяем наличие скидочных товаров и включаем режим
+      const discountedProducts = products.filter((product) => product.discount_price && (product.unavailable === false || product.unavailable === null))
+      if (discountedProducts.length > 0) {
+        setSelectedFilters([])
+        resetFilters()
+        setSearchQuery('')
+        setShowDiscounted(true)
+      }
+    }
+  }
+
+  const handleResetFilters = () => {
+    setSelectedFilters([])
+    resetFilters()
+    setShowDiscounted(false) // Сбрасываем флаг при сбросе фильтров
+    setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
+  }
+
   return (
     <div data-section="products" className={`grid gap-5 w-full ${gridConfig.global}`}>
       <section data-section="filters-catalog" className={`space-y-3 ${gridConfig.filters}`}>
+        {products.some((product) => Boolean(product.discount_price)) && (
+          <div className={cn('w-full px-3 py-2 border bg-custom-blue text-white text-center cursor-pointer hover:bg-custom-blue/80 duration-200', showDiscounted && 'bg-custom-blue/80')} onClick={handleDiscountedProducts}>
+            Товары на скидке
+          </div>
+        )}
+
         <div className="space-y-2.5">
           <div className="flex items-center justify-between px-3 text-lg font-semibold sm:text-base sm:py-2 INPUT">
             <input
@@ -110,18 +148,7 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
             <Search className="s-6 mt-0.5" />
           </div>
 
-          {selectedFilters.length > 0 && (
-            <Button
-              text="Сбросить фильтры"
-              classes="block w-full text-base"
-              onClick={() => {
-                setSelectedFilters([])
-                resetFilters()
-                // Ensure main_filter is always expanded
-                setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
-              }}
-            ></Button>
-          )}
+          {selectedFilters.length > 0 && <Button text="Сбросить фильтры" classes="block w-full text-base" onClick={handleResetFilters}></Button>}
         </div>
 
         {productFilters.map((filter, index) => {
@@ -159,19 +186,24 @@ const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
 
       <section data-section="grid-catalog" className={`grid relative grid-cols-3 xl:grid-cols-2 auto-rows-min sm:grid-cols-1 gap-3 ${gridConfig.grid}`}>
         {filteredProducts.length === 0 ? (
-          <div className="absolute inset-0 grid w-full h-fit place-items-center">
-            <Title text="Ничего не найдено" />
-            <Button
-              text="Сбросить фильтры"
-              classes="block w-[50%] text-base !mt-3"
-              variant="secondary"
-              onClick={() => {
-                setSelectedFilters([])
-                resetFilters()
-                // Ensure main_filter is always expanded
-                setExpandedFilters(productFilters.map((filter) => filter.name === 'main_filter'))
-              }}
-            ></Button>
+          <div className="col-span-3 xl:col-span-2 sm:col-span-1 space-y-24 sm:space-y-10">
+            <div className="grid w-full pt-10 sm:pt-6 place-items-center">
+              <Title text="Ничего не найдено" />
+
+              <Button text="Сбросить фильтры" classes="block w-[60%] sm:w-full text-base !mt-3" variant="secondary" onClick={handleResetFilters} />
+            </div>
+
+            <div className="space-y-2">
+              <Title text="Возможно, вас заинтересует:" classes="text-center" />
+
+              <div className="grid grid-cols-3 xl:grid-cols-2 sm:grid-cols-1 gap-3">
+                {products
+                  .slice(0, 9) // Show first 6 products
+                  .map((item, idx) => (
+                    <CatalogCard key={idx} item={item} idx={idx} />
+                  ))}
+              </div>
+            </div>
           </div>
         ) : (
           filteredProducts.map((item, idx) => <CatalogCard key={idx} item={item} idx={idx} />)

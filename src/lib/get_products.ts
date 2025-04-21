@@ -7,6 +7,8 @@ type TProduct = {
   article: number
   volume: string
 
+  unavailable: boolean | null
+
   short_description: any
   full_description: any
   utilization: any
@@ -33,6 +35,8 @@ async function getProducts(): Promise<TProduct[]> {
         caption,
         article,
         volume,
+
+        unavailable,
 
         short_description,
         full_description,

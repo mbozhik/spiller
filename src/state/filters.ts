@@ -1,5 +1,6 @@
 import {create, StateCreator} from 'zustand'
 import {persist} from 'zustand/middleware'
+import {createExpiringStorage} from '@/lib/expiring-storage'
 
 export interface Filter {
   filterName: string
@@ -34,5 +35,6 @@ const filterSlice: StateCreator<FilterStore, [['zustand/persist', unknown]]> = (
 export const useFilterStore = create<FilterStore>()(
   persist(filterSlice, {
     name: 'filter-storage',
+    storage: createExpiringStorage<FilterStore>('filter-storage'),
   }),
 )

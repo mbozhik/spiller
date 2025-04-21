@@ -6,6 +6,7 @@ import {TProduct} from '@/lib/get_products'
 import Link from 'next/link'
 import Image from 'next/image'
 import CartButton from '##/products/Cart/CartButton'
+import {buttonVariants} from '#/UI/Button'
 
 interface CatalogCardProps {
   item: TProduct
@@ -14,6 +15,8 @@ interface CatalogCardProps {
 
 const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
   const cardHref = `/products/${item.slug.current}`
+
+  const noItem = item.unavailable
 
   return (
     <article className="flex flex-col justify-between w-full h-full gap-5 p-5 border border-neutral-200 group" key={idx}>
@@ -26,18 +29,27 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
         <h1 className="text-custom-grey2">{item.caption}</h1>
       </Link>
 
-      <div className="flex items-center justify-between">
-        <CartButton product={item} className="text-base" />
+      {!noItem ? (
+        <div className="flex items-center justify-between">
+          <CartButton product={item} className="text-base" />
 
-        {item.discount_price ? (
-          <div className="flex items-end gap-1.5">
-            <h1 className="text-lg font-medium line-through text-custom-blue/50">{item.price}</h1>
-            <h1 className="text-2xl font-medium text-custom-blue">{item.discount_price} тг</h1>
-          </div>
-        ) : (
-          <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
-        )}
-      </div>
+          {item.discount_price ? (
+            <div className="flex flex-col sm:gap-0.5 justify-end">
+              <div className="flex gap-2 justify-end items-end">
+                <span className="text-sm leading-none text-right line-through font-medium text-custom-blue/50">{item.price}</span>
+
+                <span className="text-lg leading-none font-medium text-custom-blue/50">-{Math.round(((item.price - item.discount_price) / item.price) * 100)}%</span>
+              </div>
+
+              <h1 className="text-2xl text-right font-medium text-custom-blue">{item.discount_price} тг</h1>
+            </div>
+          ) : (
+            <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
+          )}
+        </div>
+      ) : (
+        <div className={`text-base w-full hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Нет в наличии</div>
+      )}
 
       {/* <div className="flex flex-wrap gap-1">
         {Object.keys(productParams).map((param, idx) =>

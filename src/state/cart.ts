@@ -1,5 +1,6 @@
 import {create, StateCreator} from 'zustand'
 import {persist} from 'zustand/middleware'
+import {createExpiringStorage} from '@/lib/expiring-storage'
 
 export interface CartStore {
   count: number
@@ -18,5 +19,6 @@ const cartSlice: StateCreator<CartStore, [['zustand/persist', unknown]]> = (set,
 export const useCartCounter = create<CartStore>()(
   persist(cartSlice, {
     name: 'cart-storage',
+    storage: createExpiringStorage<CartStore>('cart-storage'),
   }),
 )
