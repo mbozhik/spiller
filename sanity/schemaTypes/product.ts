@@ -25,6 +25,11 @@ export const product: SchemaTypeDefinition = {
       validation: (rule: Rule) => rule.required(),
     },
     {
+      name: 'unavailable',
+      title: 'Unavailable?',
+      type: 'boolean',
+    },
+    {
       name: 'volume',
       title: 'Volume',
       type: 'string',
@@ -221,16 +226,17 @@ export const product: SchemaTypeDefinition = {
   ],
   preview: {
     select: {
-      title: 'name',
+      name: 'name',
       article: 'article',
-      media: 'image',
+      unavailable: 'unavailable',
+      image: 'image',
     },
     prepare(selection) {
-      const {title, article, media} = selection
+      const {name, article, unavailable, image} = selection
       return {
-        title: title,
-        subtitle: article,
-        media: media,
+        title: name,
+        subtitle: `${unavailable ? '✖' : ''} ${article}`,
+        media: image,
       }
     },
   },
