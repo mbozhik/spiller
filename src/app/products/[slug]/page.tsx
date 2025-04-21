@@ -27,6 +27,7 @@ import PortableText from '#/UI/PortableText'
 import ProductInfo from '##/products/ProductInfo'
 import ProductBack from '##/products/ProductBack'
 import CartButton from '##/products/Cart/CartButton'
+import {buttonVariants} from '#/UI/Button'
 
 async function getData(slug): Promise<TProduct | null> {
   const data = await client.fetch<TProduct>(
@@ -35,6 +36,8 @@ async function getData(slug): Promise<TProduct | null> {
         caption,
         article,
         volume,
+
+        unavailable,
 
         short_description,
         full_description,
@@ -70,6 +73,8 @@ const ProductPage = async ({params}) => {
     return <mark>ошибка</mark>
   }
 
+  const noProduct = product.unavailable
+
   return (
     <Container className="w-[70%] xl:w-[80%]" marginBottom={true}>
       <ProductBack />
@@ -90,17 +95,21 @@ const ProductPage = async ({params}) => {
             <PortableText value={product.short_description} />
           </div>
 
-          <div className="flex flex-col gap-4 text-custom-blue">
-            {product.discount_price ? (
-              <div className="flex items-end gap-1.5">
-                <h2 className="text-lg font-medium line-through text-custom-blue/50">{product.price}</h2>
-                <h2 className="text-3xl font-medium">{product.discount_price} тг</h2>
-              </div>
-            ) : (
-              <h2 className="text-3xl font-medium">{product.price} тг</h2>
-            )}
-            <CartButton product={product} className="px-20 text-base sm:!w-full" />
-          </div>
+          {!noProduct ? (
+            <div className="flex flex-col gap-4 text-custom-blue">
+              {product.discount_price ? (
+                <div className="flex items-end gap-1.5">
+                  <h2 className="text-lg font-medium line-through text-custom-blue/50">{product.price}</h2>
+                  <h2 className="text-3xl font-medium">{product.discount_price} тг</h2>
+                </div>
+              ) : (
+                <h2 className="text-3xl font-medium">{product.price} тг</h2>
+              )}
+              <CartButton product={product} className="px-20 text-base sm:!w-full" />
+            </div>
+          ) : (
+            <div className={`text-base hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Нет в наличии</div>
+          )}
 
           <div className="flex gap-3 sm:!mt-3">
             <Text text={`Артикул: <b>${product.article}</b>`} />
