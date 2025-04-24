@@ -27,7 +27,9 @@ export const product: SchemaTypeDefinition = {
     {
       name: 'unavailable',
       title: 'Unavailable?',
+      description: 'If checked, the product will not be able to be added to the cart',
       type: 'boolean',
+      initialValue: false,
     },
     {
       name: 'volume',
