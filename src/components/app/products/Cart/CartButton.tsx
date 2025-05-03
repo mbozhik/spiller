@@ -9,6 +9,7 @@ export interface CartItem {
   name: string
   article: number
   price: number
+  discount_price?: number
   quantity: number
   slug: string
   image?: Array<{asset: {url: string}}>
@@ -31,7 +32,8 @@ export default function CartButton({product, variant, className}: CartButtonProp
       cart.push({
         name: product.name,
         article: product.article,
-        price: product.discount_price || product.price, // Используем скидочную цену если она есть
+        price: product.price,
+        ...(product.discount_price && {discount_price: product.discount_price}),
         quantity: 1,
         slug: product.slug.current,
         image: product.image,

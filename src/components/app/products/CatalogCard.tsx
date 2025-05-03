@@ -36,7 +36,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
           {item.discount_price ? (
             <div className="flex flex-col sm:gap-0.5 justify-end">
               <div className="flex gap-2 justify-end items-end">
-                <span className="text-sm leading-none text-right line-through font-medium text-custom-blue/50">{item.price}</span>
+                <span className="text-base leading-none text-right line-through font-medium text-custom-blue/50">{item.price}</span>
 
                 <span className="text-lg leading-none font-medium text-custom-blue/50">-{Math.round(((item.price - item.discount_price) / item.price) * 100)}%</span>
               </div>
