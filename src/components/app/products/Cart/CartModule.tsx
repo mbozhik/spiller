@@ -12,6 +12,7 @@ import {urlForImage} from '@/lib/sanity'
 import {useCartCounter} from '@/state/cart'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import {SquareX} from 'lucide-react'
 
 import Title from '#/UI/Title'
@@ -145,12 +146,12 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
             <div className="sm:space-y-3">
               {cart.map((item, idx) => (
                 <div className={`grid ${gridConfig.global} sm:flex items-center justify-between border-t sm:pt-4 sm:pb-1 border-custom-blue ${idx === 0 && 'border-none'}`} key={idx}>
-                  <div className={`flex items-center gap-4 sm:gap-2.5 ${gridConfig.info}`}>
-                    <Image quality={100} src={urlForImage(item.image).url()} className="object-contain w-32 sm:w-14 aspect-square" width={250} height={250} alt={item.name} />
+                  <Link href={`/products/${typeof item.slug === 'string' ? item.slug : item.slug.current}`} className={`flex items-center gap-4 sm:gap-2.5 ${gridConfig.info} group`}>
+                    <Image quality={100} src={urlForImage(item.image).url()} className="object-contain w-32 sm:w-14 aspect-square group-hover:scale-[1.02] duration-300" width={250} height={250} alt={item.name} />
 
                     <div className="flex flex-col">
                       <div className="flex flex-col gap-1">
-                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15]">{item.name}</span>
+                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15] border-b border-b-transparent group-hover:border-b-custom-grey duration-300">{item.name}</span>
                         <span className="text-sm">{item.article}</span>
                       </div>
 
@@ -159,7 +160,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
                         <span className="font-bold sm:text-sm">{item.price} тг</span>
                       </div>
                     </div>
-                  </div>
+                  </Link>
 
                   <div className={`flex justify-end gap-5 ${gridConfig.price}`}>
                     <div className={`flex flex-col justify-self-end w-fit text-right sm:hidden`}>

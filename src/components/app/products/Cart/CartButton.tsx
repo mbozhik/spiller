@@ -11,7 +11,7 @@ export interface CartItem {
   price: number
   discount_price?: number
   quantity: number
-  slug: string
+  slug: string | {current: string}
   image?: Array<{asset: {url: string}}>
 }
 
@@ -35,7 +35,7 @@ export default function CartButton({product, variant, className}: CartButtonProp
         price: product.price,
         ...(product.discount_price && {discount_price: product.discount_price}),
         quantity: 1,
-        slug: product.slug.current,
+        slug: product.slug, // Сохраняем весь объект slug
         image: product.image,
       })
     } else {
