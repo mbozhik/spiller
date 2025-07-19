@@ -81,7 +81,7 @@ const ProductPage = async ({params}) => {
 
       <article className={`flex items-center sm:flex-col gap-10 sm:gap-5 mb-[10vh] sm:mb-[7vh]`}>
         <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
-          <Image quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+          <Image unoptimized quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
         </div>
 
         <div className="space-y-5 sm:space-y-3 w-[50%] xl:w-[55%] sm:w-full">

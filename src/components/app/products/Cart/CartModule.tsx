@@ -147,7 +147,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
               {cart.map((item, idx) => (
                 <div className={`grid ${gridConfig.global} sm:flex items-center justify-between border-t sm:pt-4 sm:pb-1 border-custom-blue ${idx === 0 && 'border-none'}`} key={idx}>
                   <Link href={`/products/${typeof item.slug === 'string' ? item.slug : item.slug.current}`} className={`flex items-center gap-4 sm:gap-2.5 ${gridConfig.info} group`}>
-                    <Image quality={100} src={urlForImage(item.image).url()} className="object-contain w-32 sm:w-14 aspect-square group-hover:scale-[1.02] duration-300" width={250} height={250} alt={item.name} />
+                    <Image unoptimized quality={100} src={urlForImage(item.image).url()} className="object-contain w-32 sm:w-14 aspect-square group-hover:scale-[1.02] duration-300" width={250} height={250} alt={item.name} />
 
                     <div className="flex flex-col">
                       <div className="flex flex-col gap-1">

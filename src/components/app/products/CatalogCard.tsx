@@ -21,7 +21,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
   return (
     <article className="flex flex-col justify-between w-full h-full gap-5 p-5 border border-neutral-200 group" key={idx}>
       <Link className="h-[250px] xl:h-[200px] w-full relative self-center" href={cardHref}>
-        <Image src={urlForImage(item.image).url()} className="object-contain" sizes="40vw" fill={true} alt={`item ${idx}`} />
+        <Image unoptimized src={urlForImage(item.image).url()} className="object-contain" sizes="40vw" fill={true} alt={`item ${idx}`} />
       </Link>
 
       <Link className="space-y-1" href={cardHref}>
