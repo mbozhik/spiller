@@ -16,6 +16,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({error: 'Missing required fields'}, {status: 400})
   }
 
+  const suspiciousWords = ['bot', 'fake', 'test', 'temp', 'robot', 'auto']
+  const emailLower = email.toLowerCase()
+
+  if (suspiciousWords.some((word) => emailLower.includes(word))) {
+    return NextResponse.json({error: 'Invalid email address'}, {status: 400})
+  }
+
   try {
     const {data, error} = await resend.emails.send({
       from: `Dr. Spiller <${emailsList.from}>`,
