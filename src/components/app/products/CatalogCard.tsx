@@ -31,7 +31,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
 
       {!noItem ? (
         <div className="flex items-center justify-between">
-          <CartButton product={item} className="text-base" />
+          {/* <CartButton product={item} className="text-base" />
 
           {item.discount_price ? (
             <div className="flex flex-col sm:gap-0.5 justify-end">
@@ -45,7 +45,8 @@ const CatalogCard: React.FC<CatalogCardProps> = ({item, idx}) => {
             </div>
           ) : (
             <h1 className="text-2xl font-medium text-custom-blue">{item.price} тг</h1>
-          )}
+          )} */}
+          <div className={`text-base w-full hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Обновляем цены</div>
         </div>
       ) : (
         <div className={`text-base w-full hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Нет в наличии</div>
