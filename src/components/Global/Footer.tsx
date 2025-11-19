@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import {LogoImage} from '#/Global/Header/Header'
 
-const footerData = {
+export const footerData = {
   clients: {
     1: {text: 'Главная', url: '/'},
     2: {text: 'Продукты', url: '/products/'},
@@ -9,10 +9,10 @@ const footerData = {
     4: {text: 'Где купить', url: '/buy/'},
   },
   contacts: {
-    1: {text: '+7 (707) 033-11-17', url: 'tel:+77070331117'},
-    2: {text: 'sales@dr-spiller.kz', url: 'mailto:sales@dr-spiller.kz'},
-    3: {text: 'г. Алматы, Самал 2- 69', url: 'https://yandex.ru/maps/-/CDeKmOne'},
-    4: {text: 'instagram.com/drspiller.kz', url: 'https://www.instagram.com/drspiller.kz/'},
+    phone: {text: '+7 (707) 033-11-17', url: 'tel:+77070331117'},
+    email: {text: 'sales@dr-spiller.kz', url: 'mailto:sales@dr-spiller.kz'},
+    address: {text: 'Алматы, Назарбаева 229', url: 'https://yandex.ru/maps/-/CLSe4NnQ'},
+    inst: {text: 'instagram.com/drspiller.kz', url: 'https://www.instagram.com/drspiller.kz/'},
   },
 }
 
