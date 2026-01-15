@@ -99,6 +99,7 @@ export const product: SchemaTypeDefinition = {
       options: {
         list: [
           {title: 'Лицо', value: 'face'},
+          {title: 'Волосы', value: 'hair'},
           {title: 'Кожа вокруг глаз и губ', value: 'eye_lip_skin'},
           {title: 'Шея и декольте', value: 'neck_decolletage'},
           {title: 'Тело', value: 'body'},
@@ -161,7 +162,7 @@ export const product: SchemaTypeDefinition = {
           {title: 'Спрей', value: 'spray'},
           {title: 'Сыворотка', value: 'serum'},
           {title: 'Тоник', value: 'toner'},
-          {title: 'Туалетная вода', value: 'toilet_water'},
+          {title: 'Кондиционер', value: 'conditioner'},
           {title: 'Флюид', value: 'fluid'},
           {title: 'Шампунь', value: 'shampoo'},
           {title: 'Эмульсия', value: 'emulsion'},
@@ -186,6 +187,9 @@ export const product: SchemaTypeDefinition = {
           {title: 'Жирный блеск', value: 'oily_shine'},
           {title: 'Тёмные круги / отёчность', value: 'dark_circles'},
           {title: 'Антицеллюлитные средства', value: 'anti_cellulite'},
+          {title: 'Обезвоженность', value: 'dehydration'},
+          {title: 'Тусклый и неровный цвет лица', value: 'dull_and_uneven_skin_color'},
+          {title: 'Перхоть/выпадение волос', value: 'hair_loss'},
         ],
       },
     }),
