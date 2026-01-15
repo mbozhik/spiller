@@ -97,7 +97,7 @@ const ProductPage = async ({params}) => {
 
           {!noProduct ? (
             <div className="flex flex-col gap-4 text-custom-blue">
-              {/* {product.discount_price ? (
+              {product.discount_price ? (
                 <div className="flex flex-col gap-0.5 sm:gap-1.5 items-start">
                   <div className="flex gap-2 justify-end items-end">
                     <span className="text-base leading-none text-right line-through font-medium text-custom-blue/50">{product.price}</span>
@@ -109,9 +109,9 @@ const ProductPage = async ({params}) => {
                 </div>
               ) : (
                 <h2 className="text-3xl font-medium">{product.price} тг</h2>
-              )} */}
-              {/* <CartButton product={product} className="px-20 text-base sm:!w-full" /> */}
-              <div className={`text-base w-full hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Обновляем цены</div>
+              )}
+              <CartButton product={product} className="px-20 text-base sm:!w-full" />
+              {/* <div className={`text-base w-full hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Обновляем цены</div> */}
             </div>
           ) : (
             <div className={`text-base hover:bg-white hover:!text-custom-blue hover:cursor-default ${buttonVariants.default} ${buttonVariants.primary}`}>Нет в наличии</div>
