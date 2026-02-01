@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.1.0",
-    "@bozzhik/is-mobile": "^0.1.1",
     "@portabletext/react": "^3.1.0",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@react-email/components": "^0.0.21",

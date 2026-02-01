@@ -1,7 +1,7 @@
 'use client'
 
 import {useState, useEffect} from 'react'
-import {isMobile} from '@bozzhik/is-mobile'
+import {useMediaQuery} from '@/utils/use-media-query'
 
 import {product as productFilters} from '@/lib/categories_[product.ts]'
 import {filterTitles} from '@/lib/categorize_products'
@@ -31,20 +31,22 @@ const gridConfig = {
 const Catalog: React.FC<{products: TProduct[]}> = ({products}) => {
   const {filters, addFilter, removeFilter, resetFilters} = useFilterStore()
 
+  const isDesktop = useMediaQuery('(min-width: 768px)')
+
   const [selectedFilters, setSelectedFilters] = useState<Filter[]>(filters)
-  const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (!isMobile ? filter.name === 'main_filter' : false)))
+  const [expandedFilters, setExpandedFilters] = useState<boolean[]>(productFilters.map((filter) => (isDesktop ? filter.name === 'main_filter' : false)))
   const [searchQuery, setSearchQuery] = useState('')
   const [showDiscounted, setShowDiscounted] = useState(false) // Добавляем новое состояние
 
   useEffect(() => {
     setSelectedFilters(filters)
 
-    if (!isMobile) {
+    if (isDesktop) {
       // Expand all groups that have selected filters and always expand main_filter
       const newExpandedFilters = productFilters.map((filter) => filter.name === 'main_filter' || filters.some((selectedFilter) => selectedFilter.filterName === filter.name))
       setExpandedFilters(newExpandedFilters)
     }
-  }, [filters])
+  }, [filters, isDesktop])
 
   const filteredProducts = products.filter((product) => {
     // Сначала проверяем флаг showDiscounted

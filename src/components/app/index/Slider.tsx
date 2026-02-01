@@ -1,6 +1,6 @@
 'use client'
 
-import {isMobile} from '@bozzhik/is-mobile'
+import {useMediaQuery} from '@/utils/use-media-query'
 
 import Image from 'next/image'
 import SliderImage1 from '%/slider/1.jpg'
@@ -21,7 +21,9 @@ import 'swiper/css/pagination'
 import 'swiper/css/effect-fade'
 
 export default function Slider() {
-  const sliderImages = [isMobile ? SliderDiscountMobile : SliderDiscount, SliderImage1, SliderImage2, SliderImage3, SliderImage4, SliderImage5, SliderImage6]
+  const isDesktop = useMediaQuery('(min-width: 768px)')
+
+  const sliderImages = [!isDesktop ? SliderDiscountMobile : SliderDiscount, SliderImage1, SliderImage2, SliderImage3, SliderImage4, SliderImage5, SliderImage6]
 
   return (
     <Swiper modules={[Pagination, Autoplay, EffectFade]} pagination={{clickable: true}} autoplay={{delay: 3500}} effect={'fade'} grabCursor={true} loop={true} className="mySwiper w-full h-[60vh] xl:h-[65vh] sm:h-[45vh]">

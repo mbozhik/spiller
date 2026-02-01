@@ -1,13 +1,15 @@
 'use client'
 
 import {cn} from '@/lib/utils'
-import {isMobile} from '@bozzhik/is-mobile'
+import {useMediaQuery} from '@/utils/use-media-query'
 import {usePathname} from 'next/navigation'
 
 import Link from 'next/link'
 
 export default function NavBar() {
   const pathname = usePathname()
+
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const navItems = [
     {href: '/', label: 'Главная'},
@@ -24,7 +26,7 @@ export default function NavBar() {
         const isActive = pathname === href
         const isLast = index === navItems.length - 1
 
-        if (isMobile && ['/about', '/'].includes(href)) return null
+        if (!isDesktop && ['/about', '/'].includes(href)) return null
 
         return (
           <Link href={href} key={href} className={cn('py-2 duration-200 border-l-2 xl:py-2 px-8 sm:px-1.5 hover:bg-custom-nav border-custom-nav w-fit sm:w-full', isActive && 'bg-custom-nav', isLast && 'border-r-2')}>
