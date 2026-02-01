@@ -27,6 +27,7 @@ import PortableText from '#/UI/PortableText'
 import ProductInfo from '##/products/ProductInfo'
 import ProductBack from '##/products/ProductBack'
 import CartButton from '##/products/Cart/CartButton'
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from '#/UI/shadcnui/carousel'
 import {buttonVariants} from '#/UI/Button'
 
 async function getData(slug): Promise<TProduct | null> {
@@ -49,6 +50,8 @@ async function getData(slug): Promise<TProduct | null> {
         discount_price,
         slug,
         image,
+        more_images,
+        
         main_filter,
         for_face,
         for_body,
@@ -80,8 +83,26 @@ const ProductPage = async ({params}) => {
       <ProductBack />
 
       <article className={`flex items-center sm:flex-col gap-10 sm:gap-5 mb-[10vh] sm:mb-[7vh]`}>
-        <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] mx-auto`}>
-          <Image unoptimized quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+        <div className={`w-[20vw] xl:w-[25vw] sm:w-[50vw] sm:pt-6 mx-auto`}>
+          {product.more_images && product.more_images.length > 0 ? (
+            <Carousel className="w-full">
+              <CarouselContent>
+                <CarouselItem>
+                  <Image unoptimized quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+                </CarouselItem>
+
+                {product.more_images.map((img, idx) => (
+                  <CarouselItem key={idx}>
+                    <Image unoptimized quality={100} className="object-contain s-full" src={urlForImage(img).url()} width={700} height={700} alt={`${product.name} ${idx + 1}`} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          ) : (
+            <Image unoptimized quality={100} className="object-contain s-full" src={urlForImage(product.image).url()} width={700} height={700} alt={`${product.name}`} />
+          )}
         </div>
 
         <div className="space-y-5 sm:space-y-3 w-[50%] xl:w-[55%] sm:w-full">
