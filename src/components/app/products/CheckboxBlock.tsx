@@ -1,4 +1,4 @@
-import {Checkbox} from '#/UI/shadcn-ui/checkbox'
+import {Checkbox} from '#/UI/shadcnui/checkbox'
 
 interface CheckboxBlockProps {
   id: string
