@@ -19,6 +19,7 @@ type TProduct = {
 
   slug: {current: string}
   image?: Array<{asset: {url: string}}>
+  more_images?: Array<{asset: {url: string}}>
 
   main_filter: string
   for_face?: string
@@ -48,6 +49,7 @@ async function getProducts(): Promise<TProduct[]> {
 
         slug,
         image,
+        more_images,
 
         main_filter,
         for_face,
