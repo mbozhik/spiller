@@ -116,6 +116,7 @@ export const product: any = [
           {title: 'Hydro-Marin', value: 'hydro_marin'},
           {title: 'Oxygen Vital', value: 'oxygen_vital'},
           {title: 'Silk Protein', value: 'silk_protein'},
+          {title: 'Retinol', value: 'retinol'},
           {title: 'Vitamin A', value: 'vitamin_a'},
           {title: 'Vitamin C Plus', value: 'vitamin_c_plus'},
           {title: 'Summer Glow', value: 'summer_glow'},
