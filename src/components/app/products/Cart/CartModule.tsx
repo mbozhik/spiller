@@ -238,7 +238,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
             <ol className="!mt-3 list-decimal list-inside text-xs text-custom-grey2 [&_span]:underline [&_span]:underline-offset-2">
               <li>
-                Стоимость доставки - <span>3 000 KZT</span>. Доставка по Казахстану бесплатна при заказе от <span>30 000 KZT</span>.
+                Стоимость доставки - <span>3 000 KZT</span>. Бесплатная доставка при заказе от <span>30 000 KZT</span> по Алматы и <span>60 000 KZT</span> по Казахстану.
               </li>
               <li>
                 После оформления заказа наш менеджер <span>свяжется с вами</span> для подтверждения по телефону или мессенджеру WhatsApp и выставления счёта через Kaspi. Также вы можете <span>оплатить заказ самостоятельно</span> через QR код.
