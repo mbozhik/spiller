@@ -151,7 +151,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
                     <div className="flex flex-col">
                       <div className="flex flex-col gap-1">
-                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15] border-b border-b-transparent group-hover:border-b-custom-grey duration-300">{item.name}</span>
+                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15] group-hover:text-custom-grey/50 duration-300">{item.name}</span>
                         <span className="text-sm">{item.article}</span>
                       </div>
 
@@ -172,7 +172,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
                             <span className="text-sm leading-none font-medium text-custom-blue/50">-{Math.round(((item.price - item.discount_price) / item.price) * 100)}%</span>
                           </div>
 
-                          <span className="text-lg font-bold text-custom-blue">{item.price} тг</span>
+                          <span className="text-lg font-bold text-custom-blue">{item.discount_price} тг</span>
                         </div>
                       ) : (
                         <span className="text-lg font-bold">{item.price} тг</span>
