@@ -157,7 +157,16 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
                       <div className="items-center hidden gap-3 sm:flex">
                         <span className="text-sm">{item.quantity} шт.</span>
-                        <span className="font-bold sm:text-sm">{item.price} тг</span>
+                        {item.discount_price ? (
+                          <div className="flex items-center justify-end gap-1.5">
+                            <span className="sm:text-sm font-medium leading-none! line-through text-custom-blue/50">{item.price}</span>
+                            {/* <span className="text-sm font-medium leading-none text-custom-blue/50">-{Math.round(((item.price - item.discount_price) / item.price) * 100)}%</span> */}
+
+                            <span className="font-bold sm:text-sm leading-none! text-custom-blue">{item.discount_price} тг</span>
+                          </div>
+                        ) : (
+                          <span className="font-bold sm:text-sm leading-none!">{item.price} тг</span>
+                        )}
                       </div>
                     </div>
                   </Link>
