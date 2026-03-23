@@ -107,9 +107,25 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
     removeProduct(productToRemove.quantity)
   }
 
+  const hasItemDiscount = (item: CartItem) => typeof item.discount_price === 'number' && item.discount_price < item.price
+
+  const getItemCurrentPrice = (item: CartItem) => (hasItemDiscount(item) ? item.discount_price : item.price)
+
+  const getItemDiscountPercent = (item: CartItem) => {
+    if (!hasItemDiscount(item) || item.price <= 0) {
+      return 0
+    }
+
+    return Math.round(((item.price - item.discount_price) / item.price) * 100)
+  }
+
+  const baseTotalPrice = cart.reduce((total, item) => total + getItemCurrentPrice(item) * item.quantity, 0)
+  const originalTotalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0)
+  const hasProductDiscounts = cart.some((item) => hasItemDiscount(item))
+
   const calculateTotalPrice = () => {
-    const total = cart.reduce((total, item) => total + item.price * item.quantity, 0)
-    return total - (total * discount) / 100
+    const totalWithPromo = baseTotalPrice - (baseTotalPrice * discount) / 100
+    return Math.round(totalWithPromo)
   }
 
   const applyPromoCode = () => {
@@ -151,28 +167,37 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
                     <div className="flex flex-col">
                       <div className="flex flex-col gap-1">
-                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15] border-b border-b-transparent group-hover:border-b-custom-grey duration-300">{item.name}</span>
+                        <span className="font-bold sm:text-sm max-w-[30ch] !leading-[1.15] group-hover:text-custom-grey/50 duration-300">{item.name}</span>
                         <span className="text-sm">{item.article}</span>
                       </div>
 
                       <div className="items-center hidden gap-3 sm:flex">
                         <span className="text-sm">{item.quantity} шт.</span>
-                        <span className="font-bold sm:text-sm">{item.price} тг</span>
+                        {hasItemDiscount(item) ? (
+                          <div className="flex items-center justify-end gap-1.5">
+                            <span className="sm:text-sm font-medium leading-none! line-through text-custom-blue/50">{item.price}</span>
+                            <span className="text-sm font-medium leading-none text-custom-blue/50">-{getItemDiscountPercent(item)}%</span>
+
+                            <span className="font-bold sm:text-sm leading-none! text-custom-blue">{item.discount_price} тг</span>
+                          </div>
+                        ) : (
+                          <span className="font-bold sm:text-sm leading-none!">{item.price} тг</span>
+                        )}
                       </div>
                     </div>
                   </Link>
 
                   <div className={`flex justify-end gap-5 ${gridConfig.price}`}>
                     <div className={`flex flex-col justify-self-end w-fit text-right sm:hidden`}>
-                      {item.discount_price ? (
+                      {hasItemDiscount(item) ? (
                         <div className="flex flex-col sm:gap-0.5 justify-end">
                           <div className="flex gap-1.5 justify-end items-end">
                             <span className="text-sm leading-none text-right line-through font-medium text-custom-blue/50">{item.price}</span>
 
-                            <span className="text-sm leading-none font-medium text-custom-blue/50">-{Math.round(((item.price - item.discount_price) / item.price) * 100)}%</span>
+                            <span className="text-sm leading-none font-medium text-custom-blue/50">-{getItemDiscountPercent(item)}%</span>
                           </div>
 
-                          <span className="text-lg font-bold text-custom-blue">{item.price} тг</span>
+                          <span className="text-lg font-bold text-custom-blue">{item.discount_price} тг</span>
                         </div>
                       ) : (
                         <span className="text-lg font-bold">{item.price} тг</span>
@@ -200,9 +225,9 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
               <div className="flex items-center gap-4">
                 <span className="font-semibold">
-                  {promoApplied ? (
+                  {promoApplied || hasProductDiscounts ? (
                     <span className="flex items-center gap-2">
-                      <span className="line-through text-custom-blue opacity-70">{cart.reduce((total, item) => total + item.price * item.quantity, 0)} тг</span>
+                      <span className="line-through text-custom-blue opacity-70">{originalTotalPrice} тг</span>
                       <span className="text-custom-blue">{calculateTotalPrice()} тг</span>
                     </span>
                   ) : (
