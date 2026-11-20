@@ -4,7 +4,7 @@ import type {CartItem} from '##/products/Cart/CartButton'
 import type {TPromocode} from '@/lib/get_promocodes'
 
 import {useRouter} from 'next/navigation'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 import {cn} from '@/lib/utils'
@@ -15,6 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {SquareX} from 'lucide-react'
 
+import {measureCheckoutStarted} from '#/Global/OpenAiPixel'
 import Title from '#/UI/Title'
 import Button, {buttonVariants} from '#/UI/Button'
 
@@ -28,6 +29,7 @@ type FormFields = {
 export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
   const router = useRouter()
   const [cart, setCart] = useState<CartItem[]>([])
+  const checkoutStarted = useRef(false)
 
   const [submitMessage, setSubmitMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -50,8 +52,12 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
       setSubmitMessage('Корзина пуста')
     } else {
       setCart(cartData)
+      if (!checkoutStarted.current) {
+        checkoutStarted.current = true
+        measureCheckoutStarted()
+      }
     }
-  }, [router])
+  }, [])
 
   const onSubmit = async (data) => {
     try {

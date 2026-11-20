@@ -1,4 +1,5 @@
 import NextScript from 'next/script'
+import Image from 'next/image'
 
 export default function MetaPixel() {
   return (
@@ -24,7 +25,7 @@ export default function MetaPixel() {
             }}
           />
           <noscript>
-            <img height="1" width="1" style={{display: 'none'}} src="https://www.facebook.com/tr?id=732096808975465&ev=PageView&noscript=1" />
+            <Image alt="" height={1} width={1} unoptimized loading="eager" style={{display: 'none'}} src="https://www.facebook.com/tr?id=732096808975465&ev=PageView&noscript=1" />
           </noscript>
         </>
       )}
