@@ -10,6 +10,7 @@ import {useForm} from 'react-hook-form'
 import {cn} from '@/lib/utils'
 import {urlForImage} from '@/lib/sanity'
 import {useCartCounter} from '@/state/cart'
+import {submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -30,6 +31,8 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
   const router = useRouter()
   const [cart, setCart] = useState<CartItem[]>([])
   const checkoutStarted = useRef(false)
+  const requestIdentity = useRef<SubmissionIdentity>(null)
+  const inFlight = useRef(false)
 
   const [submitMessage, setSubmitMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -60,39 +63,43 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
   }, [])
 
   const onSubmit = async (data) => {
+    if (inFlight.current || cart.length === 0) return
+    const payload = {
+      kind: 'order',
+      ...data,
+      items: cart,
+      ...(promoApplied ? {promoCode} : {}),
+    }
+    requestIdentity.current = submissionIdFor(payload, requestIdentity.current)
+    inFlight.current = true
+    setIsSubmitting(true)
+    setSubmitMessage('')
     try {
-      setIsSubmitting(true)
       const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          subject: 'КОРЗИНА',
-          email: data.email,
-          message: data.message || '',
-          name: data.name,
-          phone: data.phone,
-          items: cart,
-          promoDetails: promoApplied ? `Промокод: ${promoCode} — ${discount}%` : 'Промокод не применен',
-        }),
+        body: JSON.stringify({...payload, submissionId: requestIdentity.current.id}),
       })
 
       if (!response.ok) {
         throw new Error('Failed to send data')
       }
 
-      setSubmitMessage('Форма отправлена!')
-
+      const result = await response.json()
+      if (!result?.id) throw new Error('Submission was not confirmed')
+      requestIdentity.current = null
+      setSubmitMessage('Заказ отправлен! Менеджер свяжется с вами для подтверждения.')
+      clearCart()
       setTimeout(() => {
-        clearCart()
-        setTimeout(() => {
-          router.push('/products')
-        }, 250)
-      }, 1500)
+        router.push('/products')
+      }, 2500)
     } catch (error) {
       console.error('Error:', error)
+      setSubmitMessage('Не удалось отправить заказ. Проверьте соединение и попробуйте ещё раз.')
     } finally {
+      inFlight.current = false
       setIsSubmitting(false)
     }
   }
@@ -153,7 +160,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
 
   return (
     <div id="FORM_WRAPPER" className="w-[80%] sm:w-full mx-auto mb-[15vh]">
-      {submitMessage ? (
+      {submitMessage === 'Корзина пуста' || submitMessage.startsWith('Заказ отправлен') ? (
         <>
           <Title text={submitMessage} classes="text-center" />
           {submitMessage === 'Корзина пуста' && <Button text="Вернуться к продуктам" classes="mt-4 text-base !w-full block grid place-items-center" onClick={() => router.push('/products')} />}
@@ -262,6 +269,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
               <textarea className="INPUT" placeholder="Адрес доставки и комментарий (необязательно)" {...register('message')}></textarea>
               {errors.message && <span className="text-red-500">{errors.message.message}</span>}
 
+              {submitMessage.startsWith('Не удалось') && <p role="alert" aria-live="polite" className="text-red-600">{submitMessage}</p>}
               <button className={cn([buttonVariants.default, buttonVariants.secondary], 'w-full block text-center', isSubmitting && 'opacity-85')} title="Оформить корзину" disabled={isSubmitting}>
                 {isSubmitting ? 'Отправляется...' : 'Отправить'}
               </button>

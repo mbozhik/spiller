@@ -1,11 +1,12 @@
 'use client'
 
-import {useState} from 'react'
+import {useRef, useState} from 'react'
 import {useForm} from 'react-hook-form'
 
 import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
 import Text from '#/UI/Text'
+import {submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
 
 type FormFields = {
   name: string
@@ -19,56 +20,50 @@ type FormFields = {
 
 const Form = () => {
   const [submitMessage, setSubmitMessage] = useState('')
-  const {register, handleSubmit, watch} = useForm<FormFields>()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const requestIdentity = useRef<SubmissionIdentity>(null)
+  const {register, handleSubmit, watch, formState: {errors}} = useForm<FormFields>()
   const businessType = watch('businessType')
 
   const businessTypes = ['Дистрибьюторская компания', 'Клиника/косметология', 'Салон красоты', 'СПА-центр', 'Частный косметолог', 'Магазин косметики', 'Прочее']
 
   const submitForm = async (data) => {
+    if (isSubmitting) return
+    const payload = {kind: 'partnership', ...data}
+    requestIdentity.current = submissionIdFor(payload, requestIdentity.current)
+    setIsSubmitting(true)
+    setSubmitMessage('')
     try {
       const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          subject: 'Партнерство',
-          email: data.email,
-          message: data.message,
-          name: data.name,
-          naming: data.naming,
-          city: data.city,
-          phone: data.phone,
-          businessType: data.businessType,
-        }),
+        body: JSON.stringify({...payload, submissionId: requestIdentity.current.id}),
       })
 
       if (!response.ok) {
         throw new Error('Failed to send data')
       }
 
-      // const responseData = await response.json()
-      // console.log('Response Data:', responseData)
-
+      const result = await response.json()
+      if (!result?.id) throw new Error('Submission was not confirmed')
+      requestIdentity.current = null
       setSubmitMessage('Форма отправлена!')
-
-      setTimeout(() => {
-        setSubmitMessage(null)
-      }, 1500)
     } catch (error) {
       console.error('Error:', error)
-      setSubmitMessage('Ошибка')
-      setTimeout(() => {
-        setSubmitMessage(null)
-      }, 1500)
+      setSubmitMessage('Не удалось отправить заявку. Проверьте соединение и попробуйте ещё раз.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
     <div id="FORM_WRAPPER" className="px-[20%] sm:p-5 py-10 border border-custom-blue w-full mx-auto">
-      {submitMessage ? (
+      {submitMessage === 'Форма отправлена!' && (
         <Title text={submitMessage} classes="text-center" />
-      ) : (
+      )}
+      {submitMessage !== 'Форма отправлена!' && (
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-0.5 text-center">
             <Title text="Стать партнером:" />
@@ -95,14 +90,16 @@ const Form = () => {
               <div className="space-y-3">
                 <input {...register('naming')} placeholder="Название компании" type="text" className="INPUT" />
                 <input {...register('city')} placeholder="Ваш город" type="text" className="INPUT" />
-                <input {...register('email')} placeholder="E-mail" type="email" className="INPUT" />
+                <input {...register('email', {required: 'Укажите e-mail'})} placeholder="E-mail" type="email" className="INPUT" />
+                {errors.email && <span role="alert" className="text-red-600">{errors.email.message}</span>}
                 <input {...register('phone')} placeholder="Телефон" type="tel" className="INPUT" />
                 <textarea {...register('message')} placeholder="Комментарий (необязательно)" className="INPUT" rows={5}></textarea>
               </div>
             </div>
 
-            <button className={`!w-full block text-center ${buttonVariants.default} ${buttonVariants.secondary}`} title="submit">
-              Отправить
+            {submitMessage && <p role="alert" aria-live="polite" className="text-red-600">{submitMessage}</p>}
+            <button disabled={isSubmitting} className={`!w-full block text-center ${buttonVariants.default} ${buttonVariants.secondary} disabled:opacity-60`} title="submit">
+              {isSubmitting ? 'Отправляется...' : 'Отправить'}
             </button>
           </form>
         </div>

@@ -13,11 +13,13 @@ interface EmailTemplateProps {
   businessType?: string
 
   cosmetologist?: boolean
-  items?: any
+  items?: {name: string; article: number; price: number; discount_price?: number; quantity: number}[]
   promoDetails?: string
+  total?: number
+  submissionId?: string
 }
 
-export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items, promoDetails}: EmailTemplateProps) => {
+export const EmailTemplate = ({subject, email, message, name, naming, city, phone, businessType, cosmetologist, items, promoDetails, total, submissionId}: EmailTemplateProps) => {
   return (
     <Html>
       <Head />
@@ -44,7 +46,7 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                               <b>Артикул:</b> {item.article}
                             </li>
                             <li>
-                              <b>Цена:</b> {item.price}
+                              <b>Цена:</b> {item.discount_price ?? item.price} ₸
                             </li>
                             <li>
                               <b>Количество:</b> {item.quantity}
@@ -62,6 +64,8 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                     <b>{promoDetails}</b>
                   </Text>
                 )}
+
+                {typeof total === 'number' && <Text style={paragraph}><b>Итого за товары:</b> {total} ₸</Text>}
 
                 {name && (
                   <Text style={{...paragraph}}>
@@ -105,6 +109,8 @@ export const EmailTemplate = ({subject, email, message, name, naming, city, phon
                     <b>Комментарий:</b> {message}
                   </Text>
                 )}
+
+                {submissionId && <Text style={paragraph}><b>Номер заявки:</b> {submissionId}</Text>}
               </Column>
             </Row>
           </Section>
