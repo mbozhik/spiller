@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form'
 
 import {buttonVariants} from '#/UI/Button'
 import Title from '#/UI/Title'
-import {submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
+import {confirmSubmission, submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
 
 type FormFields = {
   name: string
@@ -34,12 +34,7 @@ const Form = ({onClose}) => {
         body: JSON.stringify({...payload, submissionId: requestIdentity.current.id}),
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to send data')
-      }
-
-      const result = await response.json()
-      if (!result?.id) throw new Error('Submission was not confirmed')
+      await confirmSubmission(response, 'contact')
       requestIdentity.current = null
       setSubmitMessage('Заявка отправлена!')
       setTimeout(() => {

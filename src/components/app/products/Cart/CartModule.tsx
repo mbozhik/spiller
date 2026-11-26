@@ -10,7 +10,7 @@ import {useForm} from 'react-hook-form'
 import {cn} from '@/lib/utils'
 import {urlForImage} from '@/lib/sanity'
 import {useCartCounter} from '@/state/cart'
-import {submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
+import {confirmSubmission, submissionIdFor, type SubmissionIdentity} from '@/lib/submissions-client'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -83,12 +83,7 @@ export default function CartModule({promocodes}: {promocodes: TPromocode[]}) {
         body: JSON.stringify({...payload, submissionId: requestIdentity.current.id}),
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to send data')
-      }
-
-      const result = await response.json()
-      if (!result?.id) throw new Error('Submission was not confirmed')
+      await confirmSubmission(response, 'order')
       requestIdentity.current = null
       setSubmitMessage('Заказ отправлен! Менеджер свяжется с вами для подтверждения.')
       clearCart()
